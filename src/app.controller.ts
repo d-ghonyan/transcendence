@@ -3,15 +3,15 @@ import { AppService } from './app.service';
 
 @Controller(["/barev", "/hello"])
 export class AppController {
-  constructor(private readonly appService: AppService) {}
+	constructor(private readonly appService: AppService) {}
 
-  @Get("/hello")
-  getHello(): string {
-    return this.appService.getHello();
-  }
+	@Get("/hello")
+	getHello(): string {
+		return this.appService.getHello();
+	}
 
-  @Get("/barev")
-  getKov(): string {
-	  return this.appService.getBarev();
-  }
+	@Get("/barev")
+	getKov(): string {
+		return this.appService.getBarev();
+	}
 }
