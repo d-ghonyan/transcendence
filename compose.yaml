@@ -1,0 +1,28 @@
+services:
+  postgres:
+    image: postgres:latest
+    env_file: .docker-env
+    volumes:
+      - postgres:/var/lib/postgresql/data
+    # ports:
+    #   - ${POSTGRES_PORT}:5432
+    networks:
+      - app
+  nest:
+    ports:
+      - "3000:3000"
+      # - ${PORT}:${PORT}
+    build:
+      dockerfile: dockerfiles/nest/Dockerfile
+      context: .
+    env_file: .docker-env
+    volumes:
+      - ./src:/app/src
+    networks:
+      - app
+
+networks:
+  app:
+
+volumes:
+  postgres:
