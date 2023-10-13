@@ -8,21 +8,21 @@ export class UserController {
 
 	@Get("/all")
 	async findAll() {
-		const users = await this.userService.findAll();
+		// const users = await this.userService.findAll();
 
-		if (!users.length)
-			return ["None"];
-		return users;
+		// if (!users.length)
+		// 	return ["None"];
+		// return users;
 	}
 
 	@Get("/user")
-	async findOne(@Query("id") id: string | number) {
-		return await this.userService.findOne(id);
+	async findOne(@Query("username") username: string) {
+		return await this.userService.findOne(username);
 	}
 
 	@Post("/user")
 	async addUser(@Body("user") user: User): Promise<string> {
-		this.userService.addUser(user);
+		// this.userService.addUser(user);
 		return "success";
 	}
 }
