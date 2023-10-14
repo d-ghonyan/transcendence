@@ -20,6 +20,7 @@ services:
       - ./src:/app/src
     networks:
       - app
+    restart: always
 
 networks:
   app:

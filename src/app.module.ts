@@ -9,16 +9,16 @@ import { AuthModule } from './auth/auth.module';
 
 @Module({
 	imports: [
-		// TypeOrmModule.forRoot({
-		// 	type: "postgres",
-		// 	host: "postgres",
-		// 	port: parseInt(process.env.POSTGRES_PORT) || 5432,
-		// 	database: process.env.POSTGRES_DB || "test",
-		// 	username: process.env.POSTGRES_USER || "root",
-		// 	password: process.env.POSTGRES_PASSWORD || "root",
-		// 	entities: [User],
-		// 	synchronize: true,
-		// }),
+		TypeOrmModule.forRoot({
+			type: "postgres",
+			host: "postgres",
+			port: parseInt(process.env.POSTGRES_PORT) || 5432,
+			database: process.env.POSTGRES_DB || "test",
+			username: process.env.POSTGRES_USER || "root",
+			password: process.env.POSTGRES_PASSWORD || "root",
+			entities: [User],
+			synchronize: true,
+		}),
 		UserModule,
 		AuthModule,
 	],
@@ -26,6 +26,5 @@ import { AuthModule } from './auth/auth.module';
 	providers: [AppService],
 })
 export class AppModule {
-	// constructor(private dataSource: DataSource) {}
-	
+	constructor(private dataSource: DataSource) {}
 }

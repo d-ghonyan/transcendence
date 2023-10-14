@@ -7,14 +7,10 @@ import bcrypt from 'bcrypt'
 export class AuthService {
 	constructor(private userService: UserService) {}
 
-	async signIn(username : string, pass: string): Promise<any> {
+	async signIn(username: string, pass: string): Promise<any> {
 		const user = await this.userService.findOne(username);
 
-		const hashed = await bcrypt.hash(pass, "a");
-
-		console.log(user, user.password, hashed);
-
-		if (!user || hashed !== user.password)
+		if (!user || !(await bcrypt.compare(pass, user.password)))
 		{
 			throw new UnauthorizedException();
 		}
