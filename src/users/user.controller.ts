@@ -12,7 +12,12 @@ export class UserController {
 
 		if (!users.length)
 			return ["None"];
-		return users;
+
+		return users.map((user) => {
+			let { password, ...ret } = user;
+			
+			return ret;
+		});
 	}
 
 	@Get("/user")
@@ -22,15 +27,11 @@ export class UserController {
 
 	@Post("/user")
 	async addUser(@Body() user: User): Promise<string> {
-
-		console.log(user);
-
 		if (user) 
 		{
-			console.log("ah, " + user);
-			
 			this.userService.addUser(user);
+			return "success";
 		}
-		return "success";
+		return "oh no";
 	}
 }

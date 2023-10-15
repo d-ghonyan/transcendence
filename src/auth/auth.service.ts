@@ -7,7 +7,7 @@ import bcrypt from 'bcrypt'
 export class AuthService {
 	constructor(private userService: UserService) {}
 
-	async signIn(username: string, pass: string): Promise<any> {
+	async login(username: string, pass: string): Promise<any> {
 		const user = await this.userService.findOne(username);
 
 		if (!user || !(await bcrypt.compare(pass, user.password)))

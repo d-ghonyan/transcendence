@@ -7,11 +7,15 @@ import { UserModule } from './users/user.module';
 import { User } from './users/user.entity';
 import { AuthModule } from './auth/auth.module';
 
+import * as dotenv from 'dotenv'
+
+dotenv.config();
+
 @Module({
 	imports: [
 		TypeOrmModule.forRoot({
 			type: "postgres",
-			host: "postgres",
+			host: "localhost",//"postgres",
 			port: parseInt(process.env.POSTGRES_PORT) || 5432,
 			database: process.env.POSTGRES_DB || "test",
 			username: process.env.POSTGRES_USER || "root",
