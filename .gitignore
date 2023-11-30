@@ -1,6 +1,7 @@
 # compiled output
 /dist
 /node_modules
+*/*/__pycache__
 
 # Logs
 logs
@@ -14,20 +15,9 @@ lerna-debug.log*
 # OS
 .DS_Store
 
-# Tests
-/coverage
-/.nyc_output
-
-# IDEs and editors
-/.idea
-.project
-.classpath
-.c9/
-*.launch
-.settings/
-*.sublime-workspace
-
 # Environment
 
 *.env
 *.*env
+*passfile
+.pg_service.conf
