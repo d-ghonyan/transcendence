@@ -1,6 +1,6 @@
 {
-    "workbench.panel.defaultLocation": "right",
-    "editor.minimap.enabled": false,
-    "editor.insertSpaces": false,
-    "editor.detectIndentation": false
+	"workbench.panel.defaultLocation": "right",
+	"editor.minimap.enabled": false,
+	"editor.insertSpaces": false,
+	"editor.detectIndentation": false
 }

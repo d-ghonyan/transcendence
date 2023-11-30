@@ -1,5 +1,0 @@
-[postgres]
-host=localhost
-user=user_transcendence
-dbname=db_transcendence
-port=5432
