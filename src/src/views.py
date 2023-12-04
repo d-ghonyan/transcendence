@@ -1,10 +1,9 @@
-from django.http import JsonResponse
 from src.models import User
+from django.http import JsonResponse
 
 import json
 
 def get_users(request):
-
 	try:
 		users = []
 		for i in User.objects.all():
