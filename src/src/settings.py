@@ -14,6 +14,9 @@ from pathlib import Path
 from dotenv import load_dotenv
 import os
 
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = Path(__file__).resolve().parent.parent
+
 load_dotenv()
 
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -21,9 +24,9 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
-# Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent
-
+# added settings
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
+MEDIA_URL = '/media/'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -84,14 +87,18 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': POSTGRES_DB,
-		'PORT': POSTGRES_PORT,
-		'USER': POSTGRES_USER,
-		'PASSWORD': POSTGRES_PASSWORD,
-		'HOST': 'localhost',
-	}
+	# 'default': {
+	# 	'ENGINE': 'django.db.backends.postgresql',
+	# 	'NAME': POSTGRES_DB,
+	# 	'PORT': POSTGRES_PORT,
+	# 	'USER': POSTGRES_USER,
+	# 	'PASSWORD': POSTGRES_PASSWORD,
+	# 	'HOST': 'localhost',
+	# }
+	"default": {
+        "ENGINE": "django.db.backends.sqlite3",
+        "NAME": "mydatabase",
+    }
 }
 
 
