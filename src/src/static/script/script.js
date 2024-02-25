@@ -19,18 +19,23 @@ window.history.pushState({ start: true, innerHtml: await getLogin() }, "", "");
 let currentUrl = "public/";
 
 login.addEventListener('click', async () => {
-	let res = await fetch(`loginPage.html`);
 
-	const loginPage = await res.text();
+	/// TODO: add 42 oauth logic
 
-	window.history.pushState({ loginPage }, "", "barev/");
+	window.location.href = 'startPage.html'
 
-	while (container.lastChild)
-	{
-		container.removeChild(container.lastChild);
-	}
+	// let res = await fetch(`loginPage.html`);
 
-	container.innerHTML = loginPage;
+	// const loginPage = await res.text();
+
+	// window.history.pushState({ loginPage }, "", "barev/");
+
+	// while (container.lastChild)
+	// {
+	// 	container.removeChild(container.lastChild);
+	// }
+
+	// container.innerHTML = loginPage;
 })
 
 window.addEventListener('popstate', (event) => {

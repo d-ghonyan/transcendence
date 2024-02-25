@@ -24,6 +24,11 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
+INTRA_URL = os.getenv("INTRA_URL")
+INTRA_UID = os.getenv("INTRA_UID")
+INTRA_SECRET = os.getenv("INTRA_SECRET")
+INTRA_GRANT_TYPE = os.getenv("INTRA_GRANT_TYPE")
+
 # added settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
@@ -39,11 +44,12 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = [
 	'src',
+	'oauth2_provider',
+
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -87,20 +93,23 @@ WSGI_APPLICATION = 'src.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-	# 'default': {
-	# 	'ENGINE': 'django.db.backends.postgresql',
-	# 	'NAME': POSTGRES_DB,
-	# 	'PORT': POSTGRES_PORT,
-	# 	'USER': POSTGRES_USER,
-	# 	'PASSWORD': POSTGRES_PASSWORD,
-	# 	'HOST': 'localhost',
-	# }
-	"default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": "mydatabase",
-    }
+	'default': {
+		'ENGINE': 'django.db.backends.postgresql',
+		'NAME': POSTGRES_DB,
+		'PORT': POSTGRES_PORT,
+		'USER': POSTGRES_USER,
+		'PASSWORD': POSTGRES_PASSWORD,
+		'HOST': 'localhost',
+	}
+	# "default": {
+    #     "ENGINE": "django.db.backends.sqlite3",
+    #     "NAME": "mydatabase",
+    # }
 }
 
+AUTH_USER_MODEL = 'src.User'
+
+LOGIN_URL = '/admin/login'
 
 # Password validation
 # https://docs.djangoproject.com/en/4.2/ref/settings/#auth-password-validators
@@ -119,7 +128,6 @@ AUTH_PASSWORD_VALIDATORS = [
 		'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
 	},
 ]
-
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
