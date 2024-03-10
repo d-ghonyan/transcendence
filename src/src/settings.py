@@ -24,10 +24,14 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 
-INTRA_URL = os.getenv("INTRA_URL")
+INTRA_API_URL = os.getenv("INTRA_API_URL")
+INTRA_TOKEN_URL = os.getenv("INTRA_TOKEN_URL")
+INTRA_AUTH_URL = os.getenv("INTRA_AUTH_URL")
 INTRA_UID = os.getenv("INTRA_UID")
 INTRA_SECRET = os.getenv("INTRA_SECRET")
 INTRA_GRANT_TYPE = os.getenv("INTRA_GRANT_TYPE")
+
+REDIRECT = os.getenv("REDIRECT")
 
 # added settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
@@ -140,6 +144,13 @@ USE_I18N = True
 
 USE_TZ = True
 
+LANGUAGES = [
+    ('en', 'English'),
+    ('hy', 'Հայերեն'),
+    ('ru', 'Русский'),
+]
+
+LOCALE_PATHS = [os.path.join(BASE_DIR, 'locale')]
 
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/

@@ -1,51 +1,58 @@
-import { loginButton } from './components/loginButton.js'
+const loginButton = document.getElementById("login");
 
-const publicUrl = 'public';
+loginButton.onclick = async (e) => {
+	window.location = "http://localhost:8000/login/";
 
-const container = document.getElementsByClassName("container")[0];
-
-const login = loginButton.build();
-
-const getLogin = async () => {
-	let res = await fetch(`startPage.html`);
-	
-	const loginPage = await res.text();
-
-	return loginPage;
+	// let cookie = 
 }
+// import { loginButton } from './components/loginButton.js'
 
-window.history.pushState({ start: true, innerHtml: await getLogin() }, "", "");
+// const publicUrl = 'public';
 
-let currentUrl = "public/";
+// const container = document.getElementsByClassName("container")[0];
 
-login.addEventListener('click', async () => {
+// const login = loginButton.build();
 
-	/// TODO: add 42 oauth logic
+// const getLogin = async () => {
+// 	let res = await fetch(`startPage.html`);
+	
+// 	const loginPage = await res.text();
 
-	window.location.href = 'startPage.html'
+// 	return loginPage;
+// }
 
-	// let res = await fetch(`loginPage.html`);
+// window.history.pushState({ start: true, innerHtml: await getLogin() }, "", "");
 
-	// const loginPage = await res.text();
+// let currentUrl = "public/";
 
-	// window.history.pushState({ loginPage }, "", "barev/");
+// login.addEventListener('click', async () => {
 
-	// while (container.lastChild)
-	// {
-	// 	container.removeChild(container.lastChild);
-	// }
+// 	/// TODO: add 42 oauth logic
 
-	// container.innerHTML = loginPage;
-})
+// 	window.location.href = 'startPage.html'
 
-window.addEventListener('popstate', (event) => {
-	while (container.lastChild)
-	{
-		container.removeChild(container.lastChild);
-	}
+// 	// let res = await fetch(`loginPage.html`);
 
-	console.log(event);
-	container.innerHTML = event.state.innerHtml;
-})
+// 	// const loginPage = await res.text();
 
-container.appendChild(login);
+// 	// window.history.pushState({ loginPage }, "", "barev/");
+
+// 	// while (container.lastChild)
+// 	// {
+// 	// 	container.removeChild(container.lastChild);
+// 	// }
+
+// 	// container.innerHTML = loginPage;
+// })
+
+// window.addEventListener('popstate', (event) => {
+// 	while (container.lastChild)
+// 	{
+// 		container.removeChild(container.lastChild);
+// 	}
+
+// 	console.log(event);
+// 	container.innerHTML = event.state.innerHtml;
+// })
+
+// container.appendChild(login);
