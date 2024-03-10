@@ -25,7 +25,7 @@ urlpatterns = [
 	path('users/', views.get_users),
 	path('user/', views.post_user),
 	path('login/', views.login),
-	path('get_students/', views.get_students),
 	path('signin/', views.signin),
-	path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
+	# path('get_students/', views.get_students),
 ] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

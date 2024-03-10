@@ -52,7 +52,7 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
 	'src',
-	'oauth2_provider',
+	# 'oauth2_provider',
 
 	'django.contrib.admin',
 	'django.contrib.auth',
