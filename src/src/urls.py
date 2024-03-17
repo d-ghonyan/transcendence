@@ -23,9 +23,12 @@ from src import views
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('users/', views.get_users),
-	path('user/', views.post_user),
+	path('register/', views.register),
 	path('login/', views.login),
+	path('login_intra/', views.login_intra),
 	path('signin/', views.signin),
+	path('login_page/', views.login_page),
+	path('auth_qr/', views.auth_qr),
 	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 	# path('get_students/', views.get_students),
 ] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

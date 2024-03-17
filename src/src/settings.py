@@ -33,6 +33,10 @@ INTRA_GRANT_TYPE = os.getenv("INTRA_GRANT_TYPE")
 
 REDIRECT = os.getenv("REDIRECT")
 
+AUTHENTICATOR_SECRET_KEY = os.getenv("SECRET_KEY")
+
+JWT_SECRET = os.getenv("JWT_SECRET")
+
 # added settings
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
