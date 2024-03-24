@@ -15,24 +15,10 @@ Including another URLconf
 	2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
 
-from django.conf.urls.static import static
-from django.contrib import admin
-from django.urls import include, path
-from django.conf import settings
+from django.urls import path
 from src import views
 from src import auth_views
 
 urlpatterns = [
-	path('users/', views.get_users),
-	path('login_intra/', views.login_intra),
-	path('signin/', views.signin),
-	path('login_page/', views.login_page),
-	path('auth_qr/', views.auth_qr),
-
-	# auth
-	path('api/register/', auth_views.register),
-	path('api/login/', auth_views.login),
 	
-	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-	# path('get_students/', views.get_students),
-] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]

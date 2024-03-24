@@ -1,22 +1,3 @@
-// const loginButton = document.getElementById("login");
-
-// loginButton.onclick = async (e) => {
-// 	const res = await fetch("http://localhost:8000/auth_qr/");
-
-// 	const data = await res.json();
-
-// 	const img = document.createElement("img");
-
-// 	img.src = data.qr;
-
-// 	document.body.appendChild(img);
-
-
-// 	const loginButton = document.getElementById("login");
-
-// 	loginButton.classList.remove('active')
-// }
-
 const loginTab = document.getElementById("tab-login");
 const registerTab = document.getElementById("tab-register");
 
@@ -34,7 +15,8 @@ const showLoginTab = () => {
 }
 
 loginTab.onclick = async (e) => {
-	showLoginTab();
+	document.getElementsByClassName('intra')[0].innerHTML = intra_login;
+	// showLoginTab();
 }
 
 registerTab.onclick = async (e) => {
@@ -58,7 +40,7 @@ form.onsubmit = async (e) => {
 	const password = document.getElementById("password").value;
 
 	if (username === "" || password === "") {
-		showErrorMessage();
+		showErrorMessage("Please fill all fields");
 		return ;
 	}
 
@@ -72,7 +54,10 @@ form.onsubmit = async (e) => {
 
 	const data = await res.json();
 
-	console.log(data);
+	if (data.status === 200)
+	{
+		// window.location.href = "http://localhost:8000/home/";
+	}
 }
 
 registerForm.onsubmit = async (e) => {
@@ -85,7 +70,7 @@ registerForm.onsubmit = async (e) => {
 
 	if (username === "" || password === "" || repeat_password === "")
 	{
-		showErrorMessage();
+		showErrorMessage("Please fill all fields");
 		return ;
 	}
 
@@ -109,66 +94,16 @@ registerForm.onsubmit = async (e) => {
 document.getElementById("username").oninput = hideErrorMessage;
 document.getElementById("password").oninput = hideErrorMessage;
 
-function hideErrorMessage() {
+function hideErrorMessage()
+{
 	document.getElementById("error").classList.add("hide");
 }
 
-function showErrorMessage(error) {
-
+function showErrorMessage(error)
+{
 	if (error)
+	{
 		document.getElementById("error").innerText = error;
-
-	document.getElementById("error").classList.remove("hide");
+		document.getElementById("error").classList.remove("hide");
+	}
 }
-
-// import { loginButton } from './components/loginButton.js'
-
-// const publicUrl = 'public';
-
-// const container = document.getElementsByClassName("container")[0];
-
-// const login = loginButton.build();
-
-// const getLogin = async () => {
-// 	let res = await fetch(`startPage.html`);
-	
-// 	const loginPage = await res.text();
-
-// 	return loginPage;
-// }
-
-// window.history.pushState({ start: true, innerHtml: await getLogin() }, "", "");
-
-// let currentUrl = "public/";
-
-// login.addEventListener('click', async () => {
-
-// 	/// TODO: add 42 oauth logic
-
-// 	window.location.href = 'startPage.html'
-
-// 	// let res = await fetch(`loginPage.html`);
-
-// 	// const loginPage = await res.text();
-
-// 	// window.history.pushState({ loginPage }, "", "barev/");
-
-// 	// while (container.lastChild)
-// 	// {
-// 	// 	container.removeChild(container.lastChild);
-// 	// }
-
-// 	// container.innerHTML = loginPage;
-// })
-
-// window.addEventListener('popstate', (event) => {
-// 	while (container.lastChild)
-// 	{
-// 		container.removeChild(container.lastChild);
-// 	}
-
-// 	console.log(event);
-// 	container.innerHTML = event.state.innerHtml;
-// })
-
-// container.appendChild(login);

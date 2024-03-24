@@ -84,7 +84,16 @@
 			</div>
 			<!-- Pills content -->
 	</div>
-	<script src="{% static 'scripts/script.js' %}"></script>
+	<script>
+		let a = '{{ intra_login }}';
+
+		console.log(a);
+
+		// document.getElementById('pills-login').onclick = async (e) => {
+			document.getElementsByClassName('intra')[0].innerHTML = a;
+	// showLoginTab();
+		// }
+	</script>
 </body>
 
 </html>
