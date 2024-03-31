@@ -18,10 +18,10 @@
 			<!-- Pills navs -->
 			<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
 				<li class="nav-item" role="presentation">
-					<a class="nav-link active" id="tab-login">Login</a>
+					<a class="nav-link active login_tab_text" id="tab-login">Login</a>
 				</li>
 				<li class="nav-item" role="presentation">
-					<a class="nav-link" id="tab-register">Register</a>
+					<a class="nav-link register_tab_text" id="tab-register">Register</a>
 				</li>
 			</ul>
 			<!-- Pills navs -->
@@ -31,7 +31,7 @@
 				<div class="tab-pane fade show active" id="pills-login" role="tabpanel" aria-labelledby="tab-login">
 					<form id="signin">
 						<div class="text-center mb-3">
-							<p>Sign in with:</p>
+							<p class="sign_with_text">Sign in with:</p>
 							<button type="button" class="btn mx-1 intra">
 								INTRA
 							</button>
@@ -39,20 +39,20 @@
 						<!-- Email input -->
 						<div class="form-outline mb-4">
 							<input type="text" id="username" class="form-control input" />
-							<label class="form-label" for="username">Username</label>
+							<label class="form-label username_text" for="username">Username</label>
 						</div>
 
 						<!-- Password input -->
 						<div class="form-outline mb-4">
 							<input type="password" id="password" class="form-control input" />
-							<label class="form-label" for="password">Password</label>
+							<label class="form-label password_text" for="password">Password</label>
 						</div>
 
 						<!-- Submit button -->
-						<button type="submit" class="btn btn-primary btn-block mb-4">Sign in</button>
+						<button type="submit" class="btn btn-primary btn-block mb-4 sign_in_text">Sign in</button>
 	
 						<div class="error hide" id="error">
-							<span class="error"> Please fill out all fields</span>
+							<span class="error error_text">Please fill out all fields</span>
 						</div>
 
 					</form>
@@ -62,37 +62,44 @@
 						<!-- Username input -->
 						<div class="form-outline mb-4">
 							<input type="text" id="registerUsername" class="form-control" />
-							<label class="form-label" for="registerUsername">Username</label>
+							<label class="form-label username_text" for="registerUsername">Username</label>
 						</div>
 
 						<!-- Password input -->
 						<div class="form-outline mb-4">
 							<input type="password" id="registerPassword" class="form-control" />
-							<label class="form-label" for="registerPassword">Password</label>
+							<label class="form-label password_text" for="registerPassword">Password</label>
 						</div>
 
 						<!-- Repeat Password input -->
 						<div class="form-outline mb-4">
 							<input type="password" id="registerRepeatPassword" class="form-control" />
-							<label class="form-label" for="registerRepeatPassword">Repeat password</label>
+							<label class="form-label repeat_password_text" for="registerRepeatPassword">Repeat password</label>
 						</div>
 
 						<!-- Submit button -->
-						<button type="submit" class="btn btn-primary btn-block mb-3">Sign in</button>
+						<button type="submit" class="btn btn-primary btn-block mb-3 sign_in_text">Sign in</button>
 					</form>
 				</div>
 			</div>
 			<!-- Pills content -->
 	</div>
 	<script>
-		let a = '{{ intra_login }}';
 
-		console.log(a);
+		const lang = "hy";
+		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
 
-		// document.getElementById('pills-login').onclick = async (e) => {
-			document.getElementsByClassName('intra')[0].innerHTML = a;
-	// showLoginTab();
-		// }
+		for (const key in lang_data)
+		{
+			console.log(key, lang_data[key][lang]);
+
+			const elements = document.getElementsByClassName(key);
+			
+			for (let i = 0; i < elements.length; i++)
+			{
+				elements[i].innerText = lang_data[key][lang];
+			}
+		}
 	</script>
 </body>
 

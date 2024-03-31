@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2024-03-03 19:41+0400\n"
+"POT-Creation-Date: 2024-03-31 14:47+0000\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,6 +17,35 @@ msgstr ""
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1);\n"
-#: src/src/views.py:21
-msgid "Login with Intra"
-msgstr ""
+
+#: src/src/views.py:22
+msgid "Login"
+msgstr "բարև"
+
+#: src/src/views.py:23
+msgid "Register"
+msgstr "բռատ"
+
+#: src/src/views.py:24
+msgid "Sign in with:"
+msgstr "Sign in with:"
+
+#: src/src/views.py:25
+msgid "Username"
+msgstr "Username"
+
+#: src/src/views.py:26
+msgid "Password"
+msgstr "Password"
+
+#: src/src/views.py:27
+msgid "Sign in"
+msgstr "Sign in"
+
+#: src/src/views.py:28
+msgid "Repeat password"
+msgstr "Repeat password"
+
+#: src/src/views.py:29
+msgid "Please fill out all fields"
+msgstr "Please fill out all fields"

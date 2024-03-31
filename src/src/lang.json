@@ -1,0 +1,42 @@
+{
+	"login_tab_text": {
+		"en": "Login",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"register_tab_text": {
+		"en": "Register",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"sign_with_text": {
+		"en": "Sign in with:",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"username_text": {
+		"en": "Username",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"password_text": {
+		"en": "Password",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"sign_in_text": {
+		"en": "Sign in",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"repeat_password_text": {
+		"en": "Repeat password",
+		"hy": "բարև",
+		"ru": "привет"
+	},
+	"error_text": {
+		"en": "Please fill out all fields",
+		"hy": "բարև",
+		"ru": "привет"
+	}
+}

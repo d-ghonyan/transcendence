@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
 from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
-								REDIRECT, AUTHENTICATOR_SECRET_KEY
+								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR
 
 from django.utils.translation import gettext as _
 
@@ -14,12 +14,14 @@ import requests
 import pyotp
 import qrcode
 
+import json
+
 state = ""
 
 def login_page(request):
 
 	context = {
-		'intra_login': _('Login with Intra'),
+		"language_texts": json.dumps(json.load(open(BASE_DIR / 'src/lang.json'))),
 	}
 
 	return render(request, 'index.html', context=context)
