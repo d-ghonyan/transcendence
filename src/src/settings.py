@@ -48,9 +48,11 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False # 
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = [
+	"*"
+]
 
 # Application definition
 
@@ -68,6 +70,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
+	"whitenoise.middleware.WhiteNoiseMiddleware", # Here
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	"django.middleware.locale.LocaleMiddleware",
 	'django.middleware.common.CommonMiddleware',
@@ -140,6 +143,8 @@ AUTH_PASSWORD_VALIDATORS = [
 
 # Internationalization
 # https://docs.djangoproject.com/en/4.2/topics/i18n/
+
+# not using lol
 
 LANGUAGE_CODE = 'en'
 LANGAUAGE_COOKIE_NAME = 'django_language' # this is the defailt

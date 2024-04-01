@@ -7,3 +7,4 @@ qrcode
 pyjwt[crypto]
 bcrypt
 python-dateutil
+whitenoise

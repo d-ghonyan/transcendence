@@ -7,10 +7,6 @@ window.addEventListener('popstate', (e) => {
 	}
 });
 
-window.addEventListener('load', () => {
-	History.pushState({ innerHtml: document.body.innerHTML }, "", "login_page");
-});
-
 window.addEventListener('DOMContentLoaded', () => {
 	
 });

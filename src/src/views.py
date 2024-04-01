@@ -7,8 +7,7 @@ from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
 								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR
 
-from django.utils.translation import gettext as _
-
+import os
 import requests
 
 import pyotp
@@ -22,7 +21,14 @@ def login_page(request):
 
 	context = {
 		"language_texts": json.dumps(json.load(open(BASE_DIR / 'src/lang.json'))),
+		"pages": {}
 	}
+
+	for i in os.listdir(BASE_DIR / 'src/pages'):
+		with open(BASE_DIR / 'src/pages' / i, 'r') as f:
+			context["pages"][i.replace(".html", "")] = f.read()
+
+	context['pages'] = json.dumps(context['pages'])
 
 	return render(request, 'index.html', context=context)
 
@@ -97,6 +103,9 @@ def signin(request):
 	return JsonResponse({ "state": req_state , "code": req_code, 'res': r.json() })
 
 def get_users(request):
+
+	print("helllllllllllllooooooooooo")
+
 	users = []
 	allUsers = User.objects.all()
 

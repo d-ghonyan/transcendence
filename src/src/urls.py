@@ -17,22 +17,40 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path
+from django.urls import include, path, reverse
 from django.conf import settings
+from django.shortcuts import render, redirect
 from src import views
 from src import auth_views
 
-urlpatterns = [
-	path('users/', views.get_users),
-	path('login_intra/', views.login_intra),
-	path('signin/', views.signin),
-	path('login_page/', views.login_page),
-	path('auth_qr/', views.auth_qr),
+# TODO: all routes should return the same index.html
 
-	# auth
-	path('api/register/', auth_views.register),
-	path('api/login/', auth_views.login),
+from django.http.response import HttpResponseRedirect
+
+def redirect_to_root(request, exception):
+
+	print(request.path)
+
+	return HttpResponseRedirect(reverse('login_page'))
+
+urlpatterns = [
+	path('', views.login_page, name='login_page'),
+	path('api/', views.get_users),
+
+	# path('login/', views.login_page),
+	# path('users/', views.get_users),
+	# path('login_intra/', views.login_intra),
+	# path('signin/', views.signin),
+	# path('auth_qr/', views.auth_qr),
+
+	# # auth
+	# path('api/register/', auth_views.register),
+	# path('api/login/', auth_views.login),
 	
 	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 	# path('get_students/', views.get_students),
-] # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
+]
+
+handler404 = redirect_to_root
+
+# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
