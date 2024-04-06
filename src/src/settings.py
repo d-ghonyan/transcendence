@@ -58,6 +58,7 @@ ALLOWED_HOSTS = [
 
 INSTALLED_APPS = [
 	'src',
+	'api',
 	# 'oauth2_provider',
 
 	'django.contrib.admin',
@@ -119,7 +120,7 @@ DATABASES = {
     # }
 }
 
-AUTH_USER_MODEL = 'src.User'
+AUTH_USER_MODEL = 'api.User'
 
 LOGIN_URL = '/admin/login'
 

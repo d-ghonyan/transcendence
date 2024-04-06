@@ -17,7 +17,6 @@ Including another URLconf
 
 from django.urls import path
 from src import views
-from src import auth_views
 
 urlpatterns = [
 	

@@ -1,4 +1,4 @@
-from src.models import User
+from api.models import User
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
 from src.settings import JWT_SECRET
