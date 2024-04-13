@@ -1,0 +1,20 @@
+{
+  "name": "transcendence",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+	"truffle": "truffle",
+	"compile": "truffle compile",
+	"migrate": "truffle migrate",
+	"migrate-reset": "truffle migrate --reset",
+	"init": "truffle init",
+	"console": "truffle console",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "truffle": "^5.11.5"
+  }
+}
