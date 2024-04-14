@@ -1,6 +1,6 @@
-# from src.models import User
+from api.models import User
 from django.http import JsonResponse
-from src.utils import get_random_string
+from api.utils import get_random_string
 from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
 from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
@@ -16,109 +16,18 @@ import qrcode
 import json
 
 state = ""
-texts_file = open(BASE_DIR / 'src/lang.json', 'r')
-texts_json = json.dumps(json.load(texts_file))
-
-pages = {}
-
-for i in os.listdir(BASE_DIR / 'src/pages'):
-	with open(BASE_DIR / 'src/pages' / i, 'r') as f:
-		pages[i.replace(".html", "")] = f.read()
-
-pages = json.dumps(pages)
 
 @require_GET
-def login_page(request):
+def users(request):
 
-	context = {
-		"language_texts": texts_json,
-		"pages": pages
-	}
+	users = []
+	allUsers = User.objects.all()
 
-	return render(request, 'index.html', context=context)
+	if (allUsers):
+		for user in allUsers:
+			users.append({ 'username': user.username, 'password': user.password })
 
-@require_GET
-def auth_qr(request):
-	totp_auth = pyotp.totp.TOTP(AUTHENTICATOR_SECRET_KEY).provisioning_uri(
-		name='Kov',
-		issuer_name='barev.com')
-
-	print(totp_auth)
-
-	qrcode.make(totp_auth).save("qr_auth.png")
-	# totp_qr = pyotp.TOTP(SECRET_KEY)
-
-	# #  verifying the code 
-	# while True:
-	# 	print(totp_qr.verify(input(("Enter the Code : "))))
-
-	return JsonResponse({ "qr": "qr_auth.png" })
-
-@require_GET
-def login_intra(request):
-
-	global state # needed to motify the state variable
-
-	state = get_random_string(30)
-
-	response_type = "code"
-
-	intra_full_url = \
-		f"{INTRA_AUTH_URL}?client_id={INTRA_UID}&redirect_uri={REDIRECT}&response_type={response_type}&state={state}"
-
-	return redirect(intra_full_url)
-
-@require_GET
-def signin(request):
-
-	grant_type = 'authorization_code'
-	req_code = request.GET.get('code', '')
-	req_state = request.GET.get('state', '')
-	req_error = request.GET.get('error', '')
-
-	if (state != req_state):
-		return JsonResponse({ 'error': 'go_fuck_yourself', 'desc': 'self explanatory' })
-
-	if (req_error):
-		return JsonResponse({ 'error': req_error, 'desc': request.GET.get('error_description', 'none') })
-
-	try:
-		r = requests.request('POST', INTRA_TOKEN_URL, params={
-			"grant_type": grant_type,
-			"client_id": INTRA_UID,
-			"client_secret": INTRA_SECRET,
-			"code": req_code,
-			"redirect_uri": REDIRECT,
-			"state": req_state,
-		})
-	except Exception as e:
-		return JsonResponse({ 'error': 'exception', 'desc': e })
-
-	r = r.json()
-
-	access_token = r['access_token']
-	refresh_token = r['refresh_token']
-	expires_in = r['expires_in']
-	created_at = r['created_at']
-
-	r = requests.request('GET', INTRA_API_URL + "me/", headers={
-		'Authorization': 'Bearer ' + access_token,
-	})
-
-	return JsonResponse({ "state": req_state , "code": req_code, 'res': r.json() })
-
-# def get_users(request):
-
-# 	print("helllllllllllllooooooooooo")
-
-# 	users = []
-# 	allUsers = User.objects.all()
-
-# 	if (allUsers):
-# 		for user in allUsers:
-# 			users.append({ 'username': user.username, 'password': user.password })
-
-# 	return JsonResponse({'users': users})
+	return JsonResponse({'users': users})
 
 """ 
 :method: GET

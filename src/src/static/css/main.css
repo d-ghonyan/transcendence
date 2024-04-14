@@ -1,0 +1,42 @@
+body {
+	  background-color: #f4f4f4;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+.container {
+	margin: 0 auto;
+	max-width: 800px;
+	padding: 0 20px;
+}
+
+.intra {
+	color: #f4f4f4;
+	font-size: large;
+	font-weight: bold;
+	padding: 10px 100px;
+	border-radius: 15px;
+	background-color: #00babc;
+}
+
+.nav-pills .active {
+	background-color: #00babc !important;
+}
+
+.input {
+	width: 400px ;
+}
+
+.nav-link {
+	cursor: pointer;
+}
+
+.hide {
+	display: none;
+}
+
+
+.error {
+	color: red;
+}

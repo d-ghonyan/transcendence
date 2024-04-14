@@ -21,16 +21,12 @@ from django.urls import include, path, reverse
 from django.conf import settings
 from django.shortcuts import render, redirect
 
-from src import views
+from api import views, auth_views
 
 from django.http.response import HttpResponseRedirect
 
-def redirect_to_root(request, exception):
-	return HttpResponseRedirect(reverse('login_page'))
-
 urlpatterns = [
-	path('', views.login_page, name='login_page'),
-	path('api/', include('api.urls')),
+	path('users/', views.users),
 
 	# path('login/', views.login_page),
 	# path('users/', views.get_users),
@@ -45,7 +41,5 @@ urlpatterns = [
 	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 	# path('get_students/', views.get_students),
 ]
-
-handler404 = redirect_to_root
 
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

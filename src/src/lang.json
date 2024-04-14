@@ -1,0 +1,42 @@
+{
+	"login_tab_text": {
+		"us": "Login",
+		"am": "Մուտք",
+		"ru": "Вход"
+	},
+	"register_tab_text": {
+		"us": "Register",
+		"am": "Գրանցվել",
+		"ru": "Регистрация"
+	},
+	"sign_with_text": {
+		"us": "Sign in with:",
+		"am": "Մուտք գործել: ",
+		"ru": "Вход с:"
+	},
+	"username_text": {
+		"us": "Username",
+		"am": "Օգտանուն",
+		"ru": "Имя пользователя"
+	},
+	"password_text": {
+		"us": "Password",
+		"am": "Գաղտնաբառ",
+		"ru": "Пароль"
+	},
+	"sign_in_text": {
+		"us": "Sign in",
+		"am": "Մուտք գործել",
+		"ru": "Вход"
+	},
+	"repeat_password_text": {
+		"us": "Repeat password",
+		"am": "Կրկնել գաղտնաբառը",
+		"ru": "Повторите пароль"
+	},
+	"error_text": {
+		"us": "Please fill out all fields",
+		"am": "Լրացրեք բոլոր դաշտերը",
+		"ru": "Заполните все поля"
+	}
+}
