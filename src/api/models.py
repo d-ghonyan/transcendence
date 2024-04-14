@@ -24,3 +24,8 @@ class ChatMessages(models.Model):
 	sender_id =  models.IntegerField(default=1)
 	receiver_id =  models.IntegerField(default=1)
 	name = models.TextField(default="", )
+
+class Tournament(models.Model):
+	name = models.TextField(default="", )
+	players = models.TextField(default=[], )
+	winner = models.TextField(default="", )
