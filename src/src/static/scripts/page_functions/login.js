@@ -1,0 +1,112 @@
+const showHideTabs = ({ show, hide, showPills, hidePills }) => {
+	show.classList.add('active');
+	hide.classList.remove('active');
+
+	showPills.classList.add('show');
+	showPills.classList.add('active');
+	hidePills.classList.remove('show');
+	hidePills.classList.remove('active');
+}
+
+const tabs = () => {
+	return {
+		loginTab: document.getElementById("login_tab"),
+		registerTab: document.getElementById("register_tab"),
+		loginPills: document.getElementById("pills_login"),
+		registerPills: document.getElementById("pills_register"),
+	}
+}
+
+const showLogin = () => {
+
+	const { loginTab, registerTab, loginPills, registerPills } = tabs();
+
+	return {
+		show: loginTab,
+		hide: registerTab,
+		showPills: loginPills,
+		hidePills: registerPills,
+	}
+}
+
+const showRegister = () => {
+	
+	const { loginTab, registerTab, loginPills, registerPills } = tabs();
+
+	return {
+		show: registerTab,
+		hide: loginTab,
+		showPills: registerPills,
+		hidePills: loginPills,
+	}
+}
+
+// id functions
+
+const login_tab = async () => {
+	showHideTabs(showLogin());
+}
+
+const register_tab = async () => {
+	showHideTabs(showRegister());
+}
+
+const login_button = async () => {
+	const username = document.getElementById("username").value;
+	const password = document.getElementById("password").value;
+
+	if (username === "" || password === "")
+	{
+		showErrorMessage("Please fill all fields");
+		return ;
+	}
+
+	const res = await fetch("http://localhost:8000/api/login/", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ username, password })
+	});
+
+	console.log("A");
+
+	const data = await res.json();
+
+	if (data.status === 200)
+	{
+		updateState({ page: page_data['homepage'], url: "/home" });
+		// window.location.href = "http://localhost:8000/home/";
+	}
+	else
+		showErrorMessage(data.message);
+}
+
+const register_button = async () => {
+
+	const username = document.getElementById("registerUsername").value;
+	const password = document.getElementById("registerPassword").value;
+	const repeat_password = document.getElementById("registerRepeatPassword").value;
+
+	if (username === "" || password === "" || repeat_password === "")
+	{
+		showErrorMessage("Please fill all fields");
+		return ;
+	}
+
+	const res = await fetch("http://localhost:8000/api/register/", {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ username, password, repeat_password }),
+	});
+
+	const data = await res.json();
+
+	console.log(data);
+
+	if (data.status === 200)
+		showHideTabs(showLogin());
+	alert(data.message);
+}

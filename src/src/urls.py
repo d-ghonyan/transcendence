@@ -26,10 +26,10 @@ from src import views
 from django.http.response import HttpResponseRedirect
 
 def redirect_to_root(request, exception):
-	return HttpResponseRedirect(reverse('login_page'))
+	return HttpResponseRedirect(reverse('login'))
 
 urlpatterns = [
-	path('', views.login_page, name='login_page'),
+	path('', views.login, name='login'),
 	path('api/', include('api.urls')),
 
 	# path('login/', views.login_page),

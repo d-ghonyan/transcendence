@@ -42,9 +42,12 @@ def login(request):
 
 			hashed = user.password
 
+			print("User found")
+
 			if bcrypt.checkpw(body['password'].encode('utf-8'), hashed.encode('utf-8')):
 				token = jwt.encode({ 'username': user.username,
 						'exp': datetime.now(tz.UTC) + timedelta(60 * 60) }, JWT_SECRET, algorithm='HS256')
+				print("User logged in successfully")
 
 				return JsonResponse({ "status": 200, "message": "User logged in successfully", "token": token })
 			return JsonResponse({ "status": 400, "message": "Invalid username or password" })

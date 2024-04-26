@@ -3,7 +3,7 @@ window.addEventListener('popstate', (e) => {
 
 	if (e.state)
 	{
-		document.body.innerHTML = e.state.innerHtml;
+		changePageContent(e.state.page.html);
 	}
 });
 

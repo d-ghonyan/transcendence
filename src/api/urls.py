@@ -27,19 +27,8 @@ from django.http.response import HttpResponseRedirect
 
 urlpatterns = [
 	path('users/', views.users),
-
-	# path('login/', views.login_page),
-	# path('users/', views.get_users),
-	# path('login_intra/', views.login_intra),
-	# path('signin/', views.signin),
-	# path('auth_qr/', views.auth_qr),
-
-	# # auth
-	# path('api/register/', auth_views.register),
-	# path('api/login/', auth_views.login),
-	
-	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-	# path('get_students/', views.get_students),
+	path('intra_redirect/', views.intra_redirect),
+	path('intra_signin/', views.intra_signin),
+	path('login/', auth_views.login),
+	path('register/', auth_views.register),
 ]
-
-# + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)
