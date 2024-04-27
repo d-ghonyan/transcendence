@@ -12,7 +12,7 @@ function appendScript(container, js)
 {
 	const script = document.createElement("script");
 	script.textContent = js;
-	
+
 	container.appendChild(script);
 }
 

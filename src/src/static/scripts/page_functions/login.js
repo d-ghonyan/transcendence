@@ -41,6 +41,18 @@ const showRegister = () => {
 	}
 }
 
+const hideErrorMessage = () => {
+	document.getElementById("error").classList.add("hide");
+}
+
+const showErrorMessage = (error) => {
+	if (error)
+	{
+		document.getElementById("error").innerText = error;
+		document.getElementById("error").classList.remove("hide");
+	}
+}
+
 // id functions
 
 const login_tab = async () => {

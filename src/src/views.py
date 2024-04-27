@@ -15,9 +15,6 @@ import qrcode
 
 import json
 
-texts_file = open(BASE_DIR / 'src/lang.json', 'r')
-texts_json = json.dumps(json.load(texts_file))
-
 # pages = {}
 
 # for i in os.listdir(BASE_DIR / 'src/pages'):
@@ -33,6 +30,9 @@ texts_json = json.dumps(json.load(texts_file))
 
 @require_GET
 def login(request):
+
+	texts_file = open(BASE_DIR / 'src/lang.json', 'r')
+	texts_json = json.dumps(json.load(texts_file))
 
 	pages = {}
 

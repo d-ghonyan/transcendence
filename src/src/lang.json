@@ -38,5 +38,33 @@
 		"us": "Please fill out all fields",
 		"am": "Լրացրեք բոլոր դաշտերը",
 		"ru": "Заполните все поля"
+	},
+	"settings_text": {
+		"us": "Settings",
+		"am": "Կարգավորումներ",
+		"ru": "Настройки"
+
+	},
+	"friends_text": {
+		"us": "Friends",
+		"am": "Ընկերներ",
+		"ru": "Друзья"
+
+	},
+	"history_text": {
+		"us": "History",
+		"am": "Պատմություն",
+		"ru": "История"
+
+	},
+	"logout_text": {
+		"us": "Logout",
+		"am": "Դուրս գալ",
+		"ru": "Выход"
+	},
+	"tournament_text": {
+		"us": "Tournament",
+		"am": "Մրցաշար",
+		"ru": "Турнир"
 	}
 }
