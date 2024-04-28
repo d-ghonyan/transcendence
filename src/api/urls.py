@@ -31,4 +31,5 @@ urlpatterns = [
 	path('intra_signin/', views.intra_signin),
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
+	path('refresh/', auth_views.refresh),
 ]

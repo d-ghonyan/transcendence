@@ -73,7 +73,7 @@ const login_button = async () => {
 		return ;
 	}
 
-	const res = await fetch("http://localhost:8000/api/login/", {
+	const res = await fetch(`${api_url}/login/`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -81,14 +81,13 @@ const login_button = async () => {
 		body: JSON.stringify({ username, password })
 	});
 
-	console.log("A");
-
 	const data = await res.json();
 
 	if (data.status === 200)
 	{
+		localStorage.setItem("token", data.token);
+		localStorage.setItem("refreshtoken", data.refreshtoken);
 		updateState({ page: page_data['homepage'], url: "/home" });
-		// window.location.href = "http://localhost:8000/home/";
 	}
 	else
 		showErrorMessage(data.message);
@@ -106,7 +105,7 @@ const register_button = async () => {
 		return ;
 	}
 
-	const res = await fetch("http://localhost:8000/api/register/", {
+	const res = await fetch(`${api_url}/register/`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -116,9 +115,8 @@ const register_button = async () => {
 
 	const data = await res.json();
 
-	console.log(data);
-
 	if (data.status === 200)
 		showHideTabs(showLogin());
-	alert(data.message);
+	else
+		showErrorMessage(data.message);
 }

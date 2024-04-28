@@ -1,9 +1,29 @@
-window.addEventListener('popstate', (e) => {
+window.addEventListener('popstate', async (e) => {
 	e.preventDefault();
 
-	if (e.state)
+	const refreshtoken = localStorage.getItem('refreshtoken');
+
+	const res = await fetch(`${api_url}/refresh`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({ refreshtoken })
+	})
+
+	data = await res.json();
+
+	if (data.status === 200)
 	{
-		changePageContent(e.state.page.html);
+		if (e.state)
+		{
+			changePageContent(e.state.page.html);
+		}
+	}
+	else
+	{
+		console.log("no token bitch", data.message);
+		window.location.href = '/login';
 	}
 });
 

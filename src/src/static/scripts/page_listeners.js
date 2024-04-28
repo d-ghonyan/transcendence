@@ -10,7 +10,7 @@ const events = {
 document.addEventListener('click', async (e) => {
 	e.preventDefault();
 
-	if (e.target.id.includes("popup"))
+	if (e.target.id.includes('popup'))
 	{
 		openPopup(e);
 	}
@@ -24,11 +24,11 @@ document.addEventListener('click', async (e) => {
 	}
 });
 
-
 document.addEventListener('input', async (e) => {
 	e.preventDefault();
 
-	// if (e.target.id === "username" || e.target.id === "password")
-	// hideErrorMessage();
-	events[`${e.target.id}_input`]?.(e);
+	// if (document.getElementById("error").classList.contains("hide") === false)
+	hideErrorMessage();
+	
+	// events[`${e.target.id}_input`]?.(e);
 });

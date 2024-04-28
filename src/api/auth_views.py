@@ -42,15 +42,29 @@ def login(request):
 
 			hashed = user.password
 
-			print("User found")
-
 			if bcrypt.checkpw(body['password'].encode('utf-8'), hashed.encode('utf-8')):
 				token = jwt.encode({ 'username': user.username,
 						'exp': datetime.now(tz.UTC) + timedelta(60 * 60) }, JWT_SECRET, algorithm='HS256')
-				print("User logged in successfully")
+				
+				refreshtoken = jwt.encode({ 'username': user.username,
+						'exp': datetime.now(tz.UTC) + timedelta(60 * 60 * 24) }, JWT_SECRET, algorithm='HS256')
 
-				return JsonResponse({ "status": 200, "message": "User logged in successfully", "token": token })
+				return JsonResponse({ "status": 200, "message": "User logged in successfully", "token": token, "refreshtoken": refreshtoken})
 			return JsonResponse({ "status": 400, "message": "Invalid username or password" })
+		except Exception as e:
+			return JsonResponse({ "status": 500, "message": f"Internal server error: {e}" })
+	return JsonResponse({ "status": 400, "message": "Bad request" })
+
+@require_POST
+def refresh(request):
+	body = json.loads(request.body)
+	if body['refreshtoken']:
+		try:
+			decoded = jwt.decode(body['refreshtoken'], JWT_SECRET, algorithms=['HS256'])
+			token = jwt.encode({ 'username': decoded['username'],
+					'exp': datetime.now(tz.UTC) + timedelta(60 * 60) }, JWT_SECRET, algorithm='HS256')
+
+			return JsonResponse({ "status": 200, "message": "Token refreshed successfully", "token": token, "refreshtoken": body['refreshtoken']})
 		except Exception as e:
 			return JsonResponse({ "status": 500, "message": f"Internal server error: {e}" })
 	return JsonResponse({ "status": 400, "message": "Bad request" })

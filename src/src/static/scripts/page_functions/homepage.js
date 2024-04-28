@@ -27,5 +27,7 @@ const closePopup = (e) => {
 }
 
 const logout_button = async () => {
+	localStorage.removeItem("token");
 
+	updateState({ page: page_data['login'], url: "/login" });
 }
