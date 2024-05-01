@@ -119,16 +119,16 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 		"vs2": {
 			controls: {
 				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
 					up: 'ArrowUp',
 					down: 'ArrowDown'
 				},
-				player2: {
+				player3: {
 					up: 'i',
 					down: 'k'
-				},
-				player3: {
-					up: 'w',
-					down: 's'
 				},
 				player4: {
 					up: '8',
@@ -162,16 +162,16 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 		"vs3": {
 			controls: {
 				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
 					up: 'ArrowUp',
 					down: 'ArrowDown'
 				},
-				player2: {
+				player3: {
 					up: 'i',
 					down: 'k'
-				},
-				player3: {
-					up: 'w',
-					down: 's'
 				},
 				player4: {
 					up: '8',
