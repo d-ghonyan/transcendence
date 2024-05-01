@@ -158,6 +158,81 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 				player1: 'Team 1',
 				player2: 'Team 2',
 			}
+		},
+		"vs3": {
+			controls: {
+				player1: {
+					up: 'ArrowUp',
+					down: 'ArrowDown'
+				},
+				player2: {
+					up: 'i',
+					down: 'k'
+				},
+				player3: {
+					up: 'w',
+					down: 's'
+				},
+				player4: {
+					up: '8',
+					down: '5'
+				},
+				player5: {
+					up: 't',
+					down: 'g'
+				},
+				player6: {
+					up: 'o',
+					down: 'l'
+				}
+			},
+			paddlePositions: {
+				player1: {
+					x: 0,
+					y: paddleHeight
+				},
+				player2: {
+					x: canvas.width - paddleWidth,
+					y: paddleHeight
+				},
+				player3: {
+					x: 0,
+					y: (canvas.height - paddleHeight) / 2
+				},
+				player4: {
+					x: canvas.width - paddleWidth,
+					y: (canvas.height - paddleHeight) / 2
+				},
+				player5: {
+					x: 0,
+					y: canvas.height - paddleHeight
+				},
+				player6: {
+					x: canvas.width - paddleWidth,
+					y: canvas.height - paddleHeight
+				}
+			},
+			playerCount: 6,
+			teamNames: {
+				player1: 'Team 1',
+				player2: 'Team 2',
+				player3: 'Team 3'
+			}
 		}
 	}
+}
+
+const canvasSize = {
+	"vs1": {
+		w: 800,
+		h: 400,
+	},
+	"vs2": {
+		w: 1000,
+		h: 600,
+	},
+	"vs3": {
+		w: 1200,
+		h: 800,
+	},
 }

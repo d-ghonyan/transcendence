@@ -21,6 +21,7 @@ document.addEventListener('click', async (e) => {
 	}
 	else if (e.target.id.includes("vs"))
 	{
+		updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
 		startGame(e.target.id);
 	}
 	else

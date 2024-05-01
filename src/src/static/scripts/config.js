@@ -6,3 +6,5 @@ const	flag_url = "https://flagicons.lipis.dev/flags/4x3/{lang}.svg";
 
 const	get_flag_url = (lang) => flag_url.replace("{lang}", lang);
 const	pushState = (state, url) => window.history.pushState(state, "", url);
+
+let gameAnimationId = null;

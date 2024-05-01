@@ -1,18 +1,19 @@
 const startGame = (gameMode) => {
-	updateState({ page: page_data['game'], url: "/game" });
-
 	const canvas = document.getElementById('gameCanvas');
+
 	const ctx = canvas.getContext('2d');
 	const paddleWidth = 10;
 	const paddleHeight = 80;
 	const ballSize = 10;
-	const winningScore = 15;
+	const winningScore = 5;
 
 	let player1Score = 0;
 	let player2Score = 0;
 	
 	const paddleSpeed = 15;
 
+	canvas.width = canvasSize[gameMode].w;
+	canvas.height = canvasSize[gameMode].h;
 	const mode = gameOptions({ canvas, paddleWidth, paddleHeight })[gameMode];
 
 	const paddles = [];
@@ -27,9 +28,26 @@ const startGame = (gameMode) => {
 		paddles.push(paddle);
 	}
 
+	console.log(paddles);
+
+	const controller = {};
+
+	for (const control in mode.controls) {
+
+		const index = parseInt(control[control.length - 1]) - 1;
+
+		controller[mode.controls[control].up] = { index, func: 'moveUp', pressed: false };
+		controller[mode.controls[control].down] = { index, func: 'moveDown', pressed: false };
+	}
+
+	console.log(controller);
+
 	let ball = new Ball(canvas.width / 2, canvas.height / 2, ballSize, 5, 5);
 
 	function draw() {
+
+		runPressedButtons(paddles);
+		
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
 		paddles.forEach(paddle => {
@@ -68,9 +86,9 @@ const startGame = (gameMode) => {
 			resetScore();
 		}
 
-		requestAnimationFrame(draw);
+		gameAnimationId = requestAnimationFrame(draw);
 	}
-	
+
 	function drawScore() {
 		ctx.fillStyle = 'white';
 		ctx.font = '20px Arial';
@@ -83,22 +101,27 @@ const startGame = (gameMode) => {
 		player2Score = 0;
 	}
 
-	function modeControls(e) {
-		const controls = mode.controls;
+	const handleKeyDown = (e) => {
+		controller[e.key] && (controller[e.key].pressed = true)
+	}
+	
+	const handleKeyUp = (e) => {
+		controller[e.key] && (controller[e.key].pressed = false)
+	}
+	
+	const runPressedButtons = (paddles) => {
+		Object.keys(controller).forEach(key => {
 
-		for (const control in controls) {
+			const cont = controller[key];
+			const index = cont.index;
+			const func = cont.func;
 
-			const index = parseInt(control[control.length - 1]) - 1;
-
-			if (e.key === controls[control].up) {
-				paddles[index].moveUp();
-			} else if (e.key === controls[control].down) {
-				paddles[index].moveDown(canvas.height);
-			}
-		}
+			controller[key].pressed && paddles[index][func](canvas.height);
+		});
 	}
 
-	document.addEventListener('keydown', modeControls);
+	document.addEventListener("keydown", handleKeyDown)
+	document.addEventListener("keyup", handleKeyUp)
 
 	draw();
 }

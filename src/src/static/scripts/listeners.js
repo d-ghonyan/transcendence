@@ -1,6 +1,21 @@
 window.addEventListener('popstate', async (e) => {
 	e.preventDefault();
 
+	if (e.state.url === "/game")
+	{
+		changePageContent(page_data['game'].html);
+
+		startGame(e.state.mode);
+
+		return ;
+	}
+	else if (gameAnimationId)
+	{
+		cancelAnimationFrame(gameAnimationId);
+		document.removeEventListener('keydown', modeControls);
+		gameAnimationId = null;
+	}
+
 	if (!getUser().token)
 	{
 		window.location.href = '/login';
