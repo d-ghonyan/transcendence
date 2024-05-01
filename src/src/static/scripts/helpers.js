@@ -35,3 +35,20 @@ const createLanguageOptions = (optionContainer, selectBtn, customSelect) => {
 		optionContainer.appendChild(option);
 	}
 }
+
+const storeUser = (data) => {
+	localStorage.setItem("token", data.token);
+	localStorage.setItem("username", data.username);
+}
+
+const getUser = () => {
+	return {
+		token: localStorage.getItem("token"),
+		username: localStorage.getItem("username"),
+	}
+}
+
+const clearUser = () => {
+	localStorage.removeItem("token");
+	localStorage.removeItem("username");
+}

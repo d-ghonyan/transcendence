@@ -59,6 +59,8 @@ ALLOWED_HOSTS = [
 INSTALLED_APPS = [
 	'src',
 	'api',
+	'corsheaders',
+
 	# 'oauth2_provider',
 
 	'django.contrib.admin',
@@ -74,6 +76,7 @@ MIDDLEWARE = [
 	"whitenoise.middleware.WhiteNoiseMiddleware", # Here
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	"django.middleware.locale.LocaleMiddleware",
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	# 'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
@@ -98,6 +101,8 @@ TEMPLATES = [
 		},
 	},
 ]
+
+CORS_ALLOW_ALL_ORIGINS = True
 
 WSGI_APPLICATION = 'src.wsgi.application'
 

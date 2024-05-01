@@ -85,8 +85,7 @@ const login_button = async () => {
 
 	if (data.status === 200)
 	{
-		localStorage.setItem("token", data.token);
-		localStorage.setItem("refreshtoken", data.refreshtoken);
+		storeUser(data);
 		updateState({ page: page_data['homepage'], url: "/home" });
 	}
 	else

@@ -1,8 +1,15 @@
 body {
-	  background-color: #f4f4f4;
+	background-color: #f4f4f4;
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
+}
+
+canvas {
+	border: 1px solid black;
+	display: block;
+	margin: 0 auto;
+	background-color: tomato;
 }
 
 /* .container {

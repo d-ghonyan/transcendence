@@ -5,6 +5,7 @@ const events = {
 	register_button,
 	logout_button,
 	overlay,
+	startGame,
 }
 
 document.addEventListener('click', async (e) => {
@@ -17,6 +18,10 @@ document.addEventListener('click', async (e) => {
 	else if (e.target.id.includes("close_button"))
 	{
 		closePopup(e);
+	}
+	else if (e.target.id.includes("vs"))
+	{
+		startGame(e.target.id);
 	}
 	else
 	{

@@ -8,3 +8,4 @@ pyjwt[crypto]
 bcrypt
 python-dateutil
 whitenoise
+django-cors-headers
