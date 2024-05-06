@@ -16,7 +16,14 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
+# Define the path to the 'static' directory
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
+# Define the URL for static files
+STATIC_URL = '/static/'
 load_dotenv()
 
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -50,9 +57,7 @@ SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False # 
 
-ALLOWED_HOSTS = [
-	"*"
-]
+ALLOWED_HOSTS = ['localhost', '192.168.99.100', '172.17.0.1']  
 
 # Application definition
 
@@ -113,11 +118,11 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': POSTGRES_DB,
-		'PORT': POSTGRES_PORT,
-		'USER': POSTGRES_USER,
-		'PASSWORD': POSTGRES_PASSWORD,
-		'HOST': 'localhost',
+		'NAME': "db_transcendence",
+		'PORT': 5432,
+		'USER': "user_transcendence",
+		'PASSWORD': "pass_transcendence",
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",

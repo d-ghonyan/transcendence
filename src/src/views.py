@@ -73,3 +73,4 @@ def auth_qr(request):
 	# 	print(totp_qr.verify(input(("Enter the Code : "))))
 
 	return JsonResponse({ "qr": "qr_auth.png" })
+            

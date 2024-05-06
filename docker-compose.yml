@@ -1,0 +1,54 @@
+version: '3'
+
+services:
+  db:
+    image: postgres:12-bullseye
+    environment:
+      POSTGRES_DB: db_transcendence
+      POSTGRES_USER: user_transcendence
+      POSTGRES_PASSWORD: pass_transcendence
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    networks:
+      - transcendence_app
+    restart: always
+
+  web:
+    build: .
+    # command: gunicorn src.wsgi:application --bind 0.0.0.0:8000
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    ulimits:
+      nproc: 65535 
+    environment:
+      - POSTGRES_DB=db_transcendence
+      - POSTGRES_USER=user_transcendence
+      - POSTGRES_PASSWORD=pass_transcendence
+      - POSTGRES_HOST=db
+      - POSTGRES_PORT=5432
+      - DJANGO_SETTINGS_MODULE=src.settings
+      - PYTHONPATH=/app/src
+    depends_on:
+      - db
+    networks:
+      - transcendence_app
+  
+  nginx: 
+    build: ./nginx
+    ports:
+      - "80:80"
+    depends_on:
+      - web
+    volumes:
+      - ./src/static:/static 
+    networks:
+      - transcendence_app
+
+networks:
+  transcendence_app:
+    driver: bridge
+
+volumes:
+  postgres_data:
