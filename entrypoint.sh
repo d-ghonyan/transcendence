@@ -1,6 +1,7 @@
 #!/bin/sh
 
-python src/manage.py migrate --no-input
-python src/manage.py collectstatic --no-input
+python ./src/manage.py makemigrations src
+python ./src/manage.py makemigrations api
+python ./src/manage.py migrate
 
-gunicorn src.wsgi:application --bind 0.0.0.0:8000
+python ./src/manage.py runserver --insecure "0.0.0.0:8000"
