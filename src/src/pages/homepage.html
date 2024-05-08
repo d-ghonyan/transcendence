@@ -43,7 +43,6 @@
 		position: absolute;
 		border: 1px solid black;
 		width: 300px;
-		height: 300px;
 		padding: 20px;
 	}
 </style>
@@ -90,15 +89,15 @@
 	</div>
 
 
-	<div class="popup" id="settings_popup">
+	<div class="popup h-300" id="settings_popup">
 		<div class="popup_content">
 			<div class="popup_header">
 				<div class="close_button d-flex justify-content-between">
 					<h1 class="popup_header_text">Settings</h1>
-					<button class="close btn btn-danger" id="settings_close_button">X</button>
+					<button class="close btn btn-danger mb-3" id="settings_close_button">X</button>
 				</div>
 			</div>
-			<div class="popup_body">
+			<div class="popup_body d-flex flex-column gap-3  mb-3">
 				<input type="text" class="username_input form-control" placeholder="Username">
 				<input type="password" class="password_input form-control" placeholder="Password">
 				<input type="password" class="repeat_password_input form-control" placeholder="Repeat password">
@@ -112,16 +111,16 @@
 	</div>
 
 	<div class="popup" id="friends_popup">
-		<div class="popup_content">
+		<div class="popup_content  d-flex  flex-column gap-3">
 			<div class="popup_header">
 				<div class="close_button d-flex justify-content-between">
 					<h1 class="popup_header_text">Friends</h1>
 					<button class="close btn btn-danger" id="friends_close_button">X</button>
 				</div>
 			</div>
-			<div class="popup_body d-flex flex-column">
-				<div class="friend_list">
-					<div class="friend d-flex justify-content-between">
+			<div class="popup_body d-flex flex-column gap-3">
+				<div class="friend_list d-flex flex-column gap-3 mb-9">
+					<div class="friend d-flex justify-content-between ">
 						<p class="friend_name">Friend 1</p>
 						<button class="btn btn-danger">Remove</button>
 					</div>
@@ -134,35 +133,35 @@
 						<button class="btn btn-danger">Remove</button>
 					</div>
 				</div>
-			<div class="add_friend d-flex justify-content-between">
-				<input type="text" class="add_friend_input form-control" placeholder="Add friend">
-				<button class="btn btn-success">Add</button>
+				<div class="add_friend d-flex justify-content-between gap-2">
+					<input type="text" class="add_friend_input form-control" placeholder="Add friend">
+					<button class="btn btn-success">Add</button>
+				</div>
 			</div>
-	</div>
 
-<div class="popup" id="history_popup">
-	<div class="popup_content">
-		<div class="popup_header">
-			<div class="close_button d-flex justify-content-between">
-				<h1 class="popup_header_text">History</h1>
-				<button class="close btn btn-danger" id="history_close_button">X</button>
+			<div class="popup" id="history_popup">
+				<div class="popup_content">
+					<div class="popup_header">
+						<div class="close_button d-flex justify-content-between">
+							<h1 class="popup_header_text">History</h1>
+							<button class="close btn btn-danger" id="history_close_button">X</button>
+						</div>
+					</div>
+					<div class="popup_body d-flex flex-column">
+						<div class="history_list">
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 1</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 2</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 3</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+						</div>
+					</div>
+				</div>
 			</div>
-		</div>
-		<div class="popup_body d-flex flex-column">
-			<div class="history_list">
-				<div class="history d-flex justify-content-between">
-					<p class="history_text">History 1</p>
-					<button class="btn btn-danger">Remove</button>
-				</div>
-				<div class="history d-flex justify-content-between">
-					<p class="history_text">History 2</p>
-					<button class="btn btn-danger">Remove</button>
-				</div>
-				<div class="history d-flex justify-content-between">
-					<p class="history_text">History 3</p>
-					<button class="btn btn-danger">Remove</button>
-				</div>
-			</div>
-		</div>
-	</div>
-</div>
