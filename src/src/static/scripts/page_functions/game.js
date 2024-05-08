@@ -5,7 +5,7 @@ const startGame = (gameMode) => {
 	const paddleWidth = 10;
 	const paddleHeight = 80;
 	const ballSize = 10;
-	const winningScore = 5;
+	const winningScore = Infinity;
 
 	let player1Score = 0;
 	let player2Score = 0;
@@ -28,8 +28,6 @@ const startGame = (gameMode) => {
 		paddles.push(paddle);
 	}
 
-	console.log(paddles);
-
 	const controller = {};
 
 	for (const control in mode.controls) {
@@ -40,12 +38,13 @@ const startGame = (gameMode) => {
 		controller[mode.controls[control].down] = { index, func: 'moveDown', pressed: false };
 	}
 
-	console.log(controller);
-
 	let ball = new Ball(canvas.width / 2, canvas.height / 2, ballSize, 5, 5);
 
+	let paddleCollided;
+	
 	function draw() {
-
+		
+		paddleCollided = false;
 		runPressedButtons(paddles);
 		
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -66,17 +65,19 @@ const startGame = (gameMode) => {
 				ball.speedX = -ball.speedX;
 				let deltaY = ball.y - (paddle.y + paddle.height / 2);
 				ball.speedY = deltaY * 0.35;
+
+				paddleCollided = true;
 			}
 		});
 
-		if (ball.collidesWithWalls(canvas.width, canvas.height)) {
+		if (!paddleCollided && ball.collidesWithWalls(canvas.width, canvas.height)) {
 			ball.speedY = -ball.speedY;
 		}
 
-		if (ball.x - ball.radius < 0) {
+		if (ball.x < 0) {
 			player2Score++;
 			ball.reset(canvas);
-		} else if (ball.x + ball.radius > canvas.width) {
+		} else if (ball.x > canvas.width) {
 			player1Score++;
 			ball.reset(canvas);
 		}

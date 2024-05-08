@@ -70,11 +70,18 @@ class Ball {
 		this.x = canvas.width / 2;
 		this.y = canvas.height / 2;
 		this.speedX = -this.speedX;
-		this.speedY = 5;
+
+		let max = 5;
+		let min = -5;
+		
+		const rand1 = Math.random() * 10 - 5;
+		const rand2 = -rand1;
+
+		this.speedY = Math.random() < 0.5 ? rand1 : rand2;
 	}
 
     collidesWithWalls(canvasWidth, canvasHeight) {
-        return this.y - this.radius < 0 || this.y + this.radius > canvasHeight;
+        return this.y < 0 || this.y > canvasHeight;
     }
 
     collidesWithPaddle(paddle) {
