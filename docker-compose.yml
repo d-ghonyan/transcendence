@@ -9,30 +9,30 @@ services:
     ports:
       - 5432:5432
 
-    networks:
-      - barev
+    # networks:
+    #   - barev
 
     restart: always
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "8000:8000"
 
-    networks:
-      - barev
-    depends_on:
-      - db
-    env_file:
-      - .env
-    restart: always
+  #   networks:
+  #     - barev
+  #   depends_on:
+  #     - db
+  #   env_file:
+  #     - .env
+  #   restart: always
 
 volumes:
   postgres:
 
-networks:
-  barev:
-    driver: bridge
+# networks:
+#   barev:
+#     driver: bridge
