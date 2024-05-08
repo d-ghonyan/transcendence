@@ -16,11 +16,6 @@ import os
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
-STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, "static"),
-]
-# Define the path to the 'static' directory
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 
 # Define the URL for static files
 STATIC_URL = '/static/'
@@ -65,7 +60,7 @@ INSTALLED_APPS = [
 	'src',
 	'api',
 	'corsheaders',
-
+	'django_extensions',
 	# 'oauth2_provider',
 
 	'django.contrib.admin',
@@ -122,7 +117,7 @@ DATABASES = {
 		'PORT': 5432,
 		'USER': "user_transcendence",
 		'PASSWORD': "pass_transcendence",
-		'HOST': 'db',
+		'HOST': 'localhost',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",
@@ -183,3 +178,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
