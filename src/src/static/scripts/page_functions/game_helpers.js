@@ -71,9 +71,6 @@ class Ball {
 		this.y = canvas.height / 2;
 		this.speedX = -this.speedX;
 
-		let max = 5;
-		let min = -5;
-		
 		const rand1 = Math.random() * 10 - 5;
 		const rand2 = -rand1;
 

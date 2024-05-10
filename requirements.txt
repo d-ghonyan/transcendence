@@ -16,3 +16,4 @@ gunicorn
 werkzeug
 django-extensions
 pyOpenSSL
+web3
