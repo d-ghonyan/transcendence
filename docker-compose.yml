@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   db:
     image: postgres:latest
@@ -13,14 +11,32 @@ services:
     #   - barev
 
     restart: always
-  # ganache:
-  #   stop_grace_period: 5s
-  #   image: trufflesuite/ganache-cli:latest
-  #   volumes:
-  #     - ganache:/data
-  #   ports:
-  #     - 8545:8545
-  #   restart: always
+
+  hardhat:
+    stop_grace_period: 5s
+    env_file: .docker-env
+    build:
+      context: .
+      dockerfile: Dockerfile.hardhat
+    volumes:
+      - ./hardhat:/app
+    # networks:
+    #   - barev
+    depends_on:
+      - ganache
+  ganache:
+    build:
+      context: .
+      dockerfile: Dockerfile.ganache
+    stop_grace_period: 5s
+    env_file: .docker-env
+    volumes:
+      - ganache:/data
+    ports:
+      - 8545:8545
+    # networks:
+    #   - barev
+    restart: always
 
   # backend:
   #   build:
@@ -43,6 +59,6 @@ volumes:
   postgres:
   ganache:
 
-# networks:
-#   barev:
-#     driver: bridge
+networks:
+  barev:
+    driver: bridge

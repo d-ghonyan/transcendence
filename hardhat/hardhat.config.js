@@ -8,6 +8,9 @@ require("@nomicfoundation/hardhat-toolbox");
 require("hardhat-deploy");
 // import type { HardhatUserConfig } from "hardhat/config";
 const { vars } = require("hardhat/config");
+
+require('dotenv').config();
+
 // import type { NetworkUserConfig } from "hardhat/types";
 
 // import "./tasks/accounts";
@@ -15,8 +18,11 @@ const { vars } = require("hardhat/config");
 
 // Run 'npx hardhat vars setup' to see the list of variables that need to be set
 
-const mnemonic = vars.get("MNEMONIC");
-const infuraApiKey = vars.get("INFURA_API_KEY");
+// const mnemonic = vars.get("MNEMONIC");
+// const infuraApiKey = vars.get("INFURA_API_KEY");
+
+const mnemonic = process.env.MNEMONIC;
+const infuraApiKey = process.env.INFURA_API_KEY;
 
 const chainIds = {
   "arbitrum-mainnet": 42161,
@@ -91,7 +97,7 @@ const config = {
         mnemonic,
       },
       chainId: chainIds.ganache,
-      url: "http://localhost:7545",
+      url: "http://ganache:8545",
     },
     arbitrum: getChainConfig("arbitrum-mainnet"),
     avalanche: getChainConfig("avalanche"),

@@ -3,9 +3,11 @@ FROM node:alpine
 # Set the /app directory as working directory
 WORKDIR /app
 # Install ganache-cli globally
-RUN npm install -g ganache-cli && mkdir /data
+RUN npm install ganache-cli --save-dev && mkdir /data
+ENV PATH="/app/node_modules/.bin:${PATH}"
+COPY ./entrypoint-ganache.sh /app
 
 EXPOSE 8545
 
 # Set the default command for the image
-CMD ["ganache-cli", "-h", "0.0.0.0", "--mnemonic", "myth like bonus scare over problem client lizard pioneer submit ranch slush gospel", "--database.dbPath", "/data"]
+ENTRYPOINT ["./entrypoint-ganache.sh"]
