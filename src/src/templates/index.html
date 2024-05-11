@@ -45,12 +45,12 @@
 			});
 			
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
-		
+
 			if (getUser().token)
 				updateState({ page: page_data["homepage"], url: "/homepage" });
 			else
 				updateState({ page: page_data["login"], url: "/login" });
-			
+
 			updateLanguage();
 			// updateState({ page: page_data["homepage"], url: "/login" });
 		});

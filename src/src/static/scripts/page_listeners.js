@@ -6,6 +6,7 @@ const events = {
 	logout_button,
 	overlay,
 	startGame,
+	intra_button
 }
 
 document.addEventListener('click', async (e) => {

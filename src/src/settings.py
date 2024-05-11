@@ -52,7 +52,7 @@ SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False # 
 
-ALLOWED_HOSTS = ['localhost', '192.168.99.100', '172.17.0.1']  
+ALLOWED_HOSTS = ['*']  
 
 # Application definition
 
@@ -60,7 +60,7 @@ INSTALLED_APPS = [
 	'src',
 	'api',
 	'corsheaders',
-	'django_extensions',
+	# 'django_extensions',
 	# 'oauth2_provider',
 
 	'django.contrib.admin',
@@ -179,6 +179,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-SECURE_SSL_REDIRECT = True
-SESSION_COOKIE_SECURE = True
-CSRF_COOKIE_SECURE = True
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

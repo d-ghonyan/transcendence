@@ -1,7 +1,7 @@
-FROM node:18
+FROM node:16
 
 WORKDIR /app
 COPY ./hardhat /app
-RUN npm install
+RUN npm i
 
 ENTRYPOINT ["./entrypoint-hardhat.sh"]

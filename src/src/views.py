@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.views.decorators.http import require_GET
 from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
-								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR
+								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR, INTRA_GRANT_TYPE
 
 import os
 import requests
@@ -16,59 +16,64 @@ import qrcode
 import json
 
 # load the contract from build/contracts/MyContract.json
-with open('build/contracts/MyContract.json') as file:
-	contract_json = json.load(file)
-	abi = contract_json['abi']
-	bytecode = contract_json['bytecode']
+# with open('build/contracts/MyContract.json') as file:
+# 	contract_json = json.load(file)
+# 	abi = contract_json['abi']
+# 	bytecode = contract_json['bytecode']
 
 
-# pages = {}
+# # pages = {}
 
-# for i in os.listdir(BASE_DIR / 'src/pages'):
+# # for i in os.listdir(BASE_DIR / 'src/pages'):
 
-# 	filename = i.replace(".html", "")
+# # 	filename = i.replace(".html", "")
 
-# 	if os.path.isfile(BASE_DIR / 'src/pages' / i):
-# 		with open(BASE_DIR / 'src/pages' / i, 'r') as f:
-# 			pages[filename] = f.read()
+# # 	if os.path.isfile(BASE_DIR / 'src/pages' / i):
+# # 		with open(BASE_DIR / 'src/pages' / i, 'r') as f:
+# # 			pages[filename] = f.read()
 
-		# with open(BASE_DIR / 'src/pages/page_scripts' / (filename + '.js'), 'r') as js:
-		# 	pages[filename] += f"<script type='text/javascript'>{js.read()}</script>"
+# 		# with open(BASE_DIR / 'src/pages/page_scripts' / (filename + '.js'), 'r') as js:
+# 		# 	pages[filename] += f"<script type='text/javascript'>{js.read()}</script>"
 
-from web3 import Web3
+# from web3 import Web3
 
-sender_key = "0xb055b48db21434cda04a19f8a6e9b4acb1b3ac9ae6281f31ba7fc5273552a52e";
+# sender_key = "0xb055b48db21434cda04a19f8a6e9b4acb1b3ac9ae6281f31ba7fc5273552a52e";
 
-ganache_url = "HTTP://127.0.0.1:7545"
-web3 = Web3(Web3.HTTPProvider(ganache_url))
+# ganache_url = "HTTP://127.0.0.1:7545"
+# web3 = Web3(Web3.HTTPProvider(ganache_url))
 
-acct1 = web3.eth.account.from_key(sender_key)
+# acct1 = web3.eth.account.from_key(sender_key)
 
-some_address = "0xccf7E1892a17364ba1afC47235A51aFD14Cf80A5" 
+# some_address = "0xccf7E1892a17364ba1afC47235A51aFD14Cf80A5" 
 
-transaction = {
-      'from': acct1.address,
-      'to': some_address, 
-      'value': 1000000000,
-      'nonce': web3.eth.get_transaction_count(acct1.address), 
-      'gas': 250000,
-      'gasPrice': web3.to_wei(8,'gwei'),
-}
+# transaction = {
+#       'from': acct1.address,
+#       'to': some_address, 
+#       'value': 1000000000,
+#       'nonce': web3.eth.get_transaction_count(acct1.address), 
+#       'gas': 250000,
+#       'gasPrice': web3.to_wei(8,'gwei'),
+# }
 
-signed = web3.eth.account.sign_transaction(transaction, sender_key)
+# signed = web3.eth.account.sign_transaction(transaction, sender_key)
 
-tx_hash = web3.eth.send_raw_transaction(signed.rawTransaction)
-tx = web3.eth.get_transaction(tx_hash)
-assert tx['from'] == acct1.address
+# tx_hash = web3.eth.send_raw_transaction(signed.rawTransaction)
+# tx = web3.eth.get_transaction(tx_hash)
+# assert tx['from'] == acct1.address
 
-# initialize the contract using the abi and bytecode
-contract = web3.eth.contract(abi=abi, bytecode=bytecode)
+# # initialize the contract using the abi and bytecode
+# contract = web3.eth.contract(abi=abi, bytecode=bytecode)
 
-print(contract, contract.all_functions()[1].call())
+# print(contract, contract.all_functions()[1].call())
 
 @require_GET
 def login(request):
+	intra_req = check_intra(request)
 
+	# if (intra_req['error']):
+	# # 	return JsonResponse({ 'error': 'problem with intra', 'desc': intra_req['error'] })
+
+	print(intra_req)
 	texts_file = open(BASE_DIR / 'src/lang.json', 'r')
 	texts_json = json.dumps(json.load(texts_file))
 
@@ -89,11 +94,11 @@ def login(request):
 		"pages": pages
 	}
 
-	# remove in prod
-	# for i in os.listdir(BASE_DIR / 'src/pages/page_scripts'):
-	# 	context["pages"][i.replace(".js", "")] = f"<script type='text/javascript'>{open(BASE_DIR / 'src/pages/page_scripts' / i, 'r').read()}</script>"
-
 	return render(request, 'index.html', context=context)
+
+@require_GET
+def home(request):
+	return render(request, 'home.html')
 
 @require_GET
 def auth_qr(request):
@@ -111,4 +116,53 @@ def auth_qr(request):
 	# 	print(totp_qr.verify(input(("Enter the Code : "))))
 
 	return JsonResponse({ "qr": "qr_auth.png" })
-            
+
+def check_intra(request):
+	grant_type = 'authorization_code'
+
+	req_code = request.GET.get('code', '')
+	req_state = request.GET.get('state', '')
+	req_error = request.GET.get('error', '')
+
+	if req_error == '' and req_code == '':
+		return { 'pass': '' }
+
+	# if (state != req_state):
+	# 	return { 'error': 'hacker attack', 'desc': 'self explanatory' }
+
+	if (req_error):
+		return { 'error': req_error, 'desc': request.GET.get('error_description', 'none') }
+
+	try:
+		r = requests.request('POST', INTRA_TOKEN_URL, params={
+			"grant_type": INTRA_GRANT_TYPE,
+			"client_id": INTRA_UID,
+			"client_secret": INTRA_SECRET,
+			"code": req_code,
+			"redirect_uri": REDIRECT,
+			"state": req_state,
+		})
+	except Exception as e:
+		print("exception: ", e)
+		return { 'error': 'exception', 'desc': e }
+
+	r = r.json()
+
+	print(r)
+
+	access_token = r['access_token']
+	refresh_token = r['refresh_token']
+	expires_in = r['expires_in']
+	created_at = r['created_at']
+
+	r = requests.request('GET', INTRA_API_URL + "me/", headers={
+		'Authorization': 'Bearer ' + access_token,
+	})
+
+	return {
+		"state": req_state,
+		"code": req_code,
+		"refresh_token": refresh_token,
+		"expires_in": expires_in,
+		"created_at": created_at
+	}

@@ -17,19 +17,25 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path, reverse
+from django.urls import include, path, reverse, re_path
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.views.generic.base import RedirectView
 
 from src import views
 
 from django.http.response import HttpResponseRedirect
 
-def redirect_to_root(request, exception):
-	return HttpResponseRedirect(reverse('login'))
+favicon_view = RedirectView.as_view(url='/static/barev.png', permanent=True)
+
+# def redirect_to_root(request, exception):
+# 	return HttpResponseRedirect(reverse('login'))
 
 urlpatterns = [
-	path('', views.login, name='login'),
+	re_path(r'^favicon\.ico$', favicon_view),
+	path('login/', views.login, name='login'),
+	# path('', views.login, name='login'),
+	# path('home/', views.home, name='home'),
 	path('api/', include('api.urls')),
 
 	# path('login/', views.login_page),
@@ -46,6 +52,6 @@ urlpatterns = [
 	# path('get_students/', views.get_students),
 ]
 
-handler404 = redirect_to_root
+# handler404 = redirect_to_root
 
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

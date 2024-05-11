@@ -119,3 +119,24 @@ const register_button = async () => {
 	else
 		showErrorMessage(data.message);
 }
+
+const intra_button = async () => {
+
+
+	const INTRA_AUTH_URL = "https://api.intra.42.fr/oauth/authorize";
+	const INTRA_UID = "u-s4t2ud-430a2135c4a1b996b9da9573916078397a9a4caffa71bd6fc3fdf73a1172ddad";
+	const REDIRECT = "http://localhost:8000/login";
+	const response_type = "code";
+	const state = "intra";
+
+	const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
+
+	window.location.href = intra_full_url
+
+	// const res = fetch(`${api_url}/intra_redirect/`, {
+	// 	method: "GET",
+	// 	headers: {
+	// 		"Content-Type": "application/json"
+	// 	},
+	// });
+}
