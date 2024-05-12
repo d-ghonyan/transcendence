@@ -7,6 +7,8 @@ from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
 								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR, INTRA_GRANT_TYPE
 
+from datetime import datetime
+
 import os
 import requests
 
@@ -70,10 +72,9 @@ import json
 def login(request):
 	intra_req = check_intra(request)
 
-	# if (intra_req['error']):
-	# # 	return JsonResponse({ 'error': 'problem with intra', 'desc': intra_req['error'] })
+	if (intra_req.get('error', '')):
+		return JsonResponse({ 'error': 'problem with intra', 'desc': intra_req['error'] })
 
-	print(intra_req)
 	texts_file = open(BASE_DIR / 'src/lang.json', 'r')
 	texts_json = json.dumps(json.load(texts_file))
 
@@ -94,11 +95,13 @@ def login(request):
 		"pages": pages
 	}
 
-	return render(request, 'index.html', context=context)
+	if (intra_req.get('pass', '') == ''):
+		context['token'] = intra_req['access_token']
 
-@require_GET
-def home(request):
-	return render(request, 'home.html')
+		context['expires_at'] = intra_req['expires_in'] + intra_req['created_at']
+		context['created_at'] = intra_req['created_at']
+
+	return render(request, 'index.html', context=context)
 
 @require_GET
 def auth_qr(request):
@@ -118,14 +121,12 @@ def auth_qr(request):
 	return JsonResponse({ "qr": "qr_auth.png" })
 
 def check_intra(request):
-	grant_type = 'authorization_code'
-
 	req_code = request.GET.get('code', '')
 	req_state = request.GET.get('state', '')
 	req_error = request.GET.get('error', '')
 
 	if req_error == '' and req_code == '':
-		return { 'pass': '' }
+		return { 'pass': 'pass' }
 
 	# if (state != req_state):
 	# 	return { 'error': 'hacker attack', 'desc': 'self explanatory' }
@@ -148,21 +149,18 @@ def check_intra(request):
 
 	r = r.json()
 
-	print(r)
-
 	access_token = r['access_token']
-	refresh_token = r['refresh_token']
 	expires_in = r['expires_in']
 	created_at = r['created_at']
 
-	r = requests.request('GET', INTRA_API_URL + "me/", headers={
-		'Authorization': 'Bearer ' + access_token,
-	})
+	# r = requests.request('GET', INTRA_API_URL + "me/", headers={
+	# 	'Authorization': 'Bearer ' + access_token,
+	# })
 
 	return {
+		"access_token": access_token,
 		"state": req_state,
 		"code": req_code,
-		"refresh_token": refresh_token,
 		"expires_in": expires_in,
 		"created_at": created_at
 	}

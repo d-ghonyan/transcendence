@@ -1,63 +1,63 @@
 class Paddle {
-    constructor(x, y, width, height, speed, isPlayerControlled) {
-        this.x = x;
-        this.y = y;
-        this._width = width;
-        this.height = height;
-        this._speed = speed;
-    }
+	constructor(x, y, width, height, speed, isPlayerControlled) {
+		this.x = x;
+		this.y = y;
+		this._width = width;
+		this.height = height;
+		this._speed = speed;
+	}
 
 	draw(ctx) {
 		ctx.fillStyle = 'white';
 		ctx.fillRect(this.x, this.y, this.width, this.height, 'white');
 	}
 
-    get width() {
-        return this._width;
-    }
+	get width() {
+		return this._width;
+	}
 
-    set width(newWidth) {
-        this._width = newWidth;
-    }
+	set width(newWidth) {
+		this._width = newWidth;
+	}
 
-    get speed() {
-        return this._speed;
-    }
+	get speed() {
+		return this._speed;
+	}
 
-    set speed(newSpeed) {
-        this._speed = newSpeed;
-    }
+	set speed(newSpeed) {
+		this._speed = newSpeed;
+	}
 
-    moveUp() {
-        if (this.y > 0) {
-            this.y -= this._speed;
-        }
-    }
+	moveUp() {
+		if (this.y > 0) {
+			this.y -= this._speed;
+		}
+	}
 
-    moveDown(canvasHeight) {
-        if (this.y + this.height < canvasHeight) {
-            this.y += this._speed;
-        }
-    }
+	moveDown(canvasHeight) {
+		if (this.y + this.height < canvasHeight) {
+			this.y += this._speed;
+		}
+	}
 
-    collidesWithBall(ball) {
-        return (
-            this.x < ball.x + ball.radius &&
-            this.x + this.width > ball.x - ball.radius &&
-            this.y < ball.y + ball.radius &&
-            this.y + this.height > ball.y - ball.radius
-        );
-    }
+	collidesWithBall(ball) {
+		return (
+			this.x < ball.x + ball.radius &&
+			this.x + this.width > ball.x - ball.radius &&
+			this.y < ball.y + ball.radius &&
+			this.y + this.height > ball.y - ball.radius
+		);
+	}
 }
 
 class Ball {
-    constructor(x, y, radius, speedX, speedY) {
-        this.x = x;
-        this.y = y;
-        this.radius = radius;
-        this.speedX = speedX;
-        this.speedY = speedY;
-    }
+	constructor(x, y, radius, speedX, speedY) {
+		this.x = x;
+		this.y = y;
+		this.radius = radius;
+		this.speedX = speedX;
+		this.speedY = speedY;
+	}
 
 	draw(ctx) {
 		ctx.fillStyle = 'white';
@@ -65,7 +65,7 @@ class Ball {
 		ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2, false);
 		ctx.fill();
 	}
-	
+
 	reset(canvas) {
 		this.x = canvas.width / 2;
 		this.y = canvas.height / 2;
@@ -77,18 +77,18 @@ class Ball {
 		this.speedY = Math.random() < 0.5 ? rand1 : rand2;
 	}
 
-    collidesWithWalls(canvasWidth, canvasHeight) {
-        return this.y < 0 || this.y > canvasHeight;
-    }
+	collidesWithWalls(canvasWidth, canvasHeight) {
+		return this.y < 0 || this.y > canvasHeight;
+	}
 
-    collidesWithPaddle(paddle) {
-        return (
-            this.x - this.radius < paddle.x + paddle.width &&
-            this.x + this.radius > paddle.x &&
-            this.y < paddle.y + paddle.height &&
-            this.y > paddle.y
-        );
-    }
+	collidesWithPaddle(paddle) {
+		return (
+			this.x - this.radius < paddle.x + paddle.width &&
+			this.x + this.radius > paddle.x &&
+			this.y < paddle.y + paddle.height &&
+			this.y > paddle.y
+		);
+	}
 }
 
 const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {

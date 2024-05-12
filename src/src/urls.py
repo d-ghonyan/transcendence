@@ -33,23 +33,10 @@ favicon_view = RedirectView.as_view(url='/static/barev.png', permanent=True)
 
 urlpatterns = [
 	re_path(r'^favicon\.ico$', favicon_view),
-	path('login/', views.login, name='login'),
-	# path('', views.login, name='login'),
-	# path('home/', views.home, name='home'),
+	path('login/', views.login),
 	path('api/', include('api.urls')),
-
-	# path('login/', views.login_page),
-	# path('users/', views.get_users),
-	# path('login_intra/', views.login_intra),
-	# path('signin/', views.signin),
-	# path('auth_qr/', views.auth_qr),
-
-	# # auth
-	# path('api/register/', auth_views.register),
-	# path('api/login/', auth_views.login),
-	
-	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-	# path('get_students/', views.get_students),
+	path('game/', views.login),
+	path('home/', views.login),
 ]
 
 # handler404 = redirect_to_root

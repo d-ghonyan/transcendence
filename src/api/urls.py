@@ -27,8 +27,6 @@ from django.http.response import HttpResponseRedirect
 
 urlpatterns = [
 	path('users/', views.users),
-	path('intra_redirect/', auth_views.intra_redirect),
-	path('intra_signin/', auth_views.intra_signin),
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
 ]

@@ -22,13 +22,17 @@
 	<script src="{% static 'scripts/helpers.js' %}" type="text/javascript"></script>
 
 	<script src="{% static 'scripts/page_functions/login.js' %}" type="text/javascript"></script>
-	<script src="{% static 'scripts/page_functions/homepage.js' %}" type="text/javascript"></script>
+	<script src="{% static 'scripts/page_functions/home.js' %}" type="text/javascript"></script>
 	<script src="{% static 'scripts/page_functions/game_helpers.js' %}" type="text/javascript"></script>
 	<script src="{% static 'scripts/page_functions/game.js' %}" type="text/javascript"></script>
 
 	<script src="{% static 'scripts/page_listeners.js' %}" type="text/javascript"></script>
 
 	<script type="text/javascript">
+
+		let url = window.location.pathname;
+		if (url[0] === "/") url = url.slice(1, url.length);
+		if (url[url.length - 1] === "/") url = url.slice(0, url.length - 1);
 
 		const page_data = JSON.parse("{{ pages | escapejs }}");
 		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
@@ -46,13 +50,10 @@
 			
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 
-			if (getUser().token)
-				updateState({ page: page_data["homepage"], url: "/homepage" });
-			else
-				updateState({ page: page_data["login"], url: "/login" });
+			if (page_data[url] && getUser().token) updateState({ page: page_data[url], url });
+			else updateState({ page: page_data["login"], url: "/login" });
 
 			updateLanguage();
-			// updateState({ page: page_data["homepage"], url: "/login" });
 		});
 	</script>
 
