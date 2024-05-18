@@ -96,13 +96,13 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 		"vs1": {
 			controls: {
 				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
 					up: 'ArrowUp',
 					down: 'ArrowDown'
 				},
-				player2: {
-					up: 'w',
-					down: 's'
-				}
 			},
 			paddlePositions: {
 				player1: {
