@@ -8,3 +8,12 @@ pyjwt[crypto]
 bcrypt
 python-dateutil
 whitenoise
+django-cors-headers
+requests
+Django
+psycopg2-binary
+gunicorn
+werkzeug
+django-extensions
+pyOpenSSL
+web3

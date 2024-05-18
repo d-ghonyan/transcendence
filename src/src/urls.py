@@ -17,35 +17,28 @@ Including another URLconf
 
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import include, path, reverse
+from django.urls import include, path, reverse, re_path
 from django.conf import settings
 from django.shortcuts import render, redirect
+from django.views.generic.base import RedirectView
 
 from src import views
 
 from django.http.response import HttpResponseRedirect
 
-def redirect_to_root(request, exception):
-	return HttpResponseRedirect(reverse('login_page'))
+favicon_view = RedirectView.as_view(url='/static/barev.png', permanent=True)
+
+# def redirect_to_root(request, exception):
+# 	return HttpResponseRedirect(reverse('login'))
 
 urlpatterns = [
-	path('', views.login_page, name='login_page'),
+	re_path(r'^favicon\.ico$', favicon_view),
+	path('login/', views.login),
 	path('api/', include('api.urls')),
-
-	# path('login/', views.login_page),
-	# path('users/', views.get_users),
-	# path('login_intra/', views.login_intra),
-	# path('signin/', views.signin),
-	# path('auth_qr/', views.auth_qr),
-
-	# # auth
-	# path('api/register/', auth_views.register),
-	# path('api/login/', auth_views.login),
-	
-	# path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
-	# path('get_students/', views.get_students),
+	path('game/', views.login),
+	path('home/', views.login),
 ]
 
-handler404 = redirect_to_root
+# handler404 = redirect_to_root
 
 # + static(settings.STATIC_URL, document_root=settings.STATIC_ROOT)

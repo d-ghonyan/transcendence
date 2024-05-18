@@ -17,6 +17,8 @@ import os
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Define the URL for static files
+STATIC_URL = '/static/'
 load_dotenv()
 
 POSTGRES_DB = os.getenv("POSTGRES_DB")
@@ -50,15 +52,15 @@ SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = False # 
 
-ALLOWED_HOSTS = [
-	"*"
-]
+ALLOWED_HOSTS = ['*']  
 
 # Application definition
 
 INSTALLED_APPS = [
 	'src',
 	'api',
+	'corsheaders',
+	# 'django_extensions',
 	# 'oauth2_provider',
 
 	'django.contrib.admin',
@@ -74,11 +76,13 @@ MIDDLEWARE = [
 	"whitenoise.middleware.WhiteNoiseMiddleware", # Here
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	"django.middleware.locale.LocaleMiddleware",
+	'corsheaders.middleware.CorsMiddleware',
 	'django.middleware.common.CommonMiddleware',
 	# 'django.middleware.csrf.CsrfViewMiddleware',
 	'django.contrib.auth.middleware.AuthenticationMiddleware',
 	'django.contrib.messages.middleware.MessageMiddleware',
 	'django.middleware.clickjacking.XFrameOptionsMiddleware',
+	'src.models.AuthMiddleware',
 ]
 
 ROOT_URLCONF = 'src.urls'
@@ -99,6 +103,8 @@ TEMPLATES = [
 	},
 ]
 
+CORS_ALLOW_ALL_ORIGINS = True
+
 WSGI_APPLICATION = 'src.wsgi.application'
 
 
@@ -108,11 +114,11 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': POSTGRES_DB,
-		'PORT': POSTGRES_PORT,
-		'USER': POSTGRES_USER,
-		'PASSWORD': POSTGRES_PASSWORD,
-		'HOST': 'localhost',
+		'NAME': "db_transcendence",
+		'PORT': 5432,
+		'USER': "user_transcendence",
+		'PASSWORD': "pass_transcendence",
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",
@@ -173,3 +179,7 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+# SECURE_SSL_REDIRECT = True
+# SESSION_COOKIE_SECURE = True
+# CSRF_COOKIE_SECURE = True

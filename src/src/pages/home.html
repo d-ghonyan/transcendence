@@ -1,0 +1,186 @@
+<script>
+	var selectedLanguage = lang; // Default to English
+
+	// Event listener for language select change
+	document.getElementById('language_select_popup').addEventListener('change', function () {
+		console.log("value is ", this.value);
+		selectedLanguage = this.value;
+	});
+
+</script>
+
+<style>
+	.profile_picture {
+		min-width: 100px;
+		min-height: 100px;
+
+		max-width: 100px;
+		max-height: 100px;
+
+		border-radius: 50%;
+		background-color: #6b0e41;
+	}
+
+	.row {
+		width: 100%;
+	}
+
+	.header button {
+		margin: 5px 5px;
+	}
+
+	.header {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+		height: 15%;
+	}
+
+	.tournament_text {
+		font-size: 3vw;
+	}
+
+	.buttons button {
+		border-radius: 20px;
+	}
+
+	.match_making_buttons {
+		gap: 10px;
+	}
+
+	.popup {
+		display: none;
+		background-color: #fff;
+		position: absolute;
+		border: 1px solid black;
+		width: 300px;
+		padding: 20px;
+	}
+</style>
+
+<div class="homepage d-flex flex-column justify-content-between w-100 h-100">
+
+	<div class="header">
+		<div class="d-flex justify-content-between align-items-center">
+			<div class="profile_picture">
+
+			</div>
+			<div class="button_container d-flex flex-column justify-content-around">
+				<div class="button_container_1">
+					<button class="settings_text btn btn-danger" id="settings_button_popup">Settings</button>
+				</div>
+				<div class="button_container_2 d-flex justify-content-between">
+					<button class="friends_text btn btn-danger" id="friends_button_popup">Friends</button>
+					<button class="history_text btn btn-danger" id="history_button_popup">History</button>
+				</div>
+			</div>
+		</div>
+		<div class="d-flex justify-content-end">
+			<div class="second_container d-flex justify-content-center">
+				<button class="logout_text btn btn-dark" id="logout_button">Logout</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="row buttons h-75">
+		<div class="col-3 match_making_buttons d-flex justify-content-center align-items-center flex-column">
+			<div class="vs1 w-100 h-25 d-flex justify-content-center">
+				<button id="vs1" class="vs1_text w-100 btn btn-danger">1 VS 1</button>
+			</div>
+			<div class="vs2 w-100 h-25 d-flex justify-content-center">
+				<button id="vs2" class="vs2_text w-100 btn btn-danger">2 VS 2</button>
+			</div>
+			<div class="vs3 w-100 h-25 d-flex justify-content-center">
+				<button id="vs3" class="vs2_text w-100 btn btn-danger">3 VS 3</button>
+			</div>
+		</div>
+		<div class="col-9 tournament d-flex justify-content-center align-items-center">
+			<button class="tournament_text btn btn-danger w-100 h-50 font-weight-bold">fc_42</button>
+		</div>
+	</div>
+
+
+	<div class="popup h-300" id="settings_popup">
+		<div class="popup_content">
+			<div class="popup_header">
+				<div class="close_button d-flex justify-content-between">
+					<h1 class="popup_header_text">Settings</h1>
+					<button class="close btn btn-danger mb-3" id="settings_close_button">X</button>
+				</div>
+			</div>
+			<div class="popup_body d-flex flex-column gap-3  mb-3">
+				<input type="text" class="username_input form-control" placeholder="Username">
+				<input type="password" class="password_input form-control" placeholder="Password">
+				<input type="password" class="repeat_password_input form-control" placeholder="Repeat password">
+				<input type="file" class="file_input form-control" />
+				<div class="language_select">
+					<label for="language_select">Preferred Language:</label>
+					<select id="language_select_popup" class="form-control">
+						<option value="am">Armenian</option>
+						<option value="fr">Russian</option>
+						<option value="en">English</option>
+					</select>
+				</div>
+			</div>
+
+			<div class="submit_button d-flex justify-content-end">
+				<button class="close btn btn-success" id="submit_button">Submit</button>
+			</div>
+		</div>
+	</div>
+
+	<div class="popup" id="friends_popup">
+		<div class="popup_content  d-flex  flex-column gap-3">
+			<div class="popup_header">
+				<div class="close_button d-flex justify-content-between">
+					<h1 class="popup_header_text">Friends</h1>
+					<button class="close btn btn-danger" id="friends_close_button">X</button>
+				</div>
+			</div>
+			<div class="popup_body d-flex flex-column gap-3">
+				<div class="friend_list d-flex flex-column gap-3 mb-9">
+					<div class="friend d-flex justify-content-between ">
+						<p class="friend_name">Friend 1</p>
+						<button class="btn btn-danger">Remove</button>
+					</div>
+					<div class="friend d-flex justify-content-between">
+						<p class="friend_name">Friend 2</p>
+						<button class="btn btn-danger">Remove</button>
+					</div>
+					<div class="friend d-flex justify-content-between">
+						<p class="friend_name">Friend 3</p>
+						<button class="btn btn-danger">Remove</button>
+					</div>
+				</div>
+				<div class="add_friend d-flex justify-content-between gap-2">
+					<input type="text" class="add_friend_input form-control" placeholder="Add friend">
+					<button class="btn btn-success">Add</button>
+				</div>
+			</div>
+
+			<div class="popup" id="history_popup">
+				<div class="popup_content">
+					<div class="popup_header">
+						<div class="close_button d-flex justify-content-between">
+							<h1 class="popup_header_text">History</h1>
+							<button class="close btn btn-danger" id="history_close_button">X</button>
+						</div>
+					</div>
+					<div class="popup_body d-flex flex-column">
+						<div class="history_list">
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 1</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 2</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+							<div class="history d-flex justify-content-between">
+								<p class="history_text">History 3</p>
+								<button class="btn btn-danger">Remove</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
