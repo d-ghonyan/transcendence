@@ -42,7 +42,7 @@ const showRegister = () => {
 }
 
 const hideErrorMessage = () => {
-	document.getElementById("error").classList.add("hide");
+	document.getElementById("error")?.classList?.add("hide");
 }
 
 const showErrorMessage = (error) => {
@@ -86,7 +86,7 @@ const login_button = async () => {
 	if (data.status === 200)
 	{
 		storeUser(data);
-		updateState({ page: page_data['homea'], url: "/home" });
+		updateState({ page: page_data['home'], url: "/home" });
 	}
 	else
 		showErrorMessage(data.message);

@@ -6,12 +6,12 @@ const events = {
 	logout_button,
 	overlay,
 	startGame,
-	intra_button
+	intra_button,
+	submit_button
 }
 
 document.addEventListener('click', async (e) => {
 	e.preventDefault();
-
 	if (e.target.id.includes('popup'))
 	{
 		openPopup(e);
@@ -24,6 +24,10 @@ document.addEventListener('click', async (e) => {
 	{
 		updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
 		startGame(e.target.id);
+	}
+	else if (e.target.id.includes("submit_button"))
+	{
+		
 	}
 	else
 	{
@@ -39,3 +43,4 @@ document.addEventListener('input', async (e) => {
 	
 	// events[`${e.target.id}_input`]?.(e);
 });
+

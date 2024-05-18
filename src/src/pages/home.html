@@ -1,3 +1,14 @@
+<script>
+	var selectedLanguage = lang; // Default to English
+
+	// Event listener for language select change
+	document.getElementById('language_select_popup').addEventListener('change', function () {
+		console.log("value is ", this.value);
+		selectedLanguage = this.value;
+	});
+
+</script>
+
 <style>
 	.profile_picture {
 		min-width: 100px;
@@ -102,10 +113,18 @@
 				<input type="password" class="password_input form-control" placeholder="Password">
 				<input type="password" class="repeat_password_input form-control" placeholder="Repeat password">
 				<input type="file" class="file_input form-control" />
+				<div class="language_select">
+					<label for="language_select">Preferred Language:</label>
+					<select id="language_select_popup" class="form-control">
+						<option value="am">Armenian</option>
+						<option value="fr">Russian</option>
+						<option value="en">English</option>
+					</select>
+				</div>
 			</div>
 
 			<div class="submit_button d-flex justify-content-end">
-				<button class="close btn btn-success">Submit</button>
+				<button class="close btn btn-success" id="submit_button">Submit</button>
 			</div>
 		</div>
 	</div>

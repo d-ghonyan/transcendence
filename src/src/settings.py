@@ -118,7 +118,7 @@ DATABASES = {
 		'PORT': 5432,
 		'USER': "user_transcendence",
 		'PASSWORD': "pass_transcendence",
-		'HOST': 'localhost',
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",

@@ -32,3 +32,8 @@ const logout_button = async () => {
 
 	updateState({ page: page_data['login'], url: "/login" });
 }
+
+const submit_button = (e) => {
+	console.log("here in submit_button")
+	updateLanguage()
+}
