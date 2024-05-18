@@ -43,7 +43,7 @@ const startGame = (gameMode) => {
 	let paddleCollided;
 	
 	function draw() {
-		
+
 		paddleCollided = false;
 		runPressedButtons(paddles);
 		
