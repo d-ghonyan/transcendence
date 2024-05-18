@@ -7,7 +7,8 @@ const events = {
 	overlay,
 	startGame,
 	intra_button,
-	submit_button
+	submit_button,
+	language_select_popup_change,
 }
 
 document.addEventListener('click', async (e) => {
@@ -25,10 +26,6 @@ document.addEventListener('click', async (e) => {
 		updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
 		startGame(e.target.id);
 	}
-	else if (e.target.id.includes("submit_button"))
-	{
-		
-	}
 	else
 	{
 		events[e.target.id]?.(e);
@@ -41,6 +38,12 @@ document.addEventListener('input', async (e) => {
 	// if (document.getElementById("error").classList.contains("hide") === false)
 	hideErrorMessage();
 	
-	// events[`${e.target.id}_input`]?.(e);
+	events[`${e.target.id}_input`]?.(e);
 });
 
+document.addEventListener('change', async (e) => {
+	e.preventDefault();
+	console.log('pppppppp', e.target.id)
+
+	console.log(events[`${e.target.id}_change`]?.(e));
+});

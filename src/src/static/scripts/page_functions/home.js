@@ -32,8 +32,30 @@ const logout_button = async () => {
 
 	updateState({ page: page_data['login'], url: "/login" });
 }
-
+let 	prefered_lang = lang
 const submit_button = (e) => {
-	console.log("here in submit_button")
+	
+	//update language
+	lang = prefered_lang
 	updateLanguage()
+	const username_value = document.querySelector('.username_input').value
+	const password_value = document.querySelector('.password_input').value
+	const repeat_password_value = document.querySelector('.repeat_password_input').value
+	const file_input = document.querySelector('.file_input').value
+	
+	//send request to save 
+
+	console.log('username_value', username_value)
+	console.log('password_value', password_value)
+	console.log('repeat_password_value', repeat_password_value)
+	console.log('file_input', file_input)
+
+	document.getElementById('settings_popup'.replace("_close_button", "_popup")).style.display = "none";
+	document.getElementById("overlay").style.display = "none";
 }
+
+const language_select_popup_change = (e) => {
+	prefered_lang = e.target.value || lang ;
+}
+
+
