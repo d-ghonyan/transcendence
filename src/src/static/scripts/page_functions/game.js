@@ -9,7 +9,7 @@ const startGame = (gameMode) => {
 
 	let player1Score = 0;
 	let player2Score = 0;
-	
+
 	const paddleSpeed = 15;
 
 	canvas.width = canvasSize[gameMode].w;
@@ -30,8 +30,8 @@ const startGame = (gameMode) => {
 
 	const controller = {};
 
-	for (const control in mode.controls) {
-
+	for (const control in mode.controls)
+	{
 		const index = parseInt(control[control.length - 1]) - 1;
 
 		controller[mode.controls[control].up] = { index, func: 'moveUp', pressed: false };
@@ -41,7 +41,7 @@ const startGame = (gameMode) => {
 	let ball = new Ball(canvas.width / 2, canvas.height / 2, ballSize, 5, 5);
 
 	let paddleCollided;
-	
+
 	function draw() {
 
 		paddleCollided = false;
@@ -109,7 +109,7 @@ const startGame = (gameMode) => {
 	const handleKeyUp = (e) => {
 		controller[e.key] && (controller[e.key].pressed = false)
 	}
-	
+
 	const runPressedButtons = (paddles) => {
 		Object.keys(controller).forEach(key => {
 
@@ -121,8 +121,8 @@ const startGame = (gameMode) => {
 		});
 	}
 
-	document.addEventListener("keydown", handleKeyDown)
-	document.addEventListener("keyup", handleKeyUp)
+	addListener(document, 'keydown', handleKeyDown);
+	addListener(document, 'keyup', handleKeyUp);
 
 	draw();
 }

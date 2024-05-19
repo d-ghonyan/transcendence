@@ -12,7 +12,10 @@ window.addEventListener('popstate', async (e) => {
 	else if (gameAnimationId)
 	{
 		cancelAnimationFrame(gameAnimationId);
-		document.removeEventListener('keydown', modeControls);
+
+		document.removeEventListener('keydown', globalListeners['keydown']);
+		document.removeEventListener('keyup', globalListeners['keyup']);
+
 		gameAnimationId = null;
 	}
 

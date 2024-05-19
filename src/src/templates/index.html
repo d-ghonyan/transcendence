@@ -34,6 +34,8 @@
 		if (url[0] === "/") url = url.slice(1, url.length);
 		if (url[url.length - 1] === "/") url = url.slice(0, url.length - 1);
 
+		if (url == "game") url = "home";
+
 		const page_data = JSON.parse("{{ pages | escapejs }}");
 		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
 
@@ -50,8 +52,18 @@
 			
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 
-			if (page_data[url] && getUser().token) updateState({ page: page_data[url], url });
-			else updateState({ page: page_data["login"], url: "/login" });
+			if (url === "login" && getUser().token)
+			{
+				updateState({ page: page_data["home"], url: "/home" });
+			}
+			else if (page_data[url] && getUser().token)
+			{
+				updateState({ page: page_data[url], url: "/" + url });
+			}
+			else
+			{
+				updateState({ page: page_data["login"], url: "/login" });
+			}
 
 			updateLanguage();
 		});
