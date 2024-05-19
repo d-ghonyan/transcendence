@@ -52,3 +52,9 @@ const clearUser = () => {
 	localStorage.removeItem("token");
 	localStorage.removeItem("username");
 }
+
+function addListener(element, event, func)
+{
+	globalListeners[event] = func;
+	element.addEventListener(event, func);
+}

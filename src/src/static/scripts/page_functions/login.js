@@ -129,7 +129,8 @@ const intra_button = async () => {
 	const response_type = "code";
 	const state = "intra";
 
-	const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
+	// const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
+	const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code";
 
 	window.location.href = intra_full_url
 

@@ -125,6 +125,8 @@ def check_intra(request):
 	req_state = request.GET.get('state', '')
 	req_error = request.GET.get('error', '')
 
+	print(req_code, req_state, req_error)
+
 	if req_error == '' and req_code == '':
 		return { 'pass': 'pass' }
 
@@ -153,9 +155,16 @@ def check_intra(request):
 	expires_in = r['expires_in']
 	created_at = r['created_at']
 
-	# r = requests.request('GET', INTRA_API_URL + "me/", headers={
-	# 	'Authorization': 'Bearer ' + access_token,
-	# })
+	r = requests.request('GET', INTRA_API_URL + "me/", headers={
+		'Authorization': 'Bearer ' + access_token,
+	})
+
+	r = r.json()
+
+	for key, value in r.items():
+		print(key, value)
+	# print(access_token, expires_in, created_at)
+	
 
 	return {
 		"access_token": access_token,

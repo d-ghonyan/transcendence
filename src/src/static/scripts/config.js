@@ -8,3 +8,5 @@ const	get_flag_url = (lang) => flag_url.replace("{lang}", lang);
 const	pushState = (state, url) => window.history.pushState(state, "", url);
 
 let gameAnimationId = null;
+
+const globalListeners = {};
