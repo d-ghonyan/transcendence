@@ -14,6 +14,9 @@ import qrcode
 
 import json
 
+import jwt
+import bcrypt
+
 state = ""
 
 
@@ -30,7 +33,25 @@ def users(request):
 
 	return JsonResponse({'users': users})
 
-
 @require_POST
-def update_users(request):
-	print('equest is ', request)
+def update_user(request):
+    try:
+        user = request.user
+		
+        data = json.loads(request.body)
+        print('Received data:', data)
+
+        if 'username_value' in data:
+            user.username = data['username_value']
+        if 'password_value' in data:
+            user.set_password(data['password_value'])
+
+        if 'file_input' in data:
+            file_input = data['file_input']
+            user.prof_pic = file_input
+
+        user.save()
+
+        return JsonResponse({'message': 'User updated successfully'})
+    except Exception as e:
+        return JsonResponse({'error': str(e)}, status=500)

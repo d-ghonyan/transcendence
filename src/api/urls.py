@@ -29,4 +29,5 @@ urlpatterns = [
 	path('users/', views.users),
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
+	path('user/update/', views.update_user),
 ]

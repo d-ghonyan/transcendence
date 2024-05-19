@@ -33,7 +33,7 @@ const logout_button = async () => {
 	updateState({ page: page_data['login'], url: "/login" });
 }
 let 	prefered_lang = lang
-const submit_button = (e) => {
+const submit_button = async (e) => {
 	
 	//update language
 	lang = prefered_lang
@@ -42,9 +42,19 @@ const submit_button = (e) => {
 	const password_value = document.querySelector('.password_input').value
 	const repeat_password_value = document.querySelector('.repeat_password_input').value
 	const file_input = document.querySelector('.file_input').value
+	console.log("logged in user is ", getUser())
 	
 	//send request to save 
+	const res = await fetch(`${api_url}/user/update/`, {
+		method: "POST",
+		headers: {
+            "Content-Type": "application/json",
+            "Authorization": `Bearer ${getUser().token}`
+        },
+		body: JSON.stringify({ username_value, password_value, repeat_password_value, file_input})
+	});
 
+	// const data = await res.json();
 	console.log('username_value', username_value)
 	console.log('password_value', password_value)
 	console.log('repeat_password_value', repeat_password_value)
