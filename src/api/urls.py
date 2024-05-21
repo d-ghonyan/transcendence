@@ -30,4 +30,5 @@ urlpatterns = [
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
 	path('user/update/', views.update_user),
+	# path('profile_picture/<str:username>/', views.profile_picture, name='profile_picture'),
 ]

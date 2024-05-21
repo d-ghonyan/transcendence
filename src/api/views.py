@@ -19,7 +19,7 @@ import bcrypt
 
 state = ""
 
-
+from src.settings import JWT_SECRET
 
 @require_GET
 def users(request):
@@ -36,22 +36,33 @@ def users(request):
 @require_POST
 def update_user(request):
     try:
-        user = request.user
-		
+        body = json.loads(request.body)
+        user = User.objects.get(username=body['username_value'])
         data = json.loads(request.body)
         print('Received data:', data)
 
         if 'username_value' in data:
             user.username = data['username_value']
         if 'password_value' in data:
-            user.set_password(data['password_value'])
+            new_password = data['password_value']
+            hashed = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt())
+            hashed = hashed.decode('utf-8')
+            user.password = hashed
 
-        if 'file_input' in data:
-            file_input = data['file_input']
-            user.prof_pic = file_input
+        # if 'file_input' in data:s
+        #     file_input = data['file_input']
+        #     user.prof_pic = file_input
 
         user.save()
 
         return JsonResponse({'message': 'User updated successfully'})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
+    
+# def profile_picture(request, username):
+#     user = User.objects.get(username)
+#     if user.prof_pic:
+#         image_data = open(user.prof_pic.path, "rb").read()
+#         return HttpResponse(image_data, content_type="image/jpeg")
+#     else:
+#         return HttpResponse(status=404)                                         

@@ -51,14 +51,13 @@ const submit_button = async (e) => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${getUser().token}`
         },
-		body: JSON.stringify({ username_value, password_value, repeat_password_value, file_input})
+		body: JSON.stringify({ username_value, password_value, repeat_password_value})
 	});
 
 	// const data = await res.json();
 	console.log('username_value', username_value)
 	console.log('password_value', password_value)
 	console.log('repeat_password_value', repeat_password_value)
-	console.log('file_input', file_input)
 
 	document.getElementById('settings_popup'.replace("_close_button", "_popup")).style.display = "none";
 	document.getElementById("overlay").style.display = "none";

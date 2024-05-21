@@ -43,7 +43,5 @@ document.addEventListener('input', async (e) => {
 
 document.addEventListener('change', async (e) => {
 	e.preventDefault();
-	console.log('pppppppp', e.target.id)
-
 	console.log(events[`${e.target.id}_change`]?.(e));
 });
