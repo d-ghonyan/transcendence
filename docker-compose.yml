@@ -15,41 +15,22 @@ services:
     networks:
       - barev
 
-  # db_migration:
-  #  container_name: db_migration
-  #  image: python:3.11-slim
-  #  env_file:
-  #   - .env
-  #  volumes:
-  #   - ./db_migrate:/db_migrate
-  #   - ./migrations:/migrations
-  #   - ./config:/db_migrate/config
-  #  restart: "no"
-  #  command:
-  #   - /bin/sh
-  #   - -c
-  #   - |
-  #     pip install -r ./db_migrate/run_migration_requirements.txt
-  #     python ./db_migrate/up_migration.py
-  #  depends_on:
-  #   - db
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.django
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
 
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.django
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - "8000:8000"
-
-  #   networks:
-  #     - barev
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - .env
-  #   restart: always
+    networks:
+      - barev
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
 
 volumes:
   dbdata:

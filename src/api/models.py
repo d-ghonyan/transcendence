@@ -6,7 +6,7 @@ import os
 # from django.contrib.postgres.fields import ArrayField
 
 class User(AbstractUser):
-	prof_pic = models.ImageField(default=(os.path.join(settings.BASE_DIR, "/media/default.jpg")))
+	prof_pic = models.ImageField(upload_to="./media", default=(os.path.join(settings.BASE_DIR, "/media/default.jpg")))
 	name = models.TextField(default="user", )
 	username = models.TextField(default="user", unique=True)
 	password = models.TextField(default="user", )

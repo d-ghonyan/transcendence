@@ -37,11 +37,12 @@ const submit_button = async (e) => {
 	
 	//update language
 	lang = prefered_lang
-	updateLanguage()
+	// updateLanguage()
+	e.preventDefault()
 	const username_value = document.querySelector('.username_input').value
 	const password_value = document.querySelector('.password_input').value
 	const repeat_password_value = document.querySelector('.repeat_password_input').value
-	const file_input = document.querySelector('.file_input').value
+	const file_input = document.querySelector('.file_input').files[0];
 	console.log("logged in user is ", getUser())
 	
 	//send request to save 
@@ -51,10 +52,16 @@ const submit_button = async (e) => {
             "Content-Type": "application/json",
             "Authorization": `Bearer ${getUser().token}`
         },
-		body: JSON.stringify({ username_value, password_value, repeat_password_value})
+		body: JSON.stringify({
+			username: getUser().username,
+			username_value: username_value || "", 
+			password_value: password_value || "", 
+			repeat_password_value: repeat_password_value || "",
+		})
+	}).catch(error => {
+		console.error('Error:', error);
 	});
 
-	// const data = await res.json();
 	console.log('username_value', username_value)
 	console.log('password_value', password_value)
 	console.log('repeat_password_value', repeat_password_value)

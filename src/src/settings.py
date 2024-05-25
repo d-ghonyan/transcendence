@@ -62,7 +62,7 @@ INSTALLED_APPS = [
 	'corsheaders',
 	# 'django_extensions',
 	# 'oauth2_provider',
-
+	'djangouploads',
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -118,7 +118,7 @@ DATABASES = {
 		'PORT': 5432,
 		'USER': "user_transcendence",
 		'PASSWORD': "pass_transcendence",
-		'HOST': 'localhost',
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",
