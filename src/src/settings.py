@@ -114,11 +114,11 @@ WSGI_APPLICATION = 'src.wsgi.application'
 DATABASES = {
 	'default': {
 		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': "db_transcendence",
-		'PORT': 5432,
-		'USER': "user_transcendence",
-		'PASSWORD': "pass_transcendence",
-		'HOST': 'localhost',
+		'NAME': POSTGRES_DB, #"db_transcendence",
+		'PORT': POSTGRES_PORT, # 5432,
+		'USER': POSTGRES_USER, #"user_transcendence",
+		'PASSWORD': POSTGRES_PASSWORD, #"pass_transcendence",
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",

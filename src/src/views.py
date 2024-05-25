@@ -16,13 +16,13 @@ import pyotp
 import qrcode
 
 import json
+from web3 import Web3
 
 # load the contract from build/contracts/MyContract.json
-# with open('build/contracts/MyContract.json') as file:
-# 	contract_json = json.load(file)
-# 	abi = contract_json['abi']
-# 	bytecode = contract_json['bytecode']
-
+with open('hardhat/build/contracts/MyContract.json') as file:
+	contract_json = json.load(file)
+	abi = contract_json['abi']
+	bytecode = contract_json['bytecode']
 
 # # pages = {}
 
@@ -37,16 +37,23 @@ import json
 # 		# with open(BASE_DIR / 'src/pages/page_scripts' / (filename + '.js'), 'r') as js:
 # 		# 	pages[filename] += f"<script type='text/javascript'>{js.read()}</script>"
 
-# from web3 import Web3
 
-# sender_key = "0xb055b48db21434cda04a19f8a6e9b4acb1b3ac9ae6281f31ba7fc5273552a52e";
+sender_key = "0x46d74f9d30f701eab7820be77de03800581114146be59ac8ca8d575ce994b289"
 
-# ganache_url = "HTTP://127.0.0.1:7545"
-# web3 = Web3(Web3.HTTPProvider(ganache_url))
+ganache_url = "HTTP://ganache:8545"
+contract_address = "0x10db9ab494708610b4832958da34c7c19c2d09ec"
+
+web3 = Web3(Web3.HTTPProvider(ganache_url))
+
+# contract = web3.eth.contract(address=contract_address, abi=abi)
+
+accounts = web3.eth.accounts
+
+print(accounts)
 
 # acct1 = web3.eth.account.from_key(sender_key)
 
-# some_address = "0xccf7E1892a17364ba1afC47235A51aFD14Cf80A5" 
+# some_address = "0x7ba4355D85c0fA083ecED936063F6e98e5cdA847" 
 
 # transaction = {
 #       'from': acct1.address,
@@ -63,7 +70,7 @@ import json
 # tx = web3.eth.get_transaction(tx_hash)
 # assert tx['from'] == acct1.address
 
-# # initialize the contract using the abi and bytecode
+# initialize the contract using the abi and bytecode
 # contract = web3.eth.contract(abi=abi, bytecode=bytecode)
 
 # print(contract, contract.all_functions()[1].call())
