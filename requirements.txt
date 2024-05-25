@@ -17,3 +17,4 @@ werkzeug
 django-extensions
 pyOpenSSL
 web3
+py-solc-x

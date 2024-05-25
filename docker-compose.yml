@@ -10,18 +10,6 @@ services:
       - barev
     restart: always
 
-  hardhat:
-    stop_grace_period: 5s
-    env_file: .docker-env
-    build:
-      context: .
-      dockerfile: Dockerfile.hardhat
-    volumes:
-      - ./hardhat:/app
-    networks:
-      - barev
-    depends_on:
-      - ganache
   ganache:
     build:
       context: .
@@ -36,22 +24,22 @@ services:
       - barev
     restart: always
 
-  backend:
-    build:
-      context: .
-      dockerfile: Dockerfile.django
-    volumes:
-      - .:/app
-    ports:
-      - "8000:8000"
+  # backend:
+  #   build:
+  #     context: .
+  #     dockerfile: Dockerfile.django
+  #   volumes:
+  #     - .:/app
+  #   ports:
+  #     - "8000:8000"
 
-    networks:
-      - barev
-    depends_on:
-      - db
-    env_file:
-      - .env
-    restart: always
+  #   networks:
+  #     - barev
+  #   depends_on:
+  #     - db
+  #   env_file:
+  #     - .env
+  #   restart: always
 
 volumes:
   postgres:

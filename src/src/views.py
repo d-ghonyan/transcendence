@@ -17,13 +17,69 @@ import qrcode
 
 import json
 from web3 import Web3
+import solcx as sx
 
-# load the contract from build/contracts/MyContract.json
-with open('hardhat/build/contracts/MyContract.json') as file:
-	contract_json = json.load(file)
-	abi = contract_json['abi']
-	bytecode = contract_json['bytecode']
+sx.install_solc("0.8.9")
 
+compiled_sol = sx.compile_files(["./contracts/Tournament.sol"], output_values=["abi", "bin"], solc_version="0.8.9",)
+
+ganache_url = "http://localhost:8545"
+chain_id = 1337
+web3 = Web3(Web3.HTTPProvider(ganache_url))
+
+web3.eth.account.enable_unaudited_hdwallet_features()
+
+account = web3.eth.account.from_mnemonic(os.getenv("MNEMONIC"), account_path="m/44'/60'/0'/0/0")
+
+private_key = account.key.hex()
+sender_address = account.address
+receiver_address = web3.eth.accounts[1]
+
+abi = compiled_sol["contracts/Tournament.sol:Tournament"]["abi"]
+bytecode = compiled_sol["contracts/Tournament.sol:Tournament"]["bin"]
+
+Tournament = web3.eth.contract(abi=abi, bytecode=bytecode)
+
+#balance of the account
+balance = web3.eth.get_balance(sender_address)
+print(balance, sender_address)
+
+tx_hash = Tournament.constructor(123).transact({
+	"chainId": chain_id,
+	"gasPrice": web3.eth.gas_price,
+	"from": sender_address,
+	"nonce": web3.eth.get_transaction_count(sender_address),
+})
+
+txn_receipt = web3.eth.get_transaction_receipt(tx_hash)
+
+# print(txn_receipt)
+
+deployed_contract = web3.eth.contract(address=txn_receipt.contractAddress, abi=abi)
+
+# call deployed contract function
+
+call_function = deployed_contract.functions.setName("kov", "anasun").build_transaction({
+	"chainId": chain_id,
+	"gasPrice": web3.eth.gas_price,
+	"from": sender_address,
+	"nonce": web3.eth.get_transaction_count(sender_address),
+})
+
+signed_tx = web3.eth.account.sign_transaction(call_function, private_key=private_key)
+
+tx_hash = web3.eth.send_raw_transaction(signed_tx.rawTransaction)
+
+print("asdasd", deployed_contract.functions.getName("kov").call())
+
+# transaction = Tournament.constructor({
+# 	"chainId": chain_id,
+# 	"gasPrice": web3.eth.gas_price,
+# 	"from": receiver_address,
+# 	"nonce": nonce,
+# })
+
+# print(transaction)
 # # pages = {}
 
 # # for i in os.listdir(BASE_DIR / 'src/pages'):
@@ -37,19 +93,15 @@ with open('hardhat/build/contracts/MyContract.json') as file:
 # 		# with open(BASE_DIR / 'src/pages/page_scripts' / (filename + '.js'), 'r') as js:
 # 		# 	pages[filename] += f"<script type='text/javascript'>{js.read()}</script>"
 
+# sender_key = "0x46d74f9d30f701eab7820be77de03800581114146be59ac8ca8d575ce994b289"
 
-sender_key = "0x46d74f9d30f701eab7820be77de03800581114146be59ac8ca8d575ce994b289"
+# contract_address = "0x10db9ab494708610b4832958da34c7c19c2d09ec"
 
-ganache_url = "HTTP://ganache:8545"
-contract_address = "0x10db9ab494708610b4832958da34c7c19c2d09ec"
 
-web3 = Web3(Web3.HTTPProvider(ganache_url))
+# # contract = web3.eth.contract(address=contract_address, abi=abi)
 
-# contract = web3.eth.contract(address=contract_address, abi=abi)
 
-accounts = web3.eth.accounts
-
-print(accounts)
+# print(accounts)
 
 # acct1 = web3.eth.account.from_key(sender_key)
 
@@ -73,7 +125,6 @@ print(accounts)
 # initialize the contract using the abi and bytecode
 # contract = web3.eth.contract(abi=abi, bytecode=bytecode)
 
-# print(contract, contract.all_functions()[1].call())
 
 @require_GET
 def login(request):

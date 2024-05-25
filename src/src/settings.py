@@ -118,7 +118,7 @@ DATABASES = {
 		'PORT': POSTGRES_PORT, # 5432,
 		'USER': POSTGRES_USER, #"user_transcendence",
 		'PASSWORD': POSTGRES_PASSWORD, #"pass_transcendence",
-		'HOST': 'db',
+		'HOST': 'localhost',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",

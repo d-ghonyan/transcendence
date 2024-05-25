@@ -1,5 +1,5 @@
 // SPDX-License-Identifier: UNLICENSED
-pragma solidity ^0.8.24;
+pragma solidity ^0.8.9;
 
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
@@ -7,9 +7,6 @@ pragma solidity ^0.8.24;
 contract Tournament {
     // uint256 public unlockTime;
     // address payable public owner;
-
-
-
 
 	mapping (string => string) names;
 
@@ -28,5 +25,10 @@ contract Tournament {
 
 	function getName(string memory _name) public view returns (string memory) {
 		return names[_name];
+	}
+
+	// function to Hello WOrld
+	function helloWorld() public pure returns (string memory) {
+		return "Hello, World!";
 	}
 }
