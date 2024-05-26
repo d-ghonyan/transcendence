@@ -1,18 +1,20 @@
 from django.db import models
 from django.conf import settings
 from django.contrib.auth.models import AbstractUser
-
+from django.db import models
 import os
 # from django.contrib.postgres.fields import ArrayField
 
+def user_directory_path(instance, filename):
+    return 'user_{0}/{1}'.format(instance.id, filename)
 class User(AbstractUser):
-	prof_pic = models.ImageField(upload_to="./media", default=(os.path.join(settings.BASE_DIR, "/media/default.jpg")))
-	name = models.TextField(default="user", )
-	username = models.TextField(default="user", unique=True)
-	password = models.TextField(default="user", )
-	# friends = ArrayField(User())
-	wins = models.IntegerField(default=0)
-	loses = models.IntegerField(default=0)
+    prof_pic = models.ImageField(upload_to=user_directory_path, default='default.jpg')
+    name = models.TextField(default="user", )
+    username = models.TextField(default="user", unique=True)
+    password = models.TextField(default="user", )
+    # friends = ArrayField(User())
+    # wins = models.IntegerField(default=0)
+	# loses = models.IntegerField(default=0)
 	# match_history = ArrayField(Match())
 
 class Match(models.Model):

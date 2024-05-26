@@ -20,6 +20,9 @@ import bcrypt
 state = ""
 
 from src.settings import JWT_SECRET
+from django.conf import settings
+from django.contrib.auth.decorators import login_required
+from django.views.decorators.csrf import csrf_exempt
 
 @require_GET
 def users(request):
@@ -66,12 +69,23 @@ def update_user(request):
             return JsonResponse({'message': 'User not updated successfully'})
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
-    
-def profile_picture(request, username):
-    print('here in profile picture')
-    
-    user = User.objects.get(pk=username)
-    if user is not None:
-        return render(request, "users/user.html", {'user' : user})
+
+@csrf_exempt
+def user_info(request):
+    print("Here")
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username_ = data.get('username')
+            user = User.objects.get(username=username_)
+            response_data = {
+                'username': user.username,
+                'prof_pic': user.prof_pic.url 
+            }
+            return JsonResponse(response_data)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
     else:
-        return JsonResponse({'error': "prof pic dd not exist"}, status=500)                                         
+        return JsonResponse({'error': 'Invalid request method'}, status=405)

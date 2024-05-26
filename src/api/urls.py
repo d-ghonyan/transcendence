@@ -30,5 +30,5 @@ urlpatterns = [
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
 	path('user/update/', views.update_user),
-	path('user/<str:username>/', views.profile_picture),
+    path('user_info/', views.user_info, name='user_info'),
 ]

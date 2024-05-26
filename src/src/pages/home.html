@@ -1,5 +1,5 @@
 <script>
-	console.log("User is ", getUser())
+
 </script>
 
 <style>
@@ -56,7 +56,7 @@
 	<div class="header">
 		<div class="d-flex justify-content-between align-items-center">
 			<div class="profile_picture">
-				<!-- <img src="{api/profile_picture/getUser().username/}" alt="Profile Picture"> -->
+				<!-- <img id="profile-picture" src="{% static '/media/default.jpg' %}" alt="Profile Picture"> -->
 			</div>
 			<div class="button_container d-flex flex-column justify-content-around">
 				<div class="button_container_1">
@@ -105,7 +105,6 @@
 				<input type="text" class="username_input form-control" placeholder="Username">
 				<input type="password" class="password_input form-control" placeholder="Password">
 				<input type="password" class="repeat_password_input form-control" placeholder="Repeat password">
-				<input type="file" class="file_input form-control" />
 				<div class="language_select">
 					<label for="language_select">Preferred Language:</label>
 					<select id="language_select_popup" class="form-control">
