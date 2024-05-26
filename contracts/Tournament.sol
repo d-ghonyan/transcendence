@@ -4,31 +4,35 @@ pragma solidity ^0.8.9;
 // Uncomment this line to use console.log
 // import "hardhat/console.sol";
 
-contract Tournament {
-    // uint256 public unlockTime;
-    // address payable public owner;
+struct TournamentEnrty {
+	Match[] matches;
 
-	mapping (string => string) names;
+	string winner;
+}
+
+struct Match {
+	string user1;
+	string user2;
+	uint256 score1;
+	uint256 score2;
+	string winner;
+}
+
+contract Tournament {
+
+	TournamentEnrty[] tournaments;
 
     constructor(uint256 _unlockTime) payable {
-        // if (block.timestamp >= _unlockTime) {
-        //     revert InvalidUnlockTime(_unlockTime);
-        // }
 
-        // unlockTime = _unlockTime;
-        // owner = payable(msg.sender);
     }
 
-	function setName(string memory _name, string memory _value) public {
-		names[_name] = _value;
+	function addTournament(Match[] memory _matches, string memory _winner) public {
+		TournamentEnrty memory tournament = TournamentEnrty(_matches, _winner);
+		tournaments.push(tournament);
 	}
 
-	function getName(string memory _name) public view returns (string memory) {
-		return names[_name];
+	function getTournaments() public view returns (TournamentEnrty[] memory) {
+		return tournaments;
 	}
 
-	// function to Hello WOrld
-	function helloWorld() public pure returns (string memory) {
-		return "Hello, World!";
-	}
 }

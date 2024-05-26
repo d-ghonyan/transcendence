@@ -4,7 +4,8 @@ from django.shortcuts import redirect
 from django.views.decorators.http import require_GET
 from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
-								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR
+								REDIRECT, AUTHENTICATOR_SECRET_KEY, BASE_DIR,\
+									GANACHE_URL
 
 import os
 import requests
@@ -15,8 +16,6 @@ import qrcode
 import json
 
 state = ""
-
-
 
 @require_GET
 def users(request):
