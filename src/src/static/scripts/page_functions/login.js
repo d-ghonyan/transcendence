@@ -121,18 +121,54 @@ const register_button = async () => {
 }
 
 const intra_button = async () => {
+/* 
+
+	struct Match {
+		string user1;
+		string user2;
+		uint256 score1;
+		uint256 score2;
+		string winner;
+	}
+*/
+
+	const res = fetch(`${api_url}/add_tournament/`, {
+		method: "POST",
+		headers: {
+			"Content-Type": "application/json"
+		},
+		body: JSON.stringify({
+			matches: [
+				{
+					user1: "user1",
+					user2: "user2",
+					score1: 0,
+					score2: 0,
+					winner: "valod"
+				},
+				{
+					user1: "user15",
+					user2: "user25",
+					score1: 0,
+					score2: 0,
+					winner: "valod"
+				}
+			],
+			winner: "Edgar",
+		})
+	})
 
 
-	const INTRA_AUTH_URL = "https://api.intra.42.fr/oauth/authorize";
-	const INTRA_UID = "u-s4t2ud-430a2135c4a1b996b9da9573916078397a9a4caffa71bd6fc3fdf73a1172ddad";
-	const REDIRECT = "http://localhost:8000/login";
-	const response_type = "code";
-	const state = "intra";
+	// const INTRA_AUTH_URL = "https://api.intra.42.fr/oauth/authorize";
+	// const INTRA_UID = "u-s4t2ud-430a2135c4a1b996b9da9573916078397a9a4caffa71bd6fc3fdf73a1172ddad";
+	// const REDIRECT = "http://localhost:8000/login";
+	// const response_type = "code";
+	// const state = "intra";
 
-	// const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
-	const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code";
+	// // const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
+	// const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code";
 
-	window.location.href = intra_full_url
+	// window.location.href = intra_full_url
 
 	// const res = fetch(`${api_url}/intra_redirect/`, {
 	// 	method: "GET",

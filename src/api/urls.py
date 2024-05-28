@@ -21,7 +21,7 @@ from django.urls import include, path, reverse
 from django.conf import settings
 from django.shortcuts import render, redirect
 
-from api import views, auth_views
+from api import views, auth_views, blockchain_views
 
 from django.http.response import HttpResponseRedirect
 
@@ -29,4 +29,7 @@ urlpatterns = [
 	path('users/', views.users),
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
+
+	path('add_tournament/', blockchain_views.add_tournament),
+	path('get_tournaments/', blockchain_views.get_tournaments),
 ]
