@@ -59,23 +59,24 @@ function addListener(element, event, func)
 	element.addEventListener(event, func);
 }
 
-function getUserInfo() {
-	console.log("here")
+// function getUserInfo() {
+// 	console.log("here")
 	
-	fetch('/api/user_info/', {
-		method: 'POST',
-		headers: {
-			'Content-Type': 'application/json',
-			"Authorization": `Bearer ${getUser().token}`
-		},
-		body: JSON.stringify({
-			username: getUser().username,
-		})
-	})
-	.then(response => response.json())
-	.then(data => {
-		console.log("pof_pic is ", data.prof_pic)
-		document.getElementById('profile-picture').src = data.prof_pic;
-	})
-	.catch(error => console.error('Error fetching user info:', error));
-}
+// 	fetch('/api/user_info/', {
+// 		method: 'POST',
+// 		headers: {
+// 			'Content-Type': 'application/json',
+// 			"Authorization": `Bearer ${getUser().token}`
+// 		},
+// 		body: JSON.stringify({
+// 			username: getUser().username,
+// 		})
+// 	})
+// 	.then(response => response.json())
+// 	.then(data => {
+// 		console.log("pof_pic is ", data.prof_pic)
+// 		document.getElementById('profile-picture').src = data.prof_pic;
+// 	})
+// 	.catch(error => console.error('Error fetching user info:', error));
+// }
+

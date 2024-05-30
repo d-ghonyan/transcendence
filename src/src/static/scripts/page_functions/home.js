@@ -33,16 +33,14 @@ const logout_button = async () => {
 	updateState({ page: page_data['login'], url: "/login" });
 }
 let 	prefered_lang = lang
-const submit_button = async (e) => {
-	
-	//update language
+
+const submit_button = async (e) => {	
 	lang = prefered_lang
-	// updateLanguage()
+	updateLanguage()
 	e.preventDefault()
 	const username_value = document.querySelector('.username_input').value
 	const password_value = document.querySelector('.password_input').value
 	const repeat_password_value = document.querySelector('.repeat_password_input').value
-	const file_input = document.querySelector('.file_input').files[0];
 	console.log("logged in user is ", getUser())
 	
 	//send request to save 

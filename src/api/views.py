@@ -1,6 +1,6 @@
 from api.models import User
-from django.http import JsonResponse
-from django.shortcuts import redirect, render
+from django.http import JsonResponse, HttpResponseBadRequest
+from django.shortcuts import redirect, render, get_object_or_404
 from django.views.decorators.http import require_GET, require_POST
 from src.settings import INTRA_API_URL, INTRA_TOKEN_URL,\
 	 						INTRA_AUTH_URL, INTRA_UID, INTRA_SECRET,\
@@ -70,14 +70,37 @@ def update_user(request):
     except Exception as e:
         return JsonResponse({'error': str(e)}, status=500)
 
-@csrf_exempt
+@csrf_exempt  # Use csrf_exempt if you're testing with tools like Postman or similar, otherwise ensure CSRF tokens are handled properly
 def user_info(request):
-    print("Here")
     if request.method == 'POST':
         try:
             data = json.loads(request.body)
             username_ = data.get('username')
-            user = User.objects.get(username=username_)
+            if not username_:
+                return JsonResponse({'error': 'Username is required'}, status=400)
+
+            user = get_object_or_404(User, username=username_)
+            context = {
+                'username': user.username,
+                'prof_pic': user.prof_pic.url if user.prof_pic else None
+            }
+            print(8888888)  # Debug print statement
+            return JsonResponse(context)
+        except json.JSONDecodeError:
+            return JsonResponse({'error': 'Invalid JSON'}, status=400)
+        except User.DoesNotExist:
+            return JsonResponse({'error': 'User not found'}, status=404)
+        except Exception as e:
+            return JsonResponse({'error': str(e)}, status=500)
+    else:
+        return HttpResponseBadRequest("Only POST requests are allowed")
+    
+def user_info_json(request):
+    if request.method == 'POST':
+        try:
+            data = json.loads(request.body)
+            username_ = data.get('username')
+            user = get_object_or_404(User, username=username_)
             response_data = {
                 'username': user.username,
                 'prof_pic': user.prof_pic.url 
@@ -85,7 +108,4 @@ def user_info(request):
             return JsonResponse(response_data)
         except json.JSONDecodeError:
             return JsonResponse({'error': 'Invalid JSON'}, status=400)
-        except User.DoesNotExist:
-            return JsonResponse({'error': 'User not found'}, status=404)
-    else:
-        return JsonResponse({'error': 'Invalid request method'}, status=405)
+    return JsonResponse({'error': 'Invalid request method'}, status=400)

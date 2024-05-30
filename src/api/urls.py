@@ -30,5 +30,6 @@ urlpatterns = [
 	path('login/', auth_views.login),
 	path('register/', auth_views.register),
 	path('user/update/', views.update_user),
-    path('user_info/', views.user_info, name='user_info'),
+    path('user_info/', views.user_info),
+    path('user_info_json/', views.user_info_json),
 ]
