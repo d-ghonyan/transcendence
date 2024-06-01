@@ -1,7 +1,7 @@
 services:
   db:
     image: postgres:latest
-    env_file: .docker-env
+    env_file: .env
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
@@ -38,22 +38,22 @@ services:
   #   #   - barev
   #   restart: always
 
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.django
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - "8000:8000"
+  backend:
+    build:
+      context: .
+      dockerfile: Dockerfile.django
+    volumes:
+      - .:/app
+    ports:
+      - "8000:8000"
 
-  #   networks:
-  #     - barev
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - .env
-  #   restart: always
+    networks:
+      - barev
+    depends_on:
+      - db
+    env_file:
+      - .env
+    restart: always
 
 volumes:
   postgres:

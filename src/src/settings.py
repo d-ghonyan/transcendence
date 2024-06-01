@@ -50,9 +50,9 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # 
+DEBUG = False #
 
-ALLOWED_HOSTS = ['*']  
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -118,7 +118,7 @@ DATABASES = {
 		'PORT': 5432,
 		'USER': "user_transcendence",
 		'PASSWORD': "pass_transcendence",
-		'HOST': 'localhost',
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",

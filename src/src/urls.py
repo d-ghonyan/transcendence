@@ -37,6 +37,7 @@ urlpatterns = [
 	path('api/', include('api.urls')),
 	path('game/', views.login),
 	path('home/', views.login),
+	path('admin/', admin.site.urls),
 ]
 
 # handler404 = redirect_to_root
