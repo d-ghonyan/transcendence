@@ -30,7 +30,7 @@ const showLogin = () => {
 }
 
 const showRegister = () => {
-	
+
 	const { loginTab, registerTab, loginPills, registerPills } = tabs();
 
 	return {
@@ -125,12 +125,12 @@ const intra_button = async () => {
 
 	const INTRA_AUTH_URL = "https://api.intra.42.fr/oauth/authorize";
 	const INTRA_UID = "u-s4t2ud-430a2135c4a1b996b9da9573916078397a9a4caffa71bd6fc3fdf73a1172ddad";
-	const REDIRECT = "http://localhost:8000/login";
+	const REDIRECT = encodeURIComponent(`${window.location.origin}/login`)
 	const response_type = "code";
 	const state = "intra";
 
 	// const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
-	const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code";
+	const intra_full_url = `https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=${REDIRECT}&response_type=code`;
 
 	window.location.href = intra_full_url
 
