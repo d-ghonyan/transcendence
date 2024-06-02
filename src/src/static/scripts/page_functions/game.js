@@ -1,4 +1,4 @@
-const startGame = (gameMode) => {
+const startGame = (gameMode, settings) => {
 	const canvas = document.getElementById('gameCanvas');
 
 	const ctx = canvas.getContext('2d');
@@ -17,6 +17,7 @@ const startGame = (gameMode) => {
 	})[gameMode];
 
 	addControls(mode);
+	addPowerupHints(/* settings.powerupTypes */['shrink'], powerupConfig);
 
 	const balls = [];
 	const paddles = [];
@@ -53,14 +54,14 @@ const startGame = (gameMode) => {
 	let timeoutId = null;
 
 	function draw() {
-		const randomSpawnTimeout = Math.floor(Math.random() * 5000) + 2000;
+		const randomSpawnTimeout = Math.floor(Math.random() * 4000) + 2000;
 
-		if (!timeoutId)
+		if (/* settings?.powerupTypes.length > 0 &&  */!timeoutId)
 		{
-			timeoutId = setTimeout(() => {
+			timeoutId = new Timer(() => {
 				powerup = new Powerup(canvas.width / 2, 
-					Math.floor(Math.random() * canvas.height));
-
+					Math.floor(Math.random() * canvas.height, /* settings.powerupTypes */));
+	
 				timeoutId = null;
 			}, randomSpawnTimeout);
 		}
@@ -159,23 +160,24 @@ const startGame = (gameMode) => {
 
 	addListener(document, 'keydown', handleKeyDown);
 	addListener(document, 'keyup', handleKeyUp);
-
-	draw();
-
 	addListener(document, 'keydown', (e) => {
 		if (e.key === 'p')
 		{
 			if (gameAnimationId)
-			{
+			{			
+				paddles.forEach(paddle => pausePaddleEffects(paddle));
 				cancelAnimationFrame(gameAnimationId);
 				gameAnimationId = null;
 			}
 			else
 			{
+				paddles.forEach(paddle => resumePaddleEffects(paddle));
 				gameAnimationId = requestAnimationFrame(draw);
 			}
-		}	
+		}
 	});
+
+	draw();
 }
 
 function addControls(gameOptions)
@@ -211,5 +213,53 @@ function addControls(gameOptions)
 		{
 			oddContainer.innerHTML += controlHTML;
 		}
+	}	
+}
+
+const addPowerupHints = (powerupTypes, config) => {
+	const powerupHints = document.getElementById('powerups');
+
+	for (const type of powerupTypes)
+	{
+		const powerup = config[type];
+		const powerupHint = document.createElement('div');
+
+		const nameContainer = document.createElement('div');
+
+		const name = document.createElement('span');
+		const color = document.createElement('div');
+		const description = document.createElement('span');
+
+		nameContainer.classList.add('name-container');
+		powerupHint.classList.add('powerup-hint');
+		description.classList.add('powerup-description');
+		color.classList.add('powerup-color');
+		name.classList.add('powerup-hint');
+
+		nameContainer.appendChild(color);
+		nameContainer.appendChild(name);
+
+		name.innerText = powerup.name;
+		color.style.backgroundColor = powerup.color;
+		description.innerText = powerup.description;
+
+		powerupHint.appendChild(nameContainer);
+		powerupHint.appendChild(description);
+
+		powerupHints.appendChild(powerupHint);
+	}
+}
+
+const pausePaddleEffects = (paddle) => {
+	for (const effect in paddle.effects)
+	{
+		paddle.effects[effect].pause();
+	}
+}
+
+const resumePaddleEffects = (paddle) => {
+	for (const effect in paddle.effects)
+	{
+		paddle.effects[effect].resume();
 	}
 }
