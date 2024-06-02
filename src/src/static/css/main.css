@@ -1,8 +1,8 @@
 body {
 	background-color: #f4f4f4;
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
+	font-family: Arial, sans-serif;
+	margin: 0;
+	padding: 0;
 }
 
 canvas {
@@ -11,12 +11,6 @@ canvas {
 	margin: 0 auto;
 	background-color: tomato;
 }
-
-/* .container {
-	margin: 0 auto;
-	max-width: 800px;
-	padding: 0 20px;
-} */
 
 #overlay {
 	position: fixed; /* Sit on top of the page content */

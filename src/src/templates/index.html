@@ -23,7 +23,13 @@
 
 	<script src="{% static 'scripts/page_functions/login.js' %}" type="text/javascript"></script>
 	<script src="{% static 'scripts/page_functions/home.js' %}" type="text/javascript"></script>
-	<script src="{% static 'scripts/page_functions/game_helpers.js' %}" type="text/javascript"></script>
+	
+	<script src="{% static 'scripts/page_functions/game_helpers/game_helpers.js' %}" type="text/javascript"></script>
+	<script src="{% static 'scripts/page_functions/game_helpers/MovingObject.js' %}" type="text/javascript"></script>
+	<script src="{% static 'scripts/page_functions/game_helpers/Paddle.js' %}" type="text/javascript"></script>
+	<script src="{% static 'scripts/page_functions/game_helpers/Ball.js' %}" type="text/javascript"></script>
+	<script src="{% static 'scripts/page_functions/game_helpers/Powerup.js' %}" type="text/javascript"></script>
+
 	<script src="{% static 'scripts/page_functions/game.js' %}" type="text/javascript"></script>
 
 	<script src="{% static 'scripts/page_listeners.js' %}" type="text/javascript"></script>
@@ -94,7 +100,7 @@
 		</nav>
 	</header>
 
-	<div class="container d-flex align-items-center flex-column h-100" id="container">
+	<div class="container d-flex align-items-center justify-content-center flex-column h-100" id="container">
 
 	</div>
 
