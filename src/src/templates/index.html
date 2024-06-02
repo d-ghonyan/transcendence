@@ -31,6 +31,7 @@
 	<script type="text/javascript">
 
 		let url = window.location.pathname;
+		console.log(url)
 		if (url[0] === "/") url = url.slice(1, url.length);
 		if (url[url.length - 1] === "/") url = url.slice(0, url.length - 1);
 
@@ -59,6 +60,10 @@
 			else if (page_data[url] && getUser().token)
 			{
 				updateState({ page: page_data[url], url: "/" + url });
+			}
+			else if (url=="home")
+			{
+				updateState({ page: page_data["home"], url: "/home" });
 			}
 			else
 			{

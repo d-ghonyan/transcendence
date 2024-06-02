@@ -1,4 +1,6 @@
 # from src.models import User
+from api.models import User
+import logging
 from django.http import JsonResponse
 from src.utils import get_random_string
 from django.shortcuts import render, redirect
@@ -71,7 +73,6 @@ import json
 @require_GET
 def login(request):
 	intra_req = check_intra(request)
-
 	if (intra_req.get('error', '')):
 		return JsonResponse({ 'error': 'problem with intra', 'desc': intra_req['error'] })
 
@@ -82,9 +83,8 @@ def login(request):
 
 	for i in os.listdir(BASE_DIR / 'src/pages'):
 		filename = i.replace(".html", "")
-
 		if os.path.isfile(BASE_DIR / 'src/pages' / i):
-
+		
 			pages[filename] = {}
 			with open(BASE_DIR / 'src/pages' / i, 'r') as f:
 				pages[filename]['html'] = f.read()
@@ -101,6 +101,8 @@ def login(request):
 		context['expires_at'] = intra_req['expires_in'] + intra_req['created_at']
 		context['created_at'] = intra_req['created_at']
 
+		if not User.objects.filter(username=intra_req["username"]).exists():
+			User.objects.create(username=intra_req["username"])
 	return render(request, 'index.html', context=context)
 
 @require_GET
@@ -121,12 +123,13 @@ def auth_qr(request):
 	return JsonResponse({ "qr": "qr_auth.png" })
 
 def check_intra(request):
+	
 	req_code = request.GET.get('code', '')
 	req_state = request.GET.get('state', '')
 	req_error = request.GET.get('error', '')
 
-	print(req_code, req_state, req_error)
-
+	# print(req_code, req_state, req_error)
+	
 	if req_error == '' and req_code == '':
 		return { 'pass': 'pass' }
 
@@ -136,40 +139,49 @@ def check_intra(request):
 	if (req_error):
 		return { 'error': req_error, 'desc': request.GET.get('error_description', 'none') }
 
-	try:
-		r = requests.request('POST', INTRA_TOKEN_URL, params={
-			"grant_type": INTRA_GRANT_TYPE,
+	# print(INTRA_GRANT_TYPE, INTRA_UID, INTRA_SECRET)
+	# try:
+	# 	r = requests.request('POST', INTRA_TOKEN_URL, params={
+	# 		# "grant_type": 'client_credentials',
+	# 		"grant_type": 'authorization_code',
+	# 		"client_id": INTRA_UID,
+	# 		"client_secret": INTRA_SECRET,
+	# 		"code": req_code,
+	# 		"redirect_uri": REDIRECT,
+	# 		# "state": req_state,
+	# 	})
+	# except Exception as e:
+	# 	print("exception: ", e)
+	# 	return { 'error': 'exception', 'desc': e }
+
+	data={
+			"grant_type": 'authorization_code',
 			"client_id": INTRA_UID,
 			"client_secret": INTRA_SECRET,
 			"code": req_code,
 			"redirect_uri": REDIRECT,
-			"state": req_state,
-		})
-	except Exception as e:
-		print("exception: ", e)
-		return { 'error': 'exception', 'desc': e }
-
+		}
+	headers = {'Content-Type': 'application/x-www-form-urlencoded'}
+	r = requests.request('POST', "https://api.intra.42.fr/oauth/token", data=data, headers=headers)
 	r = r.json()
-
 	access_token = r['access_token']
 	expires_in = r['expires_in']
 	created_at = r['created_at']
-
-	r = requests.request('GET', INTRA_API_URL + "me/", headers={
+	r = requests.request('GET', "https://api.intra.42.fr/v2/me", headers={
 		'Authorization': 'Bearer ' + access_token,
 	})
-
 	r = r.json()
-
-	for key, value in r.items():
-		print(key, value)
+	username = r['login']
+	img_url = r["image"]["link"]
+	# for key, value in r.items():
+	# 	print(key, value)
 	# print(access_token, expires_in, created_at)
-	
-
 	return {
 		"access_token": access_token,
 		"state": req_state,
 		"code": req_code,
 		"expires_in": expires_in,
-		"created_at": created_at
+		"created_at": created_at,
+		"username" : username,
+		"img_url" : img_url
 	}

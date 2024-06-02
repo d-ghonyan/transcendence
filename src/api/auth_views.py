@@ -1,3 +1,5 @@
+import logging
+
 from api.models import User
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST, require_GET
@@ -22,6 +24,8 @@ import json
 
 @require_POST
 def register(request):
+	logging.debug("-------register")
+	print("register Request is an instance of HttpRequest class")
 	body = json.loads(request.body)
 	if body['username'] and body['password'] and body['repeat_password']:
 		try:
@@ -37,12 +41,23 @@ def register(request):
 			User.objects.create(username=body['username'], password=hashed)
 			return JsonResponse({ "status": 200, "message": "User created successfully" })
 		except Exception as e:
-			return JsonResponse({ "status": 500, "message": f"Error: {e}" })
+			return JsonResponse({ "status": 501, "message": f"Error: {e}" })
 	return JsonResponse({ "status": 400, "message": "Bad request" })
 
 @require_POST
 def login(request):
+
+# print("Request method:", request.method)
+# print("Request path:", request.path)
+# print("GET parameters:", request.GET)
+# print("POST parameters:", request.POST)
+# print("Raw request body:", request.body)
+# print("Uploaded files:", request.FILES)
+# print("Cookies:", request.COOKIES)
 	body = json.loads(request.body)
+	logging.debug("++++++++login")
+	print("login  Request is an instance of HttpRequest class")
+	print("username = ", body['username'])
 	if body['username'] and body['password']:
 		try:
 			user = User.objects.get(username=body['username'])
@@ -55,10 +70,9 @@ def login(request):
 				return JsonResponse({ "status": 200,
 						"message": "User logged in successfully",
 						"token": token, "username": user.username,
-						"expires_at": datetime.now(tz.UTC) + timedelta(hours=1),
-						
+						"expires_at": datetime.now(tz.UTC) + timedelta(hours=1),				
 					})
 			return JsonResponse({ "status": 400, "message": "Invalid username or password" })
-		except Exception as e:
-			return JsonResponse({ "status": 500, "message": f"Error: {e}" })
+		except Exception as e:		
+			return JsonResponse({ "status": 502, "message": f"Error: {e}" })
 	return JsonResponse({ "status": 400, "message": "Bad request" })

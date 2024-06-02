@@ -1,4 +1,5 @@
 window.addEventListener('popstate', async (e) => {
+	console.log(e)
 	e.preventDefault();
 
 	if (e.state.url === "/game")
@@ -26,6 +27,7 @@ window.addEventListener('popstate', async (e) => {
 	}
 	else
 	{
+	
 		if (e.state.url === "/login")
 		{
 			updateState({ page: page_data['home'], url: "/home" });

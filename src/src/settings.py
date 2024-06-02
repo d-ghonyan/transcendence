@@ -50,7 +50,7 @@ MEDIA_URL = '/media/'
 SECRET_KEY = 'django-insecure-pnt!)8ws0c!1t-z-#up^j9o-r47i+ksu22%ftmyblgy3&azwdy'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False # 
+DEBUG = True # 
 
 ALLOWED_HOSTS = ['*']  
 
@@ -118,7 +118,7 @@ DATABASES = {
 		'PORT': 5432,
 		'USER': "user_transcendence",
 		'PASSWORD': "pass_transcendence",
-		'HOST': 'localhost',
+		'HOST': 'db',
 	}
 	# "default": {
     #     "ENGINE": "django.db.backends.sqlite3",
@@ -183,3 +183,23 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 # SECURE_SSL_REDIRECT = True
 # SESSION_COOKIE_SECURE = True
 # CSRF_COOKIE_SECURE = True
+
+
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'handlers': {
+        'console': {
+            'level': 'DEBUG',
+            'class': 'logging.StreamHandler',
+        },
+    },
+    'loggers': {
+        '': {
+            'handlers': ['console'],
+            'level': 'DEBUG',
+            'propagate': True,
+        },
+    },
+}

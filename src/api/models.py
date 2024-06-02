@@ -9,12 +9,11 @@ class User(AbstractUser):
 	prof_pic = models.ImageField(default=(os.path.join(settings.BASE_DIR, "/media/default.jpg")))
 	name = models.TextField(default="user", )
 	username = models.TextField(default="user", unique=True)
-	password = models.TextField(default="user", )
+	password = models.TextField()
 	# friends = ArrayField(User())
 	wins = models.IntegerField(default=0)
 	loses = models.IntegerField(default=0)
 	# match_history = ArrayField(Match())
-
 class Match(models.Model):
 	player1_id = models.IntegerField(default=1)
 	player2_id = models.IntegerField(default=1)

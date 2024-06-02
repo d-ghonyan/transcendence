@@ -18,7 +18,9 @@ const tabs = () => {
 }
 
 const showLogin = () => {
-
+	hideErrorMessage()
+	document.getElementById("username").value = ""
+	document.getElementById("password").value = ""
 	const { loginTab, registerTab, loginPills, registerPills } = tabs();
 
 	return {
@@ -30,8 +32,11 @@ const showLogin = () => {
 }
 
 const showRegister = () => {
-	
 	const { loginTab, registerTab, loginPills, registerPills } = tabs();
+	hideErrorMessage()
+	document.getElementById("registerUsername").value = ""
+	document.getElementById("registerPassword").value = ""
+	document.getElementById("registerRepeatPassword").value = ""
 
 	return {
 		show: registerTab,
@@ -64,8 +69,10 @@ const register_tab = async () => {
 }
 
 const login_button = async () => {
+	console.log("login button inside")
 	const username = document.getElementById("username").value;
 	const password = document.getElementById("password").value;
+	
 
 	if (username === "" || password === "")
 	{
@@ -82,7 +89,7 @@ const login_button = async () => {
 	});
 
 	const data = await res.json();
-
+	console.log(data)
 	if (data.status === 200)
 	{
 		storeUser(data);
@@ -121,8 +128,6 @@ const register_button = async () => {
 }
 
 const intra_button = async () => {
-
-
 	const INTRA_AUTH_URL = "https://api.intra.42.fr/oauth/authorize";
 	const INTRA_UID = "u-s4t2ud-430a2135c4a1b996b9da9573916078397a9a4caffa71bd6fc3fdf73a1172ddad";
 	const REDIRECT = "http://localhost:8000/login";
@@ -130,14 +135,6 @@ const intra_button = async () => {
 	const state = "intra";
 
 	// const intra_full_url = `${INTRA_AUTH_URL}?client_id=${INTRA_UID}&redirect_uri=${REDIRECT}&response_type=${response_type}&state=${state}`
-	const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-57c109dc651811ce9a166ccde1cc3a309cf702e4d03168852b2eda62f9032ccf&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Flogin&response_type=code";
-
+	const intra_full_url = "https://api.intra.42.fr/oauth/authorize?client_id=u-s4t2ud-b112f9315c0ae30458140f0a4c846d64b017ca40cdaf0d9734ddf9f05294660e&redirect_uri=http%3A%2F%2Flocalhost%3A8000%2Fhome%2F&response_type=code";
 	window.location.href = intra_full_url
-
-	// const res = fetch(`${api_url}/intra_redirect/`, {
-	// 	method: "GET",
-	// 	headers: {
-	// 		"Content-Type": "application/json"
-	// 	},
-	// });
 }
