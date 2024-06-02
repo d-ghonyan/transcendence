@@ -9,7 +9,7 @@ const DEFAULTS = {
 const POWERUPS = {
 	shrink: 40,
 	grow: 160,
-	slowDown: 10,
+	slowDown: 6,
 	speedUp: 25,
 };
 
@@ -33,11 +33,11 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 			},
 			paddlePositions: {
 				player1: {
-					x: 0,
+					x: 10,
 					y: (canvas.height - paddleHeight) / 2
 				},
 				player2: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: (canvas.height - paddleHeight) / 2
 				}
 			},
@@ -69,19 +69,19 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 			},
 			paddlePositions: {
 				player1: {
-					x: 0,
+					x: 10,
 					y: paddleHeight
 				},
 				player2: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: paddleHeight
 				},
 				player3: {
-					x: 0,
+					x: 10,
 					y: canvas.height - paddleHeight
 				},
 				player4: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: canvas.height - paddleHeight
 				}
 			},
@@ -121,27 +121,27 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 			},
 			paddlePositions: {
 				player1: {
-					x: 0,
+					x: 10,
 					y: paddleHeight
 				},
 				player2: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: paddleHeight
 				},
 				player3: {
-					x: 0,
+					x: 10,
 					y: (canvas.height - paddleHeight) / 2
 				},
 				player4: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: (canvas.height - paddleHeight) / 2
 				},
 				player5: {
-					x: 0,
+					x: 10,
 					y: canvas.height - paddleHeight
 				},
 				player6: {
-					x: canvas.width - paddleWidth,
+					x: canvas.width - paddleWidth - 10,
 					y: canvas.height - paddleHeight
 				}
 			},
@@ -154,6 +154,29 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 			ballCount: 4,
 		}
 	}
+}
+
+const powerupConfig = {
+	shrink: {
+		name: "Shrink",
+		description: "Shrinks the paddle.",
+		color: "red",
+	},
+	grow: {
+		name: "Grow",
+		description: "Expands the paddle.",
+		color: "green",
+	},
+	slowDown: {
+		name: "Slowness",
+		description: "Slows down the paddle.",
+		color: "blue",
+	},
+	speedUp: {
+		name: "Speed",
+		description: "Speeds up the paddle.",
+		color: "yellow",
+	},
 }
 
 const canvasSize = {

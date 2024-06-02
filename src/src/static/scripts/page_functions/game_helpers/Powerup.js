@@ -1,12 +1,12 @@
 class Powerup extends MovingObject {
-	constructor(x, y) {
+	constructor(x, y, effectTypes) {
 
 		const speedX = Math.random() < 0.5 ? 5 : -5;
 		super(x, y, DEFAULTS.radius, speedX, getRandomSpeed());
 
-		this.effectTypes = ['shrink', 'grow', 'slowDown', 'speedUp'];
+		this.effectTypes = effectTypes || ['shrink', 'grow', 'slowDown', 'speedUp'];
 		this.effectType = this.effectTypes[Math.floor(Math.random() * this.effectTypes.length)];
-		this.effectDuration = 5000;
+		this.effectDuration = 7000;
 		this.radius = DEFAULTS.radius;
 		this.timeout = null;
 		this.paddleProperty = this.getPaddleProperty();
@@ -43,12 +43,12 @@ class Powerup extends MovingObject {
 	applyEffect(paddle) {
 		if (paddle.effects[this.paddleProperty])
 		{
-			clearTimeout(paddle.effects[this.paddleProperty]);
+			clearTimeout(paddle.effects[this.paddleProperty].timerId);
 		}
 
 		paddle[this.paddleProperty] = POWERUPS[this.effectType];
 
-		paddle.effects[this.paddleProperty] = setTimeout(() => {
+		paddle.effects[this.paddleProperty] = new Timer(() => {
 			this.revertEffect(paddle);
 		}, this.effectDuration);
 	}
