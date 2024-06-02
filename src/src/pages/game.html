@@ -1,1 +1,30 @@
-<canvas id="gameCanvas" width="800" height="400"></canvas>
+<style>
+	.gamecontainer {
+		display: flex;
+		gap: 20px;
+	}
+
+	.controls {
+		display: flex;
+		justify-content: space-around;
+		width: 400px;
+
+		padding: 0;
+		margin: 0;
+	}
+
+	.controls p {
+		font-size: large;
+		font-weight: bold;
+	}
+</style>
+
+<div class="game-container d-flex">
+
+	<div class="canvas-container">
+		<canvas id="gameCanvas" width="800" height="400"></canvas>
+	</div>
+
+	<div class="controls d-flex justify-content-around" id="controls"></div>
+</div>
+

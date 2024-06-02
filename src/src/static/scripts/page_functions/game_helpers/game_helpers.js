@@ -1,0 +1,172 @@
+const DEFAULTS = {
+	width: 10,
+	height: 80,
+	speed: 15,
+
+	radius: 10,
+};
+
+const POWERUPS = {
+	shrink: 40,
+	grow: 160,
+	slowDown: 10,
+	speedUp: 25,
+};
+
+const getRandomSpeed = () => {
+	const rand = Math.random() * 10 - 5;
+	return Math.random() < 0.5 ? rand : -rand;
+}
+
+const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
+	return {
+		"vs1": {
+			controls: {
+				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
+					up: 'ArrowUp',
+					down: 'ArrowDown'
+				},
+			},
+			paddlePositions: {
+				player1: {
+					x: 0,
+					y: (canvas.height - paddleHeight) / 2
+				},
+				player2: {
+					x: canvas.width - paddleWidth,
+					y: (canvas.height - paddleHeight) / 2
+				}
+			},
+			playerCount: 2,
+			teamNames: {
+				player1: 'Player 1',
+				player2: 'Player 2'
+			},
+			ballCount: 1,
+		},
+		"vs2": {
+			controls: {
+				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
+					up: 'ArrowUp',
+					down: 'ArrowDown'
+				},
+				player3: {
+					up: 't',
+					down: 'g'
+				},
+				player4: {
+					up: '8',
+					down: '5'
+				}
+			},
+			paddlePositions: {
+				player1: {
+					x: 0,
+					y: paddleHeight
+				},
+				player2: {
+					x: canvas.width - paddleWidth,
+					y: paddleHeight
+				},
+				player3: {
+					x: 0,
+					y: canvas.height - paddleHeight
+				},
+				player4: {
+					x: canvas.width - paddleWidth,
+					y: canvas.height - paddleHeight
+				}
+			},
+			playerCount: 4,
+			teamNames: {
+				player1: 'Team 1',
+				player2: 'Team 2',
+			},
+			ballCount: 2,
+		},
+		"vs3": {
+			controls: {
+				player1: {
+					up: 'w',
+					down: 's'
+				},
+				player2: {
+					up: 'o',
+					down: 'l'
+				},
+				player3: {
+					up: 'r',
+					down: 'f'
+				},
+				player4: {
+					up: 'ArrowUp',
+					down: 'ArrowDown'
+				},
+				player5: {
+					up: 'y',
+					down: 'h'
+				},
+				player6: {
+					up: '8',
+					down: '5'
+				}
+			},
+			paddlePositions: {
+				player1: {
+					x: 0,
+					y: paddleHeight
+				},
+				player2: {
+					x: canvas.width - paddleWidth,
+					y: paddleHeight
+				},
+				player3: {
+					x: 0,
+					y: (canvas.height - paddleHeight) / 2
+				},
+				player4: {
+					x: canvas.width - paddleWidth,
+					y: (canvas.height - paddleHeight) / 2
+				},
+				player5: {
+					x: 0,
+					y: canvas.height - paddleHeight
+				},
+				player6: {
+					x: canvas.width - paddleWidth,
+					y: canvas.height - paddleHeight
+				}
+			},
+			playerCount: 6,
+			teamNames: {
+				player1: 'Team 1',
+				player2: 'Team 2',
+				player3: 'Team 3'
+			},
+			ballCount: 4,
+		}
+	}
+}
+
+const canvasSize = {
+	"vs1": {
+		w: 800,
+		h: 400,
+	},
+	"vs2": {
+		w: 1000,
+		h: 600,
+	},
+	"vs3": {
+		w: 1200,
+		h: 800,
+	},
+}
