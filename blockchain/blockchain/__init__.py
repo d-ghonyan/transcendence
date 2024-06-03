@@ -1,29 +1,33 @@
-from src.settings import GANACHE_URL, BASE_DIR
+from blockchain.settings import GANACHE_URL, BASE_DIR, MNEMONIC
 
 import os
+import json
 from web3 import Web3
 from solcx import install_solc, compile_files
 
 chain_id = 1337
+tournament_json = BASE_DIR / "contracts/Tournament.json"
 
-install_solc("0.8.9")
-compiled_sol = compile_files(["./contracts/Tournament.sol"], output_values=["abi", "bin"], solc_version="0.8.9",)
+with open(tournament_json, 'r') as f:
+	compiled_sol = json.load(f)
+
+abi = compiled_sol["Tournament"]["abi"]
+bytecode = compiled_sol["Tournament"]["bin"]
 
 web3 = Web3(Web3.HTTPProvider(GANACHE_URL))
 web3.eth.account.enable_unaudited_hdwallet_features()
 
-account = web3.eth.account.from_mnemonic(os.getenv("MNEMONIC"), account_path="m/44'/60'/0'/0/0")
+account = web3.eth.account.from_mnemonic(MNEMONIC, account_path="m/44'/60'/0'/0/0")
 
 private_key = account.key.hex()
 sender_address = account.address
-receiver_address = web3.eth.accounts[1]
-
-abi = compiled_sol["contracts/Tournament.sol:Tournament"]["abi"]
-bytecode = compiled_sol["contracts/Tournament.sol:Tournament"]["bin"]
 
 Tournament = web3.eth.contract(abi=abi, bytecode=bytecode)
 
 deployed_contract = None
+address_file_path = BASE_DIR / ".deployed_contract"
+
+print(web3.eth.get_balance(sender_address))
 
 def deploy_contract():
 	tx_hash = Tournament.constructor(123).transact({
@@ -34,13 +38,13 @@ def deploy_contract():
 	})
 
 	deployed_address = web3.eth.get_transaction_receipt(tx_hash).contractAddress
-	with open('.deployed_contract', 'w') as f:
+	with open(address_file_path, 'w') as f:
 		f.write(deployed_address)
 
 	return deployed_address
 
-if os.path.exists('.deployed_contract'):
-	with open('.deployed_contract', 'r') as f:
+if os.path.exists(address_file_path):
+	with open(address_file_path, 'r') as f:
 		deployed_address = f.read()
 
 	try:

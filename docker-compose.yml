@@ -13,13 +13,27 @@ services:
   ganache:
     build:
       context: .
-      dockerfile: Dockerfile.ganache
+      dockerfile: ./docker/Dockerfile.ganache
     stop_grace_period: 5s
     env_file: .docker-env
     volumes:
       - ganache:/data
     ports:
-      - 8545:8545
+      - ${GANACHE_PORT}:${GANACHE_PORT}
+    networks:
+      - barev
+    restart: always
+
+  blockchain:
+    depends_on:
+      - ganache
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.blockchain
+    stop_grace_period: 5s
+    env_file: .docker-env
+    ports:
+      - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
     networks:
       - barev
     restart: always
@@ -38,7 +52,7 @@ services:
   #   depends_on:
   #     - db
   #   env_file:
-  #     - .env
+  #     - .docker-env
   #   restart: always
 
 volumes:

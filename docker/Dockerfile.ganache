@@ -5,7 +5,7 @@ WORKDIR /app
 # Install ganache-cli globally
 RUN npm install ganache-cli --save-dev && mkdir /data
 ENV PATH="/app/node_modules/.bin:${PATH}"
-COPY ./entrypoint-ganache.sh /app
+COPY ./docker/entrypoint-ganache.sh /app
 
 EXPOSE 8545
 

@@ -1,0 +1,9 @@
+django
+python-dotenv
+python-dateutil
+django-cors-headers
+gunicorn
+werkzeug
+django-extensions
+pyOpenSSL
+web3
