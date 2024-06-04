@@ -28,38 +28,37 @@
 
 	<script src="{% static 'scripts/page_listeners.js' %}" type="text/javascript"></script>
 	<script type="text/javascript">
-		function getUserInfo() {
-			console.log("Fetching user info...");
+		async function getUserInfo() {
+			try {
+				console.log("Fetching user info...");
 		
-			const user = getUser();
-			console.log("User details:", user);
+				const user = getUser();
+				console.log("User details:", user);
 		
-			return fetch('/api/user_info/', {
-				method: 'POST',
-				headers: {
-					'Content-Type': 'application/json',
-					"Authorization": `Bearer ${user.token}`
-				},
-				body: JSON.stringify({
-					username: user.username,
-				})
-			})
-			.then(response => {
+				const response = await fetch('/api/user_info/', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json',
+						"Authorization": `Bearer ${user.token}`
+					},
+					body: JSON.stringify({
+						username: user.username,
+					})
+				});
+		
 				if (!response.ok) {
-					return response.json().then(err => {
-						throw new Error(err.error || 'Unknown error');
-					});
+					const err = await response.json();
+					throw new Error(err.error || 'Unknown error');
 				}
-				return response.json(); // Assuming the response is in JSON format
-			})
-			.then(data => {
+		
+				const data = await response.json();
 				console.log("User info data:", data);
-				return data; // Return the parsed data
-			})
-			.catch(error => {
+				return data;
+			} catch (error) {
 				console.error('There was a problem with the fetch operation:', error);
-			});
+			}
 		}
+		
 
 		
 		let url = window.location.pathname;
@@ -71,12 +70,12 @@
 		const page_data = JSON.parse("{{ pages | escapejs }}");
 		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
 
-		window.addEventListener("DOMContentLoaded", (e) => {
+		window.addEventListener("DOMContentLoaded", async (e) => {
 			let url = window.location.pathname;
 			if (url[0] === "/") url = url.slice(1, url.length);
 			if (url[url.length - 1] === "/") url = url.slice(0, url.length - 1);
 		
-			if (url == "game") url = "home";
+			if (url === "game") url = "home";
 		
 			const page_data = JSON.parse("{{ pages|escapejs }}");
 			const lang_data = JSON.parse("{{ language_texts|escapejs }}");
@@ -84,7 +83,7 @@
 			const customSelect = document.querySelector(".custom-select");
 			const selectBtn = document.querySelector(".select-button");
 			const optionContainer = document.querySelector(".option-container");
-			selectBtn.style.backgroundImage = `url('${ get_flag_url(lang) }')`;
+			selectBtn.style.backgroundImage = `url('${get_flag_url(lang)}')`;
 		
 			customSelect.addEventListener("click", () => {
 				optionContainer.style.display = optionContainer.style.display === "none" ? "flex" : "none";
@@ -92,28 +91,27 @@
 		
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 		
-			if (url === "login" && getUser().token) {
-				getUserInfo().then(data => {
-					console.log("User info retrieved:", data)
-					updateState({ page: "home", url: "/home" });
-					renderUserInfo(data)
-				}).catch(error => {
-					console.error('Error:', error);
-				});
-			} else if (page_data[url] && getUser().token) {
-				getUserInfo().then(data => {
-					console.log("Page data retrieved:", data)
+			try {
+				if (url === "login" && getUser().token) {
+					const data = await getUserInfo();
+					console.log("User info retrieved:", data);
+					updateState({ page: page_data["home"], url: "/home" });
+					renderUserInfo(data);
+				} else if (page_data[url] && getUser().token) {
+					const data = await getUserInfo();
+					console.log("Page data retrieved:", data);
 					updateState({ page: page_data[url], url: "/" + url });
-					renderUserInfo(data)
-				}).catch(error => {
-					console.error('Error:', error);
-				});
-			} else {
-				updateState({ page: "login", url: "/login" });
+					renderUserInfo(data);
+				} else {
+					updateState({ page: page_data["login"], url: "/login" });
+				}
+			} catch (error) {
+				console.error('Error:', error);
 			}
 		
 			updateLanguage();
 		});
+		
 
 		function renderUserInfo(data) {
 			const usernameElement = document.getElementById('username');
@@ -122,7 +120,7 @@
 			if (usernameElement) {
 				usernameElement.textContent = data.username;
 			}
-		
+			
 			if (profilePicElement && data.prof_pic) {
 				profilePicElement.src = "static" + data.prof_pic;
 				profilePicElement.alt = data.username + "'s profile picture";

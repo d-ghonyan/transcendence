@@ -71,13 +71,11 @@ import json
 @require_GET
 def login(request):
 	intra_req = check_intra(request)
-
 	if (intra_req.get('error', '')):
 		return JsonResponse({ 'error': 'problem with intra', 'desc': intra_req['error'] })
 
 	texts_file = open(BASE_DIR / 'src/lang.json', 'r')
 	texts_json = json.dumps(json.load(texts_file))
-
 	pages = {}
 
 	for i in os.listdir(BASE_DIR / 'src/pages'):
@@ -100,7 +98,6 @@ def login(request):
 
 		context['expires_at'] = intra_req['expires_in'] + intra_req['created_at']
 		context['created_at'] = intra_req['created_at']
-
 	return render(request, 'index.html', context=context)
 
 @require_GET
