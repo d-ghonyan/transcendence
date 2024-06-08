@@ -36,8 +36,8 @@ POSTGRES_PORT = os.getenv("POSTGRES_PORT")
 POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
+KIBANA_URL = os.getenv("KIBANA_URL")
 KIBANA_API_CREATE_INDEX = "api/index_patterns/index_pattern"
-KIBANA_URL = "http://localhost:5601"
 
 # Application definition
 

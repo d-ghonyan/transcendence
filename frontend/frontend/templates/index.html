@@ -57,11 +57,11 @@
 			
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 
-			if (url === "login" && getUser().token)
+			if (url === "login" && getUser())
 			{
 				updateState({ page: page_data["home"], url: "/home" });
 			}
-			else if (page_data[url] && getUser().token)
+			else if (page_data[url] && getUser())
 			{
 				updateState({ page: page_data[url], url: "/" + url });
 			}

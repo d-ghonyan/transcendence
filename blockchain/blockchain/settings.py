@@ -21,7 +21,7 @@ STATIC_URL = '/static/'
 
 GANACHE_PORT = os.getenv("GANACHE_PORT")
 MNEMONIC = os.getenv("MNEMONIC")
-GANACHE_URL = f"http://ganache:{GANACHE_PORT}"
+GANACHE_URL = os.getenv("GANACHE_URL")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/4.2/howto/deployment/checklist/
@@ -50,7 +50,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
 	'django.middleware.security.SecurityMiddleware',
-	"whitenoise.middleware.WhiteNoiseMiddleware", # Here
 	'django.contrib.sessions.middleware.SessionMiddleware',
 	"django.middleware.locale.LocaleMiddleware",
 	'corsheaders.middleware.CorsMiddleware',

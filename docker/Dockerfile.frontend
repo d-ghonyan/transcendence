@@ -2,10 +2,9 @@ FROM python:3.7
 
 WORKDIR /app
 
-COPY ./frontend/requirements.txt .
+ADD ./frontend/requirements.txt .
+ADD ./frontend/entrypoint.sh .
 RUN	pip install --upgrade pip && \
 	pip install -r requirements.txt 
-
-ADD ./frontend .
 
 ENTRYPOINT [ "./entrypoint.sh" ]

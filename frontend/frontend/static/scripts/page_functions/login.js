@@ -73,7 +73,7 @@ const login_button = async () => {
 		return ;
 	}
 
-	const res = await fetch(`${api_url}/login/`, {
+	const res = await fetch(`${auth_url}/login/`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -103,7 +103,7 @@ const register_button = async () => {
 		return ;
 	}
 
-	const res = await fetch(`${api_url}/register/`, {
+	const res = await fetch(`${auth_url}/register/`, {
 		method: "POST",
 		headers: {
 			"Content-Type": "application/json"
@@ -128,7 +128,7 @@ const register_button = async () => {
 // 	}
 // */
 
-// 	const res = fetch(`${api_url}/add_tournament/`, {
+// 	const res = fetch(`${auth_url}/add_tournament/`, {
 // 		method: "POST",
 // 		headers: {
 // 			"Content-Type": "application/json"

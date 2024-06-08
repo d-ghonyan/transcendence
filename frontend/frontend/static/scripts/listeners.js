@@ -19,7 +19,7 @@ window.addEventListener('popstate', async (e) => {
 		gameAnimationId = null;
 	}
 
-	if (!getUser().token)
+	if (!getUser())
 	{
 		window.location.href = '/login';
 		return ;

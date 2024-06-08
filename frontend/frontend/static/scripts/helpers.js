@@ -36,22 +36,9 @@ const createLanguageOptions = (optionContainer, selectBtn, customSelect) => {
 	}
 }
 
-const storeUser = (data) => {
-	localStorage.setItem("token", data.token);
-	localStorage.setItem("username", data.username);
-}
-
-const getUser = () => {
-	return {
-		token: localStorage.getItem("token"),
-		username: localStorage.getItem("username"),
-	}
-}
-
-const clearUser = () => {
-	localStorage.removeItem("token");
-	localStorage.removeItem("username");
-}
+const getUser = () => localStorage.getItem("username");
+const clearUser = () => localStorage.removeItem("username");
+const storeUser = (data) => localStorage.setItem("username", data.username);
 
 function addListener(element, event, func)
 {

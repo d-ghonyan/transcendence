@@ -18,6 +18,30 @@ const getRandomSpeed = () => {
 	return Math.random() < 0.5 ? rand : -rand;
 }
 
+/* 
+@params {Object} data
+@params {Array} data.matches [{ user1, user2, score1, score2, winner }]
+@params {String} data.winner
+
+no this description isn't chatgpt generated
+*/
+const storeGameScore = async (data) => {
+
+	try {
+		const res = await fetch(`${blockchain_url}/add_tournament/`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify(data),
+		});
+	} catch (error) {
+		console.error("Couldn't store data in blockchain: " + error);
+		
+		/// TODO: Show error message to user
+	}
+}
+
 const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 	return {
 		"vs1": {

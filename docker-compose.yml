@@ -6,6 +6,11 @@ services:
       - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
     networks:
       - barev
     restart: always
@@ -52,45 +57,51 @@ services:
   #   depends_on:
   #     - elasticsearch
 
-  # ganache:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/Dockerfile.ganache
-  #   stop_grace_period: 5s
-  #   env_file: .docker-env
-  #   volumes:
-  #     - ganache:/data
-  #   ports:
-  #     - ${GANACHE_PORT}:${GANACHE_PORT}
-  #   networks:
-  #     - barev
-  #   restart: always
+  ganache:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.ganache
+    stop_grace_period: 5s
+    env_file: .env
+    volumes:
+      - ganache:/data
+    ports:
+      - ${GANACHE_PORT}:${GANACHE_PORT}
+    networks:
+      - barev
+    restart: always
 
-  # blockchain:
-  #   depends_on:
-  #     - ganache
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/Dockerfile.blockchain
-  #   stop_grace_period: 5s
-  #   env_file: .docker-env
-  #   ports:
-  #     - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
-  #   networks:
-  #     - barev
-  #   restart: always
+  blockchain:
+    depends_on:
+      - ganache
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.blockchain
+    stop_grace_period: 5s
+    env_file: .env
+    volumes:
+      - ./blockchain:/app
+    ports:
+      - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
+    networks:
+      - barev
+    restart: always
 
   user_auth:
     build:
       context: .
       dockerfile: docker/Dockerfile.user_auth
     env_file: .env
+    stop_grace_period: 5s
+    volumes:
+      - ./user_auth:/app
     ports:
       - "${USER_AUTH_PORT}:${USER_AUTH_PORT}"
     networks:
       - barev
     depends_on:
-      - db
+      db: 
+        condition: service_healthy
       # - elasticsearch
       # - logstash
       # - kibana
@@ -101,6 +112,7 @@ services:
       context: .
       dockerfile: docker/Dockerfile.frontend
     env_file: .env
+    stop_grace_period: 5s
     volumes:
       - ./frontend:/app
     ports:
