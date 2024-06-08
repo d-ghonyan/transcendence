@@ -75,7 +75,6 @@ const language_select_popup_change = (e) => {
 var base64EncodedImage;
 
 const ImageFileAccess_change = ()=>{
-	debugger
 	const newsrc = document.querySelector("#profile-picture")
 
     const file = event.target.files[0];

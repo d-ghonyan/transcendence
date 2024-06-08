@@ -13,7 +13,7 @@ const events = {
 }
 
 document.addEventListener('click', async (e) => {
-	e.preventDefault();
+	// e.preventDefault();
 	if (e.target.id.includes('popup'))
 	{
 		openPopup(e);
@@ -29,7 +29,6 @@ document.addEventListener('click', async (e) => {
 	}
 	else
 	{
-		// const reader = new FileReader(); // Create a FileReader object
 		events[e.target.id]?.(e);
 	}
 });
