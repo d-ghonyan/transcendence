@@ -1,12 +1,7 @@
 django
-python-dotenv
-python-dateutil
 django-cors-headers
-gunicorn
-werkzeug
 django-extensions
 pyOpenSSL
-web3
 python-logstash
 django-elasticsearch-dsl
 elasticsearch-dsl

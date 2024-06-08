@@ -1,12 +1,12 @@
 django
 python-dotenv
-python-dateutil
+psycopg2
+bcrypt
+requests
 django-cors-headers
-gunicorn
-werkzeug
+psycopg2-binary
 django-extensions
 pyOpenSSL
-web3
 python-logstash
 django-elasticsearch-dsl
 elasticsearch-dsl

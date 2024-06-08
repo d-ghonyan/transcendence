@@ -3,7 +3,6 @@ from blockchain.settings import GANACHE_URL, BASE_DIR, MNEMONIC
 import os
 import json
 from web3 import Web3
-from solcx import install_solc, compile_files
 
 chain_id = 1337
 tournament_json = BASE_DIR / "contracts/Tournament.json"

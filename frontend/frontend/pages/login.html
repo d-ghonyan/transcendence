@@ -1,0 +1,60 @@
+<!-- Pills navs -->
+<ul class="nav nav-pills nav-justified mb-3" id="ex1" role="tablist">
+	<li class="nav-item" role="presentation">
+		<a class="nav-link active login_tab_text" id="login_tab">Login</a>
+	</li>
+	<li class="nav-item" role="presentation">
+		<a class="nav-link register_tab_text" id="register_tab">Register</a>
+	</li>
+</ul>
+<!-- Pills navs -->
+
+<!-- Pills content -->
+<div class="tab-content">
+	<div class="tab-pane fade show active" id="pills_login" role="tabpanel" aria-labelledby="tab-login">
+		<form id="signin">
+			<!-- Email input -->
+			<div class="form-outline mb-4">
+				<input type="text" id="username" class="form-control input" />
+				<label class="form-label username_text" for="username">Username</label>
+			</div>
+
+			<!-- Password input -->
+			<div class="form-outline mb-4">
+				<input type="password" id="password" class="form-control input" />
+				<label class="form-label password_text" for="password">Password</label>
+			</div>
+
+			<!-- Submit button -->
+			<button type="submit" class="btn btn-primary btn-block mb-4 sign_in_text" id="login_button">Sign in</button>
+		</form>
+	</div>
+	<div class="tab-pane fade" id="pills_register" role="tabpanel" aria-labelledby="tab-register">
+		<form id="register">
+			<!-- Username input -->
+			<div class="form-outline mb-4">
+				<input type="text" id="registerUsername" class="form-control input" />
+				<label class="form-label username_text" for="registerUsername">Username</label>
+			</div>
+
+			<!-- Password input -->
+			<div class="form-outline mb-4">
+				<input type="password" id="registerPassword" class="form-control input" />
+				<label class="form-label password_text" for="registerPassword">Password</label>
+			</div>
+
+			<!-- Repeat Password input -->
+			<div class="form-outline mb-4">
+				<input type="password" id="registerRepeatPassword" class="form-control input" />
+				<label class="form-label repeat_password_text" for="registerRepeatPassword">Repeat password</label>
+			</div>
+
+			<!-- Submit button -->
+			<button type="submit" class="btn btn-primary btn-block mb-3 sign_in_text" id="register_button">Sign in</button>
+		</form>	
+	</div>
+	<div class="error hide" id="error">
+		<span class="error error_text">Please fill out all fields</span>
+	</div>
+</div>
+<!-- Pills content -->

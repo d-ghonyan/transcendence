@@ -1,11 +1,10 @@
 FROM python:3.8.9
 
-# Install dependencies
-COPY ./blockchain .
+ADD ./blockchain/requirements.txt .
 
 RUN	pip install --upgrade pip && \
 pip install -r requirements.txt
 
-COPY ./blockchain .
+ADD ./blockchain .
 
-ENTRYPOINT [ "./entrypoint-blockchain.sh" ]
+ENTRYPOINT [ "./entrypoint.sh" ]
