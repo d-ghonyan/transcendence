@@ -5,7 +5,6 @@ function updateState(state)
 	const page = state.page;
 	// const container = 
 	changePageContent(page.html);
-	// appendScript(container, page.js);
 }
 
 function appendScript(container, js)
