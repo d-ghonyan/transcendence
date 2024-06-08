@@ -9,6 +9,7 @@ const events = {
 	intra_button,
 	submit_button,
 	language_select_popup_change,
+	ImageFileAccess_change
 }
 
 document.addEventListener('click', async (e) => {
@@ -28,6 +29,7 @@ document.addEventListener('click', async (e) => {
 	}
 	else
 	{
+		// const reader = new FileReader(); // Create a FileReader object
 		events[e.target.id]?.(e);
 	}
 });
@@ -42,6 +44,6 @@ document.addEventListener('input', async (e) => {
 });
 
 document.addEventListener('change', async (e) => {
-	e.preventDefault();
-	console.log(events[`${e.target.id}_change`]?.(e));
+	// e.preventDefault();
+	events[`${e.target.id}_change`]?.(e);
 });

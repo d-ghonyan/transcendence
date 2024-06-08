@@ -32,17 +32,15 @@ const logout_button = async () => {
 
 	updateState({ page: page_data['login'], url: "/login" });
 }
+
 let 	prefered_lang = lang
 const submit_button = async (e) => {
-	
-	//update language
 	lang = prefered_lang
-	// updateLanguage()
+	updateLanguage()
 	e.preventDefault()
 	const username_value = document.querySelector('.username_input').value
 	const password_value = document.querySelector('.password_input').value
 	const repeat_password_value = document.querySelector('.repeat_password_input').value
-	const file_input = document.querySelector('.file_input').files[0];
 	console.log("logged in user is ", getUser())
 	
 	//send request to save 
@@ -74,4 +72,18 @@ const language_select_popup_change = (e) => {
 	prefered_lang = e.target.value || lang ;
 }
 
+var base64EncodedImage;
 
+const ImageFileAccess_change = ()=>{
+	debugger
+	const newsrc = document.querySelector("#profile-picture")
+
+    const file = event.target.files[0];
+    const reader = new FileReader(); 
+    reader.onload = function(event) {
+        base64EncodedImage = event.target.result;
+        base64EncodedImage = base64EncodedImage.replace(/^data:image\/(png|jpg|jpeg);base64,/, '');
+        newsrc.src = `data:image/png;base64,${base64EncodedImage}`;
+    };
+    reader.readAsDataURL(file);
+}
