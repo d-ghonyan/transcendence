@@ -1,64 +1,128 @@
 services:
   db:
     image: postgres:latest
-    env_file: .docker-env
+    env_file: .env
     volumes:
       - postgres:/var/lib/postgresql/data
     ports:
       - 5432:5432
-
     networks:
       - barev
-
     restart: always
 
-  # hardhat:
-  #   stop_grace_period: 5s
-  #   env_file: .docker-env
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.hardhat
+  # elasticsearch:
+  #   image: elasticsearch:latest
+  #   container_name: elasticsearch
+  #   ports:
+  #     - "9200:9200"
+  #     - "9300:9300"
   #   volumes:
-  #     - ./hardhat:/app
-  #   # networks:
-  #   #   - barev
+  #     - elastic_data:/usr/share/elasticsearch/data/
+  #     - ./elk-config/elasticsearch/elasticsearch.yml:/usr/share/elasticsearch/config/elasticsearch.yml
+  #   env_file:
+  #     - .env
+  #   networks:
+  #     - elk
+
+  # logstash:
+  #   image: logstash:latest
+  #   container_name: logstash
+  #   ports:
+  #     - "5044:5044"
+  #     - "9600:9600"
+  #   volumes:
+  #     - ./elk-config/logstash/logstash.conf:/usr/share/logstash/pipeline/logstash.conf
+  #     - ./elk-config/logstash/logstash.yml:/usr/share/logstash/config/logstash.yml
+  #     - ls_data:/usr/share/logstash/data
+  #   networks:
+  #     - elk
   #   depends_on:
-  #     - ganache
+  #     - elasticsearch
+
+  # kibana:
+  #   image: kibana:latest
+  #   container_name: kibana
+  #   ports:
+  #     - "5601:5601"
+  #   volumes:
+  #     - ./elk-config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
+  #     - kb_data:/usr/share/kibana/data
+  #   networks:
+  #     - elk
+  #   depends_on:
+  #     - elasticsearch
+
   # ganache:
   #   build:
   #     context: .
-  #     dockerfile: Dockerfile.ganache
+  #     dockerfile: ./docker/Dockerfile.ganache
   #   stop_grace_period: 5s
   #   env_file: .docker-env
   #   volumes:
   #     - ganache:/data
   #   ports:
-  #     - 8545:8545
-  #   # networks:
-  #   #   - barev
-  #   restart: always
-
-  # backend:
-  #   build:
-  #     context: .
-  #     dockerfile: Dockerfile.django
-  #   volumes:
-  #     - .:/app
-  #   ports:
-  #     - "8000:8000"
-
+  #     - ${GANACHE_PORT}:${GANACHE_PORT}
   #   networks:
   #     - barev
-  #   depends_on:
-  #     - db
-  #   env_file:
-  #     - .env
   #   restart: always
+
+  # blockchain:
+  #   depends_on:
+  #     - ganache
+  #   build:
+  #     context: .
+  #     dockerfile: ./docker/Dockerfile.blockchain
+  #   stop_grace_period: 5s
+  #   env_file: .docker-env
+  #   ports:
+  #     - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
+  #   networks:
+  #     - barev
+  #   restart: always
+
+  user_auth:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.user_auth
+    env_file: .env
+    ports:
+      - "${USER_AUTH_PORT}:${USER_AUTH_PORT}"
+    networks:
+      - barev
+    depends_on:
+      - db
+      # - elasticsearch
+      # - logstash
+      # - kibana
+    restart: always
+
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    env_file: .env
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - barev
+    depends_on:
+      - user_auth
+    restart: always
+      # - elasticsearch
+      # - logstash
+      # - kibana
 
 volumes:
   postgres:
   ganache:
+  elastic_data:
+  ls_data:
+  kb_data:
 
 networks:
   barev:
+    driver: bridge
+  elk:
     driver: bridge

@@ -1,0 +1,12 @@
+django
+python-dotenv
+psycopg2
+bcrypt
+requests
+django-cors-headers
+psycopg2-binary
+django-extensions
+pyOpenSSL
+python-logstash
+django-elasticsearch-dsl
+elasticsearch-dsl

@@ -1,0 +1,10 @@
+# node:alpine will be our base image to create this image
+FROM node:alpine
+
+WORKDIR /app
+
+RUN npm install ganache-cli --save-dev && mkdir /data
+ENV PATH="/app/node_modules/.bin:${PATH}"
+COPY ./docker/entrypoint-ganache.sh /app
+
+ENTRYPOINT ["./entrypoint-ganache.sh"]
