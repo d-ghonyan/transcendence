@@ -1,183 +1,218 @@
-const startGame = (gameMode, settings) => {
-	const canvas = document.getElementById('gameCanvas');
+class Game {
+	constructor(gameMode, settings) {
+		this.canvas = document.getElementById('gameCanvas');
+		this.ctx = this.canvas.getContext('2d');
+		this.ballSize = this.clamp(settings.ballSize, DEFAULTS.ballSize_min, DEFAULTS.ballSize_max);
 
-	const ctx = canvas.getContext('2d');
-	const ballSize = 10;
-	const winningScore = Infinity;
+		this.paddleWidth = this.clamp(settings.paddleWidth, DEFAULTS.paddleWidth_min, DEFAULTS.paddleWidth_max);
+		this.paddleHeight = this.clamp(settings.paddleHeight, DEFAULTS.paddleHeight_min, DEFAULTS.paddleHeight_max);
+		this.paddleSpeed = this.clamp(settings.paddleSpeed, DEFAULTS.paddleSpeed_min, DEFAULTS.paddleSpeed_max);
 
-	let player1Score = 0;
-	let player2Score = 0;
+		this.player1Score = 0;
+		this.player2Score = 0;
+		this.winningScore = Infinity;
 
-	canvas.width = canvasSize[gameMode].w;
-	canvas.height = canvasSize[gameMode].h;
-	const mode = gameOptions({
-		canvas,
-		paddleWidth: DEFAULTS.width,
-		paddleHeight: DEFAULTS.height
-	})[gameMode];
+		this.gameMode = gameMode;
+		this.settings = settings;
 
-	addControls(mode);
-	addPowerupHints(/* settings.powerupTypes */['shrink'], powerupConfig);
+		this.timeoutId = null;
+		this.gameAnimationId = null;
 
-	const balls = [];
-	const paddles = [];
-	let powerup = null;
+		this.balls = [];
+		this.paddles = [];
+		this.controller = {};
+		this.paddleCollided = [];
+		this.powerup = null;
 
-	for (let i = 1; i <= mode.playerCount; i++)
-	{
-		const paddle = new Paddle(
-			mode.paddlePositions[`player${i}`].x,
-			mode.paddlePositions[`player${i}`].y,
-		);
-
-		paddles.push(paddle);
+		this.mode = gameOptions({
+			canvas: this.canvas,
+			paddleWidth: this.paddleWidth,
+			paddleHeight: this.paddleHeight,
+		})[this.gameMode];
 	}
 
-	for (let i = 0; i < mode.ballCount; i++)
-	{
-		balls.push(new Ball(canvas.width / 2, canvas.height / 2,
-						ballSize, i % 2 == 0 ? 5 : -5, getRandomSpeed()));
+	clamp(value, min, max) {
+		return Math.min(Math.max(value, min), max);
 	}
 
-	const controller = {};
-
-	for (const control in mode.controls)
-	{
-		const index = parseInt(control[control.length - 1]) - 1;
-
-		controller[mode.controls[control].up] = { index, func: 'moveUp', pressed: false };
-		controller[mode.controls[control].down] = { index, func: 'moveDown', pressed: false };
+	start() {
+		this.setupCanvas();
+		this.setupControls();
+		this.setupPowerupHints();
+		this.setupGame();
+		this.draw();
 	}
 
-	const paddleCollided = [];
+	setupCanvas() {
+		this.canvas.width = canvasSize[this.gameMode].w;
+		this.canvas.height = canvasSize[this.gameMode].h;
+	}
 
-	let timeoutId = null;
+	setupControls() {
+		for (const control in this.mode.controls) {
+			const index = parseInt(control[control.length - 1]) - 1;
+			this.controller[this.mode.controls[control].up] = { index, func: 'moveUp', pressed: false };
+			this.controller[this.mode.controls[control].down] = { index, func: 'moveDown', pressed: false };
+		}
 
-	function draw() {
+		addListener(document, 'keydown', this.handleKeyDown.bind(this));
+		addListener(document, 'keyup', this.handleKeyUp.bind(this));
+		addListener(document, 'keydown', this.handlePause.bind(this));
+
+		addControls(this.mode);
+	}
+
+	setupPowerupHints() {
+		addPowerupHints(this.settings.powerups, powerupConfig);
+	}
+
+	setupGame() {
+		for (let i = 1; i <= this.mode.playerCount; i++) {
+			const paddle = new Paddle(
+				this.mode.paddlePositions[`player${i}`].x,
+				this.mode.paddlePositions[`player${i}`].y,
+				this.paddleWidth,
+				this.paddleHeight,
+				this.paddleSpeed
+			);
+
+			this.paddles.push(paddle);
+		}
+
+		for (let i = 0; i < this.mode.ballCount; i++) {
+			this.balls.push(new Ball(this.canvas.width / 2, this.canvas.height / 2,
+				this.ballSize, i % 2 == 0 ? 5 : -5, getRandomSpeed()));
+		}
+	}
+
+	draw() {
 		const randomSpawnTimeout = Math.floor(Math.random() * 4000) + 2000;
 
-		if (/* settings?.powerupTypes.length > 0 &&  */!timeoutId)
-		{
-			timeoutId = new Timer(() => {
-				powerup = new Powerup(canvas.width / 2, 
-					Math.floor(Math.random() * canvas.height, /* settings.powerupTypes */));
-	
-				timeoutId = null;
+		if (!this.timeoutId && this.settings.powerups.length > 0) {
+			this.timeoutId = new Timer(() => {
+				this.powerup = new Powerup(this.canvas.width / 2,
+					Math.floor(Math.random() * this.canvas.height), this.settings.powerups);
+				this.timeoutId = null;
 			}, randomSpawnTimeout);
 		}
 
-		paddleCollided.length = 0;
-		runPressedButtons(paddles);
-		
-		ctx.clearRect(0, 0, canvas.width, canvas.height);
-		drawScore();
+		this.paddleCollided.length = 0;
+		this.runPressedButtons();
+		this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+		this.drawScore();
 
-		powerup?.draw(ctx);
+		this.powerup?.draw(this.ctx);
 
-		balls.forEach(ball => {
-			ball.draw(ctx);
+		this.balls.forEach(ball => {
+			ball.draw(this.ctx);
 		});
 
-		paddles.forEach(paddle => {
-			paddle.draw(ctx);
+		this.paddles.forEach(paddle => {
+			paddle.draw(this.ctx);
 
-			balls.forEach((ball, index) => {
-				if (!paddleCollided[index] && ball.collidesWithPaddle(paddle)) {
+			this.balls.forEach((ball, index) => {
+				if (!this.paddleCollided[index] && ball.collidesWithPaddle(paddle)) {
 					ball.speedX = -ball.speedX;
 					let deltaY = ball.y - (paddle.y + paddle.height / 2);
 					ball.speedY = deltaY * 0.35;
-
-					paddleCollided[index] = true;
+					this.paddleCollided[index] = true;
 				}
 			});
 
-			if (powerup?.collidesWithPaddle(paddle)) {
-				powerup.applyEffect(paddle);
-				powerup = null;
+			if (this.powerup?.collidesWithPaddle(paddle)) {
+				this.powerup.applyEffect(paddle);
+				this.powerup = null;
 			}
 		});
 
-		balls.forEach(ball => {
-			if (ball.collidesWithWalls(canvas.height)) {
+		this.balls.forEach(ball => {
+			if (ball.collidesWithWalls(this.canvas.height)) {
 				ball.speedY = -ball.speedY;
 			}
 
 			if (ball.x < 0) {
-				player2Score++;
-				ball.reset(canvas);
-			} else if (ball.x > canvas.width) {
-				player1Score++;
-				ball.reset(canvas);
+				this.player2Score++;
+				ball.reset(this.canvas);
+			} else if (ball.x > this.canvas.width) {
+				this.player1Score++;
+				ball.reset(this.canvas);
 			}
 		});
 
-		if (powerup?.collidesWithWalls(canvas.height)) {
-			powerup.speedY = -powerup?.speedY;
+		if (this.powerup?.collidesWithWalls(this.canvas.height)) {
+			this.powerup.speedY = -this.powerup?.speedY;
 		}
 
-		if (powerup?.x < 0 || powerup?.x > canvas.width) {
-			powerup = null;
+		if (this.powerup?.x < 0 || this.powerup?.x > this.canvas.width) {
+			this.powerup = null;
 		}
 
-		if (player1Score === winningScore || player2Score === winningScore) {
-			alert(`${player1Score > player2Score ? 'Player 1' : 'Player 2'} wins!`);
-			resetScore();
+		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
+			alert(`${this.player1Score > this.player2Score ? 'Player 1' : 'Player 2'} wins!`);
+			this.resetScore();
 		}
 
-		gameAnimationId = requestAnimationFrame(draw);
+		this.gameAnimationId = requestAnimationFrame(this.draw.bind(this));
 	}
 
-	function drawScore() {
-		ctx.fillStyle = 'white';
-		ctx.font = '20px Arial';
-		ctx.fillText(`${mode.teamNames.player1}: ${player1Score}`, 20, 30);
-		ctx.fillText(`${mode.teamNames.player2}: ${player2Score}`, canvas.width - 140, 30);
+	drawScore() {
+		this.ctx.fillStyle = 'white';
+		this.ctx.font = '20px Arial';
+		this.ctx.fillText(`${this.mode.teamNames.player1}: ${this.player1Score}`, 20, 30);
+		this.ctx.fillText(`${this.mode.teamNames.player2}: ${this.player2Score}`, this.canvas.width - 140, 30);
 	}
 
-	function resetScore() {
-		player1Score = 0;
-		player2Score = 0;
+	resetScore() {
+		this.player1Score = 0;
+		this.player2Score = 0;
 	}
 
-	const handleKeyDown = (e) => {
-		controller[e.key] && (controller[e.key].pressed = true)
-	}
-	
-	const handleKeyUp = (e) => {
-		controller[e.key] && (controller[e.key].pressed = false)
+	handleKeyDown(e) {
+		this.controller[e.key] && (this.controller[e.key].pressed = true);
 	}
 
-	const runPressedButtons = (paddles) => {
-		Object.keys(controller).forEach(key => {
+	handleKeyUp(e) {
+		this.controller[e.key] && (this.controller[e.key].pressed = false);
+	}
 
-			const cont = controller[key];
+	handlePause(e) {
+		if (e.key === 'p') {
+			if (this.gameAnimationId) {
+				this.paddles.forEach(paddle => this.pausePaddleEffects(paddle));
+				cancelAnimationFrame(this.gameAnimationId);
+				this.gameAnimationId = null;
+			} else {
+				this.paddles.forEach(paddle => this.resumePaddleEffects(paddle));
+				this.gameAnimationId = requestAnimationFrame(this.draw.bind(this));
+			}
+		}
+	}
+
+	runPressedButtons() {
+		Object.keys(this.controller).forEach(key => {
+			const cont = this.controller[key];
 			const index = cont.index;
 			const func = cont.func;
-
-			controller[key].pressed && paddles[index][func](canvas.height);
+			cont.pressed && this.paddles[index][func](this.canvas.height);
 		});
 	}
 
-	addListener(document, 'keydown', handleKeyDown);
-	addListener(document, 'keyup', handleKeyUp);
-	addListener(document, 'keydown', (e) => {
-		if (e.key === 'p')
-		{
-			if (gameAnimationId)
-			{			
-				paddles.forEach(paddle => pausePaddleEffects(paddle));
-				cancelAnimationFrame(gameAnimationId);
-				gameAnimationId = null;
-			}
-			else
-			{
-				paddles.forEach(paddle => resumePaddleEffects(paddle));
-				gameAnimationId = requestAnimationFrame(draw);
-			}
+	pausePaddleEffects(paddle) {
+		for (const effect in paddle.effects) {
+			paddle.effects[effect].pause();
 		}
-	});
+	}
 
-	draw();
+	resumePaddleEffects(paddle) {
+		for (const effect in paddle.effects) {
+			paddle.effects[effect].resume();
+		}
+	}
+}
+
+const startGame = (gameMode, settings) => {
+	const game = new Game(gameMode, settings);
+	game.start();
 }
 
 function addControls(gameOptions)

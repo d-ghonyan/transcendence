@@ -1,11 +1,11 @@
 class Paddle {
-	constructor(x, y) {
+	constructor(x, y, width=DEFAULTS.width, height=DEFAULTS.height, speed=DEFAULTS.speed) {
 		this.x = x;
 		this.y = y;
 
-		this.width = DEFAULTS.width;
-		this.height = DEFAULTS.height;
-		this.speed = DEFAULTS.speed;
+		this.width = width;
+		this.height = height;
+		this._speed = speed;
 
 		this.effects = {};
 	}

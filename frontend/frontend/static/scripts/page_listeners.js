@@ -4,9 +4,7 @@ const events = {
 	login_button,
 	register_button,
 	logout_button,
-	overlay,
 	startGame,
-	submit_button
 }
 
 document.addEventListener('click', async (e) => {
@@ -22,7 +20,14 @@ document.addEventListener('click', async (e) => {
 	else if (e.target.id.includes("vs"))
 	{
 		updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
-		startGame(e.target.id);
+		startGame(e.target.id, {
+			powerups: ["shrink", "grow"],
+			ballSize: 45,
+			ballSpeed: 5,
+			paddleSpeed: 10,
+			paddleWidth: 20,
+			paddleHeight: 80,
+		});
 	}
 	else if (e.target.id.includes("submit_button"))
 	{

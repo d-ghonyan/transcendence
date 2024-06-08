@@ -2,8 +2,23 @@ const DEFAULTS = {
 	width: 10,
 	height: 80,
 	speed: 15,
-
 	radius: 10,
+
+
+	ballSize_min: 5,
+	ballSize_max: 20,
+
+	ballSpeed_min: 5,
+	ballSpeed_max: 10,
+	
+	paddleHeight_min: 40,
+	paddleHeight_max: 160,
+	
+	paddleSpeed_min: 6,
+	paddleSpeed_max: 25,
+	
+	paddleWidth_min: 10,
+	paddleWidth_max: 30,
 };
 
 const POWERUPS = {
