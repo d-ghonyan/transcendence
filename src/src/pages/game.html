@@ -1,1 +1,50 @@
-<canvas id="gameCanvas" width="800" height="400"></canvas>
+<style>
+	.gamecontainer {
+		display: flex;
+		gap: 20px;
+	}
+
+	.hints {
+		margin-left: 40px;
+		gap: 20px;
+	}
+
+	.controls {
+		display: flex;
+		justify-content: space-between;
+		width: 400px;
+
+		padding: 0;
+		margin: 0;
+	}
+
+	.controls p {
+		font-size: large;
+		font-weight: bold;
+	}
+
+	.powerup-color {
+		width: 20px;
+		height: 20px;
+		border-radius: 50%;
+	}
+
+	.name-container {
+		display: flex;
+		gap: 10px;
+	}
+
+</style>
+
+<div class="game-container d-flex">
+
+	<div class="canvas-container">
+		<canvas id="gameCanvas" width="800" height="400"></canvas>
+	</div>
+
+	<div class="hints d-flex flex-column">
+		<div class="controls d-flex" id="controls"></div>
+		<div class="controls d-flex justify-content-around flex-column" id="powerups"></div>
+	</div>
+</div>
+

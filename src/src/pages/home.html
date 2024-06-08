@@ -7,6 +7,8 @@
 		selectedLanguage = this.value;
 	});
 
+	/* TODO: what is this???????? */
+
 </script>
 
 <style>
@@ -59,7 +61,6 @@
 </style>
 
 <div class="homepage d-flex flex-column justify-content-between w-100 h-100">
-
 	<div class="header">
 		<div class="d-flex justify-content-between align-items-center">
 			<div class="profile_picture">
@@ -98,7 +99,6 @@
 			<button class="tournament_text btn btn-danger w-100 h-50 font-weight-bold">fc_42</button>
 		</div>
 	</div>
-
 
 	<div class="popup h-300" id="settings_popup">
 		<div class="popup_content">
@@ -157,30 +157,33 @@
 					<button class="btn btn-success">Add</button>
 				</div>
 			</div>
+		</div>
+	</div>
 
-			<div class="popup" id="history_popup">
-				<div class="popup_content">
-					<div class="popup_header">
-						<div class="close_button d-flex justify-content-between">
-							<h1 class="popup_header_text">History</h1>
-							<button class="close btn btn-danger" id="history_close_button">X</button>
-						</div>
+	<div class="popup" id="history_popup">
+		<div class="popup_content">
+			<div class="popup_header">
+				<div class="close_button d-flex justify-content-between">
+					<h1 class="popup_header_text">History</h1>
+					<button class="close btn btn-danger" id="history_close_button">X</button>
+				</div>
+			</div>
+			<div class="popup_body d-flex flex-column">
+				<div class="history_list">
+					<div class="history d-flex justify-content-between">
+						<p class="history_text">History 1</p>
+						<button class="btn btn-danger">Remove</button>
 					</div>
-					<div class="popup_body d-flex flex-column">
-						<div class="history_list">
-							<div class="history d-flex justify-content-between">
-								<p class="history_text">History 1</p>
-								<button class="btn btn-danger">Remove</button>
-							</div>
-							<div class="history d-flex justify-content-between">
-								<p class="history_text">History 2</p>
-								<button class="btn btn-danger">Remove</button>
-							</div>
-							<div class="history d-flex justify-content-between">
-								<p class="history_text">History 3</p>
-								<button class="btn btn-danger">Remove</button>
-							</div>
-						</div>
+					<div class="history d-flex justify-content-between">
+						<p class="history_text">History 2</p>
+						<button class="btn btn-danger">Remove</button>
+					</div>
+					<div class="history d-flex justify-content-between">
+						<p class="history_text">History 3</p>
+						<button class="btn btn-danger">Remove</button>
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</div>
