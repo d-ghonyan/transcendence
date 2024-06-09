@@ -7,6 +7,22 @@ from django.views.decorators.csrf import csrf_exempt
 
 @require_POST
 @csrf_exempt
+def set_language(request):
+	body = json.loads(request.body)
+	if body['username'] and body['language']:
+		try:
+			user = User.objects.filter(username=body['username']).first()
+			if (user):
+				user.language = body['language']
+				user.save()
+				return JsonResponse({ "status": 200, "message": "Language updated successfully" })
+			return JsonResponse({ "status": 400, "message": "User not found" })
+		except Exception as e:
+			return JsonResponse({ "status": 500, "message": e })
+	return JsonResponse({ "status": 400, "message": "Bad request" })
+
+@require_POST
+@csrf_exempt
 def register(request):
 	body = json.loads(request.body)
 	if body['username'] and body['password'] and body['repeat_password']:
@@ -20,7 +36,7 @@ def register(request):
 			hashed = bcrypt.hashpw(body['password'].encode('utf-8'), bcrypt.gensalt())
 			hashed = hashed.decode('utf-8')
 
-			User.objects.create(username=body['username'], password=hashed)
+			User.objects.create(username=body['username'], password=hashed, language='us')
 			return JsonResponse({ "status": 200, "message": "User created successfully" })
 		except Exception as e:
 			return JsonResponse({ "status": 500, "message": f"Error: {e}" })
@@ -40,6 +56,7 @@ def login(request):
 					"status": 200,
 					"message": "User logged in successfully",
 					"username": user.username,
+					"language": user.language,
 				})
 			return JsonResponse({ "status": 400, "message": "Invalid username or password" })
 		except Exception as e:

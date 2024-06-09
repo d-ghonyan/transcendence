@@ -1,17 +1,16 @@
 class Powerup extends MovingObject {
 	constructor(x, y, effectTypes) {
 
-		const speedX = Math.random() < 0.5 ? 5 : -5;
-		super(x, y, DEFAULTS.radius, speedX, getRandomSpeed());
+		const speedX = Math.random() < 0.5 ? 2 : -2;
+		super(x, y, DEFAULTS.ballSize, speedX, getRandomSpeed());
 
 		this.effectTypes = effectTypes || ['shrink', 'grow', 'slowDown', 'speedUp'];
 		this.effectType = this.effectTypes[Math.floor(Math.random() * this.effectTypes.length)];
 		this.effectDuration = 7000;
-		this.radius = DEFAULTS.radius;
+		this.radius = DEFAULTS.ballSize;
 		this.timeout = null;
 		this.paddleProperty = this.getPaddleProperty();
-
-		this.color = this.getColor();
+		this.color = COLORS[this.effectType];
 	}
 
 	getPaddleProperty() {
@@ -25,45 +24,42 @@ class Powerup extends MovingObject {
 		}
 	}
 
-	getColor() {
-		switch (this.effectType) {
-			case 'shrink':
-				return 'red';
-			case 'grow':
-				return 'green';
-			case 'slowDown':
-				return 'blue';
-			case 'speedUp':
-				return 'yellow';
-			default:
-				return 'white';
-		}
-	}
-
 	applyEffect(paddle) {
 		if (paddle.effects[this.paddleProperty])
 		{
 			clearTimeout(paddle.effects[this.paddleProperty].timerId);
+			this.revertEffect(paddle);
 		}
 
-		paddle[this.paddleProperty] = POWERUPS[this.effectType];
+		switch (this.effectType) {
+			case 'shrink':
+				paddle.height /= 2;
+				break ;
+			case 'grow':
+				paddle.height *= 2;
+				break ;
+			case 'slowDown':
+				paddle.speed /= 1.5;
+				break ;
+			case 'speedUp':
+				paddle.speed *= 1.5;
+				break ;
+		}
 
-		paddle.effects[this.paddleProperty] = new Timer(() => {
-			this.revertEffect(paddle);
-		}, this.effectDuration);
+		paddle.effects[this.paddleProperty] = new Timer(() => this.revertEffect(paddle), this.effectDuration);
 	}
 
 	revertEffect(paddle) {
 		switch (this.effectType) {
 			case 'shrink':
 			case 'grow':
-				paddle.height = DEFAULTS.height;
-				break;
+				paddle.height = gameSettings.paddleHeight;
+				break ;
 			case 'slowDown':
 			case 'speedUp':
-				paddle.speed = DEFAULTS.speed;
-				break;
+				paddle.speed = gameSettings.paddleSpeed;
+				break ;
 		}
-		paddle.effects[this.paddleProperty] = null;
+		delete paddle.effects[this.paddleProperty];
 	}
 }

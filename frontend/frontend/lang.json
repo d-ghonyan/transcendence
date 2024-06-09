@@ -66,5 +66,45 @@
 		"us": "Tournament",
 		"am": "Մրցաշար",
 		"ru": "Турнир"
+	},
+	"ball_size_text": {
+		"us": "Ball size",
+		"am": "Գնդի չափ",
+		"ru": "Размер мяча"
+	},
+	"ball_speed_text": {
+		"us": "Ball speed",
+		"am": "Գնդի արագություն",
+		"ru": "Скорость мяча"
+	},
+	"paddle_size_text": {
+		"us": "Paddle size",
+		"am": "Խաղացողի չափ",
+		"ru": "Размер ракетки"
+	},
+	"paddle_speed_text": {
+		"us": "Paddle speed",
+		"am": "Խաղացողի արագություն",
+		"ru": "Скорость ракетки"
+	},
+	"shrink_text": {
+		"us": "Shrink powerup",
+		"am": "Փոքրացնել",
+		"ru": "Уменьшить"
+	},
+	"grow_text": {
+		"us": "Grow powerup",
+		"am": "Մեծացնել",
+		"ru": "Увеличить"
+	},
+	"slow_down_text": {
+		"us": "Slow down powerup",
+		"am": "Դանդաղեցնել",
+		"ru": "Замедлить"
+	},
+	"speed_up_text": {
+		"us": "Speed up powerup",
+		"am": "Արագացնել",
+		"ru": "Ускорить"
 	}
 }

@@ -17,7 +17,6 @@
 
 	<script src="{% static 'scripts/state.js' %}" type="text/javascript"></script>
 	<script src="{% static 'scripts/config.js' %}" type="text/javascript"></script>
-	<script src="{% static 'scripts/listeners.js' %}" type="text/javascript"></script>
 	<script src="{% static 'scripts/helpers.js' %}" type="text/javascript"></script>
 
 	<script src="{% static 'scripts/page_functions/login.js' %}" type="text/javascript"></script>
@@ -54,16 +53,16 @@
 			customSelect.addEventListener("click", () => {
 				optionContainer.style.display = optionContainer.style.display === "none"  ? "flex" : "none";
 			});
-			
+
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 
 			if (url === "login" && getUser())
 			{
-				updateState({ page: page_data["home"], url: "/home" });
+				updateState({ page: page_data["home"], url: "/home", onload: "homeOnload" });
 			}
 			else if (page_data[url] && getUser())
 			{
-				updateState({ page: page_data[url], url: "/" + url });
+				updateState({ page: page_data[url], url: "/" + url, onload: url + "Onload"});
 			}
 			else
 			{
@@ -78,7 +77,9 @@
 
 <body style="height: 90vh;">
 
-	<div id="overlay"></div>
+	<div class="error hide" id="error">
+		<span>Please help us graduate</span>
+	</div>
 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">

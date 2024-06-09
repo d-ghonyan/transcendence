@@ -17,9 +17,11 @@ Including another URLconf
 from django.urls import path
 from django.http import JsonResponse
 
-from .views import register, login
+from .views import register, login, set_language
 # from user_auth import logger
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def test(request):
 	# logger.info("anasun es?")
 	return JsonResponse({ "status": 200, "message": "User created successfully" })
@@ -28,4 +30,5 @@ urlpatterns = [
 	path('register/', register),
 	path('login/', login),
 	path('test/', test),
+	path('set_language/', set_language),
 ]

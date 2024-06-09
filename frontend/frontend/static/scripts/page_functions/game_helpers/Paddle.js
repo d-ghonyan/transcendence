@@ -1,11 +1,11 @@
 class Paddle {
-	constructor(x, y, width=DEFAULTS.width, height=DEFAULTS.height, speed=DEFAULTS.speed) {
+	constructor(x, y, width=DEFAULTS.paddleWidth, height=DEFAULTS.paddleHeight, speed=DEFAULTS.paddleSpeed) {
 		this.x = x;
 		this.y = y;
 
 		this.width = width;
 		this.height = height;
-		this._speed = speed;
+		this.speed = speed;
 
 		this.effects = {};
 	}
@@ -15,23 +15,15 @@ class Paddle {
 		ctx.fillRect(this.x, this.y, this.width, this.height, 'white');
 	}
 
-	get speed() {
-		return this._speed;
-	}
-
-	set speed(newSpeed) {
-		this._speed = newSpeed;
-	}
-
 	moveUp() {
 		if (this.y > 0) {
-			this.y -= this._speed;
+			this.y -= this.speed;
 		}
 	}
 
 	moveDown(canvasHeight) {
 		if (this.y + this.height < canvasHeight) {
-			this.y += this._speed;
+			this.y += this.speed;
 		}
 	}
 

@@ -2,18 +2,20 @@ class Game {
 	constructor(gameMode, settings) {
 		this.canvas = document.getElementById('gameCanvas');
 		this.ctx = this.canvas.getContext('2d');
-		this.ballSize = this.clamp(settings.ballSize, DEFAULTS.ballSize_min, DEFAULTS.ballSize_max);
-
-		this.paddleWidth = this.clamp(settings.paddleWidth, DEFAULTS.paddleWidth_min, DEFAULTS.paddleWidth_max);
-		this.paddleHeight = this.clamp(settings.paddleHeight, DEFAULTS.paddleHeight_min, DEFAULTS.paddleHeight_max);
-		this.paddleSpeed = this.clamp(settings.paddleSpeed, DEFAULTS.paddleSpeed_min, DEFAULTS.paddleSpeed_max);
-
+		
+		this.ballSize = settings.ballSize;
+		this.ballSpeed = settings.ballSpeed;
+		this.paddleWidth = settings.paddleWidth;
+		this.paddleHeight = settings.paddleHeight;
+		this.paddleSpeed = settings.paddleSpeed;
+		
 		this.player1Score = 0;
 		this.player2Score = 0;
 		this.winningScore = Infinity;
-
+		
 		this.gameMode = gameMode;
 		this.settings = settings;
+		this.setupCanvas();
 
 		this.timeoutId = null;
 		this.gameAnimationId = null;
@@ -31,12 +33,7 @@ class Game {
 		})[this.gameMode];
 	}
 
-	clamp(value, min, max) {
-		return Math.min(Math.max(value, min), max);
-	}
-
 	start() {
-		this.setupCanvas();
 		this.setupControls();
 		this.setupPowerupHints();
 		this.setupGame();
@@ -81,7 +78,7 @@ class Game {
 
 		for (let i = 0; i < this.mode.ballCount; i++) {
 			this.balls.push(new Ball(this.canvas.width / 2, this.canvas.height / 2,
-				this.ballSize, i % 2 == 0 ? 5 : -5, getRandomSpeed()));
+				this.ballSize, i % 2 == 0 ? this.ballSpeed : -this.ballSpeed, getRandomSpeed()));
 		}
 	}
 
@@ -104,7 +101,7 @@ class Game {
 		this.powerup?.draw(this.ctx);
 
 		this.balls.forEach(ball => {
-			ball.draw(this.ctx);
+			if (ball.redraw) ball.draw(this.ctx);
 		});
 
 		this.paddles.forEach(paddle => {
@@ -114,7 +111,7 @@ class Game {
 				if (!this.paddleCollided[index] && ball.collidesWithPaddle(paddle)) {
 					ball.speedX = -ball.speedX;
 					let deltaY = ball.y - (paddle.y + paddle.height / 2);
-					ball.speedY = deltaY * 0.35;
+					ball.speedY = deltaY * 0.1;
 					this.paddleCollided[index] = true;
 				}
 			});
@@ -126,6 +123,8 @@ class Game {
 		});
 
 		this.balls.forEach(ball => {
+			if (!ball.redraw) return ;
+
 			if (ball.collidesWithWalls(this.canvas.height)) {
 				ball.speedY = -ball.speedY;
 			}
@@ -148,7 +147,6 @@ class Game {
 		}
 
 		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
-			alert(`${this.player1Score > this.player2Score ? 'Player 1' : 'Player 2'} wins!`);
 			this.resetScore();
 		}
 
@@ -208,6 +206,10 @@ class Game {
 			paddle.effects[effect].resume();
 		}
 	}
+}
+
+function gameOnload () {
+
 }
 
 const startGame = (gameMode, settings) => {
@@ -282,19 +284,5 @@ const addPowerupHints = (powerupTypes, config) => {
 		powerupHint.appendChild(description);
 
 		powerupHints.appendChild(powerupHint);
-	}
-}
-
-const pausePaddleEffects = (paddle) => {
-	for (const effect in paddle.effects)
-	{
-		paddle.effects[effect].pause();
-	}
-}
-
-const resumePaddleEffects = (paddle) => {
-	for (const effect in paddle.effects)
-	{
-		paddle.effects[effect].resume();
 	}
 }

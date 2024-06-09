@@ -1,33 +1,3 @@
-const DEFAULTS = {
-	width: 10,
-	height: 80,
-	speed: 15,
-	radius: 10,
-
-
-	ballSize_min: 5,
-	ballSize_max: 20,
-
-	ballSpeed_min: 5,
-	ballSpeed_max: 10,
-	
-	paddleHeight_min: 40,
-	paddleHeight_max: 160,
-	
-	paddleSpeed_min: 6,
-	paddleSpeed_max: 25,
-	
-	paddleWidth_min: 10,
-	paddleWidth_max: 30,
-};
-
-const POWERUPS = {
-	shrink: 40,
-	grow: 160,
-	slowDown: 6,
-	speedUp: 25,
-};
-
 const getRandomSpeed = () => {
 	const rand = Math.random() * 10 - 5;
 	return Math.random() < 0.5 ? rand : -rand;
@@ -117,11 +87,11 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 				},
 				player3: {
 					x: 10,
-					y: canvas.height - paddleHeight
+					y: canvas.height - paddleHeight - 100
 				},
 				player4: {
 					x: canvas.width - paddleWidth - 10,
-					y: canvas.height - paddleHeight
+					y: canvas.height - paddleHeight - 100
 				}
 			},
 			playerCount: 4,
@@ -177,11 +147,11 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 				},
 				player5: {
 					x: 10,
-					y: canvas.height - paddleHeight
+					y: canvas.height - paddleHeight - 100
 				},
 				player6: {
 					x: canvas.width - paddleWidth - 10,
-					y: canvas.height - paddleHeight
+					y: canvas.height - paddleHeight - 100
 				}
 			},
 			playerCount: 6,

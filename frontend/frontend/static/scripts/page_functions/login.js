@@ -8,6 +8,10 @@ const showHideTabs = ({ show, hide, showPills, hidePills }) => {
 	hidePills.classList.remove('active');
 }
 
+function loginOnload () {
+
+}
+
 const tabs = () => {
 	return {
 		loginTab: document.getElementById("login_tab"),
@@ -40,19 +44,6 @@ const showRegister = () => {
 		hidePills: loginPills,
 	}
 }
-
-const hideErrorMessage = () => {
-	document.getElementById("error")?.classList?.add("hide");
-}
-
-const showErrorMessage = (error) => {
-	if (error)
-	{
-		document.getElementById("error").innerText = error;
-		document.getElementById("error").classList.remove("hide");
-	}
-}
-
 // id functions
 
 const login_tab = async () => {
@@ -86,7 +77,10 @@ const login_button = async () => {
 	if (data.status === 200)
 	{
 		storeUser(data);
-		updateState({ page: page_data['home'], url: "/home" });
+		storeLang(data.language);
+		lang = data.language;
+		updateLanguage();
+		updateState({ page: page_data['home'], url: "/home", onload: "homeOnload" });
 	}
 	else
 		showErrorMessage(data.message);

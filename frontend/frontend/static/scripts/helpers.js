@@ -1,6 +1,26 @@
 // variables lang_codes and lang are defined in config.js, lang_data is in index.html
 
+const showErrorMessage = (message) => {
+	const error = document.getElementById("error");
+	error.innerText = message;
+	error.classList.remove("hide");
+
+	new Timer(() => {
+		hideErrorMessage();
+	}, 5000);
+}
+
+const hideErrorMessage = () => {
+	const error = document.getElementById("error");
+	error.classList.add("hide");
+}
+
 const updateLanguage = () => {
+	const selectBtn = document.querySelector(".select-button");
+	const activeLang = document.getElementById(lang);
+
+	selectBtn.style.backgroundImage = activeLang.style.backgroundImage;
+
 	for (const key in lang_data)
 	{
 		const elements = document.getElementsByClassName(key);
@@ -20,15 +40,33 @@ const createLanguageOptions = (optionContainer, selectBtn, customSelect) => {
 
 		option.id = lang_code;
 		option.style.backgroundImage = `url('${ get_flag_url(lang_code) }')`;
-		option.addEventListener("click", function(e) {
+		option.addEventListener("click", async function(e) {
+
+			if (getUser())
+			{
+				try {
+					const res = await fetch(`${auth_url}/set_language/`, {
+						method: "POST",
+						headers: {
+							"Content-Type": "application/json",
+						},
+						body: JSON.stringify({ language: this.id, username: getUser() }),
+					});
+
+					if (res.status !== 200)
+						throw new Error(res.message || res.statusText);
+				
+					storeLang(this.id);
+				} catch (error) {
+					console.error("Updating preffered language: ", error);
+					showErrorMessage("Updating preffered language: " + error);
+				}
+			}
 
 			lang = this.id;
-			localStorage.setItem("lang", lang);
 
 			selectBtn.style.backgroundImage = this.style.backgroundImage;
-
 			customSelect.classList.remove("active");
-
 			updateLanguage(lang);
 		});
 
@@ -36,9 +74,14 @@ const createLanguageOptions = (optionContainer, selectBtn, customSelect) => {
 	}
 }
 
-const getUser = () => localStorage.getItem("username");
-const clearUser = () => localStorage.removeItem("username");
-const storeUser = (data) => localStorage.setItem("username", data.username);
+const getUser = () => localStorage.getItem("user");
+const clearUser = () => localStorage.removeItem("user");
+const storeUser = (data) => localStorage.setItem("user", data.username);
+
+const storeLang = (lang) => localStorage.setItem("lang", lang);
+const clearLang = () => localStorage.removeItem("lang");
+const getLang = () => localStorage.getItem("lang");
+
 
 function addListener(element, event, func)
 {
