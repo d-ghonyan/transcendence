@@ -84,3 +84,36 @@ const reset_button = async () => {
 		}
 	});
 }
+
+const overlay = () => {
+	const overlay = document.getElementById('overlay');
+	const tournament_usernames = document.getElementById('tournament_usernames');
+
+	overlay.style.display = "none";
+	tournament_usernames.classList.add('hide');
+
+	const usernames = document.querySelectorAll('.tournament-username');
+	usernames.forEach(username => {
+		username.value = "";
+	});
+}
+
+const tournament_button = () => {
+	const overlay = document.getElementById('overlay');
+	const tournament_usernames = document.getElementById('tournament_usernames');
+
+	overlay.style.display = "block";
+	tournament_usernames.classList.remove('hide');
+}
+
+const start_button = async () => {
+	overlay();
+
+	const tournament_mode = "vs1";
+	const tournament_settings = {
+		
+	}
+
+	updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
+	startGame(e.target.id, gameSettings);
+}

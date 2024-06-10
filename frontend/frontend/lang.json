@@ -77,10 +77,15 @@
 		"am": "Գնդի արագություն",
 		"ru": "Скорость мяча"
 	},
-	"paddle_size_text": {
-		"us": "Paddle size",
-		"am": "Խաղացողի չափ",
-		"ru": "Размер ракетки"
+	"paddle_width_text": {
+		"us": "Paddle width",
+		"am": "Խաղացողի հաստություն",
+		"ru": "Ширина ракетки"
+	},
+	"paddle_height_text": {
+		"us": "Paddle height",
+		"am": "Խաղացողի բարձրություն",
+		"ru": "Высота ракетки"
 	},
 	"paddle_speed_text": {
 		"us": "Paddle speed",
@@ -126,5 +131,20 @@
 		"us": "Speeds up the paddle.",
 		"am": "Արագացնում է խաղացողին:",
 		"ru": "Ускоряет ракетку."
+	},
+	"reset_text": {
+		"us": "Reset",
+		"am": "Վերականգնել",
+		"ru": "Сброс"
+	},
+	"start_text": {
+		"us": "Start",
+		"am": "Սկսել",
+		"ru": "Старт"
+	},
+	"usernames_text": {
+		"us": "Usernames",
+		"am": "Օգտանուններ",
+		"ru": "Пользователи"
 	}
 }

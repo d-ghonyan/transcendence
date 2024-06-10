@@ -28,7 +28,7 @@ const DEFAULTS = {
 	paddleSpeed_min: 6,
 	paddleSpeed_max: 25,
 	
-	paddleWidth_min: 10,
+	paddleWidth_min: 5,
 	paddleWidth_max: 30,
 
 	winningScore: 10,

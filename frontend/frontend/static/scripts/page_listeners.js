@@ -5,7 +5,10 @@ const events = {
 	register_button,
 	logout_button,
 	startGame,
-	reset_button
+	reset_button,
+	tournament_button,
+	start_button,
+	overlay
 }
 
 document.addEventListener('click', async (e) => {
