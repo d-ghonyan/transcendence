@@ -8,7 +8,8 @@ const events = {
 	reset_button,
 	tournament_button,
 	start_button,
-	overlay
+	overlay,
+	start_button,
 }
 
 document.addEventListener('click', async (e) => {
@@ -23,8 +24,8 @@ document.addEventListener('click', async (e) => {
 	}
 	else if (e.target.id.includes("vs"))
 	{
-		updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
-		startGame(e.target.id, gameSettings);
+		updateState({ page: page_data['game'], url: "/game", mode: e.target.id, tournament: false });
+		startGame(e.target.id, gameSettings, false);
 	}
 	else if (e.target.id.includes("submit_button"))
 	{

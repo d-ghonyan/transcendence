@@ -104,16 +104,52 @@ const tournament_button = () => {
 
 	overlay.style.display = "block";
 	tournament_usernames.classList.remove('hide');
+
+	const usernames = document.querySelectorAll('.tournament-username');
+	usernames[0].value = getUser();
 }
 
 const start_button = async () => {
-	overlay();
+	let curr_user_found = false;
+	const usernames = document.querySelectorAll('.tournament-username');
+	
+	let username_values = Array.from(usernames).map(username => username.value.trim());
+	for (const username of username_values) {
+		if (!username) {
+			showErrorMessage("Please enter a username for each player.");
+			return ;
+		}
 
-	const tournament_mode = "vs1";
-	const tournament_settings = {
-		
+		if (username === getUser()) {
+			curr_user_found = true;
+		}
 	}
 
-	updateState({ page: page_data['game'], url: "/game", mode: e.target.id });
-	startGame(e.target.id, gameSettings);
+	if (!curr_user_found) {
+		showErrorMessage("The logged in user should be present in the tournament.");
+		return ;
+	}
+
+	const username_set = new Set(username_values);
+	if (username_set.size !== username_values.length) {
+		showErrorMessage("Please enter unique usernames.");
+		return ;
+	}
+
+	overlay();
+	
+	const settings = {
+		...TOURNAMENT_SETTINGS,
+		usernames: username_values
+	}
+
+	updateState({
+		page: page_data['game'],
+		url: "/game",
+		mode: "vs1",
+		tournament: true,
+		settings
+	});
+
+	startGame("vs1", settings, true);
 }

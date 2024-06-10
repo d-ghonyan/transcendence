@@ -29,11 +29,18 @@ function changePageContent(html)
 window.addEventListener('popstate', async (e) => {
 	e.preventDefault();
 
+	if (!e.state)
+	{
+		const page = getUser() ? "home" : "login";
+		updateState({ page: page_data[page], url: `/${page}` });
+		return ;
+	}
+
 	if (e.state.url === "/game")
 	{
 		changePageContent(page_data['game'].html);
 
-		startGame(e.state.mode, gameSettings);
+		startGame(e.state.mode, e.state.settings, e.state.tournament);
 
 		return ;
 	}

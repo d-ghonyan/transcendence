@@ -24,6 +24,7 @@ canvas {
 }
 
 .error {
+	z-index: 101;
 	opacity: 1;
 	position: absolute;
 	top: 10%;
@@ -31,7 +32,6 @@ canvas {
 	min-width: 40%;
 	padding: 20px;
 	border-radius: 14px;
-
 	background-color: #dc3545;
 	color: #ffffff;
 	transition: opacity 1s;

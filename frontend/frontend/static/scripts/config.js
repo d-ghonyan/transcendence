@@ -52,6 +52,16 @@ const COLORS = {
 	speedUp: 'yellow',
 }
 
+const TOURNAMENT_SETTINGS = {
+	paddleWidth: DEFAULTS.paddleWidth,
+	paddleHeight: DEFAULTS.paddleHeight,
+	paddleSpeed: DEFAULTS.paddleSpeed,
+	ballSize: DEFAULTS.ballSize,
+	ballSpeed: DEFAULTS.ballSpeed,
+	winningScore: DEFAULTS.winningScore,
+	powerups: [],
+}
+
 const gameSettings = localStorage.getItem('gameSettings') ? 
 JSON.parse(localStorage.getItem('gameSettings')) :
 {
