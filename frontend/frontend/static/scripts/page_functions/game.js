@@ -26,6 +26,8 @@ class Game {
 		this.paddleCollided = [];
 		this.powerup = null;
 
+		console.log(this.ballSize, this.ballSpeed, this.paddleWidth, this.paddleHeight, this.paddleSpeed);
+
 		this.mode = gameOptions({
 			canvas: this.canvas,
 			paddleWidth: this.paddleWidth,
@@ -232,11 +234,7 @@ function addControls(gameOptions)
 
 	for (let i = 1; i <= gameOptions.playerCount; i++)
 	{
-		let controlHTML = '';
-
-		controlHTML += `<h3>Player ${i}</h3>`;
-
-		const control = `Player ${i}`;
+		let controlHTML = `<h3>Player ${i}</h3>`;
 		const player = gameOptions.controls[`player${i}`];
 
 		controlHTML += `<p>${player.up}</p>`;
@@ -261,28 +259,20 @@ const addPowerupHints = (powerupTypes, config) => {
 		const powerup = config[type];
 		const powerupHint = document.createElement('div');
 
-		const nameContainer = document.createElement('div');
-
-		const name = document.createElement('span');
 		const color = document.createElement('div');
 		const description = document.createElement('span');
 
-		nameContainer.classList.add('name-container');
 		powerupHint.classList.add('powerup-hint');
-		description.classList.add('powerup-description');
+		description.classList.add('powerup-description', `${type}_desc_text`);
 		color.classList.add('powerup-color');
-		name.classList.add('powerup-hint');
 
-		nameContainer.appendChild(color);
-		nameContainer.appendChild(name);
-
-		name.innerText = powerup.name;
 		color.style.backgroundColor = powerup.color;
 		description.innerText = powerup.description;
 
-		powerupHint.appendChild(nameContainer);
+		powerupHint.appendChild(color);
 		powerupHint.appendChild(description);
-
 		powerupHints.appendChild(powerupHint);
 	}
+
+	updateLanguage();
 }

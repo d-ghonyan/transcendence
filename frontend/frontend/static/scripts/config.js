@@ -1,8 +1,8 @@
 const	lang_codes = [ "am", "us", "ru" ];
 let		lang = localStorage.getItem("lang") || lang_codes[0];
 
-const	auth_url = "http://localhost:8002";
-const	blockchain_url = "http://localhost:8001";
+let		auth_url = "http://localhost:{port}";
+let		blockchain_url = "http://localhost:{port}";
 const	flag_url = "https://flagicons.lipis.dev/flags/4x3/{lang}.svg";
 
 const	get_flag_url = (lang) => flag_url.replace("{lang}", lang);
@@ -57,6 +57,7 @@ JSON.parse(localStorage.getItem('gameSettings')) :
 {
 	paddleWidth: DEFAULTS.paddleWidth,
 	paddleHeight: DEFAULTS.paddleHeight,
+	paddleSpeed: DEFAULTS.paddleSpeed,
 	ballSize: DEFAULTS.ballSize,
 	ballSpeed: DEFAULTS.ballSpeed,
 	winningScore: DEFAULTS.winningScore,

@@ -19,7 +19,6 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Define the URL for static files
 STATIC_URL = '/static/'
 
-GANACHE_PORT = os.getenv("GANACHE_PORT")
 MNEMONIC = os.getenv("MNEMONIC")
 GANACHE_URL = os.getenv("GANACHE_URL")
 

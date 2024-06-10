@@ -43,6 +43,9 @@
 		const page_data = JSON.parse("{{ pages | escapejs }}");
 		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
 
+		auth_url = auth_url.replace("{port}", "{{ auth_port }}");
+		blockchain_url = blockchain_url.replace("{port}", "{{ blockchain_port }}");
+
 		window.addEventListener("DOMContentLoaded", (e) => {
 			const customSelect = document.querySelector(".custom-select");
 			const selectBtn = document.querySelector(".select-button");

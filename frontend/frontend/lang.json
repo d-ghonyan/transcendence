@@ -106,5 +106,25 @@
 		"us": "Speed up powerup",
 		"am": "Արագացնել",
 		"ru": "Ускорить"
+	},
+	"shrink_desc_text": {
+		"us": "Shrinks the paddle.",
+		"am": "Փոքրացնում է խաղացողին:",
+		"ru": "Уменьшает ракетку."
+	},
+	"grow_desc_text": {
+		"us": "Grows the paddle.",
+		"am": "Մեծացնում է խաղացողին:",
+		"ru": "Увеличивает ракетку."
+	},
+	"slowDown_desc_text": {
+		"us": "Slows down the paddle.",
+		"am": "Դանդաղում է խաղացողին:",
+		"ru": "Замедляет ракетку."
+	},
+	"speedUp_desc_text": {
+		"us": "Speeds up the paddle.",
+		"am": "Արագացնում է խաղացողին:",
+		"ru": "Ускоряет ракетку."
 	}
 }

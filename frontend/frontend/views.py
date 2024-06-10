@@ -1,7 +1,7 @@
 from django.http import JsonResponse
 from django.shortcuts import render
 from django.views.decorators.http import require_GET
-from .settings import BASE_DIR
+from .settings import BASE_DIR, USER_AUTH_PORT, BLOCKCHAIN_PORT
 
 import os
 import json
@@ -27,7 +27,9 @@ def login(request):
 	pages = json.dumps(pages)
 	context = {
 		"language_texts": texts_json,
-		"pages": pages
+		"pages": pages,
+		"auth_port": USER_AUTH_PORT,
+		"blockchain_port": BLOCKCHAIN_PORT,
 	}
 
 	return render(request, 'index.html', context=context)
