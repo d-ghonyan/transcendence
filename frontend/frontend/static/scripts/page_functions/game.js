@@ -1,7 +1,12 @@
 class Game {
-	constructor(gameMode, settings, tournament = false) {
+	constructor(gameMode, settings, tournament=false) {
 		this.canvas = document.getElementById('gameCanvas');
 		this.ctx = this.canvas.getContext('2d');
+		this.matches = [];
+		this.matchIndex = 0;
+		console.log(tournament);
+		this.tournament = tournament;
+		this.tournamentFinished = false;
 		
 		this.ballSize = settings.ballSize;
 		this.ballSpeed = settings.ballSpeed;
@@ -11,7 +16,7 @@ class Game {
 		
 		this.player1Score = 0;
 		this.player2Score = 0;
-		this.winningScore = Infinity;
+		this.winningScore = settings.winningScore;
 		
 		this.gameMode = gameMode;
 		this.settings = settings;
@@ -26,8 +31,6 @@ class Game {
 		this.paddleCollided = [];
 		this.powerup = null;
 
-		console.log(this.ballSize, this.ballSpeed, this.paddleWidth, this.paddleHeight, this.paddleSpeed);
-
 		this.mode = gameOptions({
 			canvas: this.canvas,
 			paddleWidth: this.paddleWidth,
@@ -35,7 +38,24 @@ class Game {
 		})[this.gameMode];
 	}
 
+	eliminationGameUsers() {
+		const usernames = this.settings.usernames;
+
+		const random_index1 = Math.floor(Math.random() * usernames.length);
+		const user1 = usernames[random_index1];
+		usernames.splice(random_index1, 1);
+
+		const random_index2 = Math.floor(Math.random() * usernames.length);
+		const user2 = usernames[random_index2];
+		usernames.splice(random_index2, 1);
+
+		this.matches.push({ user1, user2 }, { user1: usernames[0], user2: usernames[1] }, {});
+	}
+
 	start() {
+
+		if (this.tournament) this.eliminationGameUsers();
+
 		this.setupControls();
 		this.setupPowerupHints();
 		this.setupGame();
@@ -149,7 +169,41 @@ class Game {
 		}
 
 		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
+
+			let usernames = ["Player 1", "Player 2"];
+
+			if (this.tournament) {
+
+				console.log(this.matches[this.matchIndex], this.matchIndex);
+
+				usernames = [this.matches[this.matchIndex].user1, this.matches[this.matchIndex].user2];
+
+				this.matches[this.matchIndex].winner = this.player1Score === this.winningScore ? this.matches[this.matchIndex].user1 : this.matches[this.matchIndex].user2;
+				this.matches[this.matchIndex].score1 = this.player1Score;
+				this.matches[this.matchIndex].score2 = this.player2Score;
+				this.matchIndex++;
+
+				if (this.matchIndex === 2) {
+					console.log("last game!");
+
+					this.matches[2].user1 = this.matches[0].winner;
+					this.matches[2].user2 = this.matches[1].winner;
+				}
+
+				if (this.matchIndex === 3) {
+					console.log("tournament finished!");
+					this.matches[2].winner = this.player1Score === this.winningScore ? this.matches[2].user1 : this.matches[2].user2;
+					storeGameScore(this.matches);
+					this.tournamentFinished = true;
+				}
+			}
+			
+			alert(`${this.matches[this.matchIndex - 1].winner} wins!`);
 			this.resetScore();
+
+			if (this.tournamentFinished) {
+				// back to home
+			}
 		}
 
 		this.gameAnimationId = requestAnimationFrame(this.draw.bind(this));
@@ -214,23 +268,15 @@ function gameOnload () {
 
 }
 
-const startGame = (gameMode, settings) => {
-	const game = new Game(gameMode, settings);
+const startGame = (gameMode, settings, tournament=false) => {
+	const game = new Game(gameMode, settings, tournament);
 	game.start();
 }
 
 function addControls(gameOptions)
 {
-	const controls = document.getElementById('controls');
-
-	const oddContainer = document.createElement('div');
-	const evenContainer = document.createElement('div');
-
-	controls.appendChild(oddContainer);
-	controls.appendChild(evenContainer);
-
-	oddContainer.classList.add('odd-container');
-	evenContainer.classList.add('even-container');
+	const oddContainer = document.getElementsByClassName('odd-container')[0];
+	const evenContainer = document.getElementsByClassName('even-container')[0];
 
 	for (let i = 1; i <= gameOptions.playerCount; i++)
 	{
@@ -240,14 +286,7 @@ function addControls(gameOptions)
 		controlHTML += `<p>${player.up}</p>`;
 		controlHTML += `<p>${player.down}</p>`;
 
-		if (i % 2 === 0)
-		{
-			evenContainer.innerHTML += controlHTML;
-		}
-		else
-		{
-			oddContainer.innerHTML += controlHTML;
-		}
+		(i % 2 === 0 ? evenContainer : oddContainer).innerHTML += controlHTML;
 	}	
 }
 

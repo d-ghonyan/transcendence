@@ -31,7 +31,7 @@ const DEFAULTS = {
 	paddleWidth_min: 5,
 	paddleWidth_max: 30,
 
-	winningScore: 10,
+	winningScore: 1, // TODOOOOOO
 	winningScore_min: 5,
 	winningScore_max: 15,
 

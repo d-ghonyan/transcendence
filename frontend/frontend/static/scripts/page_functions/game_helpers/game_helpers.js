@@ -12,6 +12,11 @@ no this description isn't chatgpt generated
 */
 const storeGameScore = async (data) => {
 
+	const finalData = {
+		matches: data,
+		winner: data[2].winner,
+	}
+
 	try {
 		const res = await fetch(`${blockchain_url}/add_tournament/`, {
 			method: "POST",
@@ -20,6 +25,8 @@ const storeGameScore = async (data) => {
 			},
 			body: JSON.stringify(data),
 		});
+
+		console.log(res);
 	} catch (error) {
 		console.error("Couldn't store data in blockchain: " + error);
 		
@@ -158,7 +165,6 @@ const gameOptions = ({ canvas, paddleWidth, paddleHeight }) => {
 			teamNames: {
 				player1: 'Team 1',
 				player2: 'Team 2',
-				player3: 'Team 3'
 			},
 			ballCount: 4,
 		}
