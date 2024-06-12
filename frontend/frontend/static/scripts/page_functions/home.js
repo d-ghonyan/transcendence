@@ -31,7 +31,6 @@ function homeOnload () {
 	const powerupChecks = document.querySelectorAll('.powerup-checks-container');
 
 	powerupChecks.forEach(div => {
-
 		const powerupCheckboxes = div.querySelectorAll('input');
 		powerupCheckboxes.forEach(input => {
 			input.setAttribute("checked", "checked");
@@ -57,6 +56,63 @@ function homeOnload () {
 			});
 		});
 	});
+
+	showTournaments();
+}
+
+const showTournaments = async () => {
+	// const tournaments = await getTournaments();
+
+	// const tournamentContainer = document.getElementById('tournament_container');
+
+	// if (tournaments.length === 0) {
+	// 	tournamentContainer.innerHTML = "<h3>No tournaments found</h3>";
+	// }
+
+	// tournaments.forEach(tournament => {
+
+	// 	const users = [ tournament[0], tournament[1] ];
+	// 	const scores = [ tournament[2], tournament[3] ];
+	// 	const winner = tournament[4];
+
+	// 	// show tournaments in columns
+	// 	const column = document.createElement('div');
+	// 	column.classList.add('column');
+
+	// 	const tournamentDiv = document.createElement('div');
+	// 	tournamentDiv.classList.add('tournament');
+
+	// 	const scoreDiv = document.createElement('div');
+	// 	scoreDiv.classList.add('score');
+
+	// 	const username = document.createElement('span');
+	// 	username.classList.add('tournament-username');
+	// 	username.innerText = users[0];
+
+
+
+	// });
+}
+
+const getTournaments = async () => {
+	try {
+		const res = await fetch(`${blockchain_url}/get_tournaments_user/`, {
+			method: "POST",
+			headers: {
+				"Content-Type": "application/json"
+			},
+			body: JSON.stringify({ username: getUser() }),
+		});
+
+		const data = await res.json();
+
+		if (data.error)
+			throw new Error(data.error);
+
+		return data.data;
+	} catch (error) {
+		showErrorMessage("Couldn't get tournaments from blockchain: " + error);
+	}
 }
 
 const logout_button = async () => {
@@ -71,7 +127,6 @@ const reset_button = async () => {
 	for (const key in gameSettings) {
 		gameSettings[key] = DEFAULTS[key];
 	}
-	console.log(gameSettings);
 
 	const gameSettingInputs = document.querySelectorAll('.range-input');
 
@@ -107,6 +162,9 @@ const tournament_button = () => {
 
 	const usernames = document.querySelectorAll('.tournament-username');
 	usernames[0].value = getUser();
+	usernames[1].value = "b";
+	usernames[2].value = "c";
+	usernames[3].value = "d";
 }
 
 const start_button = async () => {

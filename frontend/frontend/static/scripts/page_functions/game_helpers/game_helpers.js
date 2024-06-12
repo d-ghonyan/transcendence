@@ -3,13 +3,6 @@ const getRandomSpeed = () => {
 	return Math.random() < 0.5 ? rand : -rand;
 }
 
-/* 
-@params {Object} data
-@params {Array} data.matches [{ user1, user2, score1, score2, winner }]
-@params {String} data.winner
-
-no this description isn't chatgpt generated
-*/
 const storeGameScore = async (data) => {
 
 	const finalData = {
@@ -30,10 +23,7 @@ const storeGameScore = async (data) => {
 
 		console.log(res);
 	} catch (error) {
-		console.error("Couldn't store data in blockchain: " + error);
-		
 		showErrorMessage("Couldn't store data in blockchain: " + error);
-		/// TODO: Show error message to user
 	}
 }
 

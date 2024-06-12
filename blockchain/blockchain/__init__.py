@@ -78,8 +78,8 @@ def get_contract(user_id):
 	user_tournaments = []
 
 	for tournament in tournaments:
-		for match in tournament.matches:
-			if user_id in match:
+		for match in tournament:
+			if (isinstance(match, list) or isinstance(match, tuple)) and user_id in match:
 				user_tournaments.append(tournament) 
 
 	return user_tournaments

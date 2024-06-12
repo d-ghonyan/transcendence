@@ -21,45 +21,46 @@ class Game {
 		this.gameMode = gameMode;
 		this.settings = settings;
 		this.setupCanvas();
-
+		
 		this.timeoutId = null;
-		this.gameAnimationId = null;
-
+		gameAnimationId = null;
+		
 		this.balls = [];
 		this.paddles = [];
 		this.controller = {};
 		this.paddleCollided = [];
 		this.powerup = null;
-
+		
 		this.mode = gameOptions({
 			canvas: this.canvas,
 			paddleWidth: this.paddleWidth,
 			paddleHeight: this.paddleHeight,
 		})[this.gameMode];
 	}
+	
+	start() {
+		this.setupControls();
+		this.setupPowerupHints();
+		this.setupGame();
+		this.draw();
 
+		if (this.tournament) this.eliminationGameUsers();
+	}
+	
 	eliminationGameUsers() {
 		const usernames = this.settings.usernames;
 
 		const random_index1 = Math.floor(Math.random() * usernames.length);
 		const user1 = usernames[random_index1];
 		usernames.splice(random_index1, 1);
-
+		
 		const random_index2 = Math.floor(Math.random() * usernames.length);
 		const user2 = usernames[random_index2];
 		usernames.splice(random_index2, 1);
-
+		
 		this.matches.push({ user1, user2 }, { user1: usernames[0], user2: usernames[1] }, {});
-	}
-
-	start() {
-
-		if (this.tournament) this.eliminationGameUsers();
-
-		this.setupControls();
-		this.setupPowerupHints();
-		this.setupGame();
-		this.draw();
+		console.log(user1, user2);
+		updateControlUsernames([ user1, user2 ]);
 	}
 
 	setupCanvas() {
@@ -78,7 +79,7 @@ class Game {
 		addListener(document, 'keyup', this.handleKeyUp.bind(this));
 		addListener(document, 'keydown', this.handlePause.bind(this));
 
-		addControls(this.mode);
+		addControls(this.mode, this.settings.usernames);
 	}
 
 	setupPowerupHints() {
@@ -170,15 +171,14 @@ class Game {
 
 		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
 
-			let usernames = ["Player 1", "Player 2"];
+			let usernames = [this.mode.teamNames.player1, this.mode.teamNames.player2];
+			let winner = this.player1Score === this.winningScore ? usernames[0] : usernames[1];
 
 			if (this.tournament) {
-
-				console.log(this.matches[this.matchIndex], this.matchIndex);
-
 				usernames = [this.matches[this.matchIndex].user1, this.matches[this.matchIndex].user2];
 
 				this.matches[this.matchIndex].winner = this.player1Score === this.winningScore ? this.matches[this.matchIndex].user1 : this.matches[this.matchIndex].user2;
+				winner = this.matches[this.matchIndex].winner;
 				this.matches[this.matchIndex].score1 = this.player1Score;
 				this.matches[this.matchIndex].score2 = this.player2Score;
 				this.matchIndex++;
@@ -197,8 +197,9 @@ class Game {
 					this.tournamentFinished = true;
 				}
 			}
-			
-			alert(`${this.matches[this.matchIndex - 1].winner} wins!`);
+
+			alert(`${winner} wins!`);
+			if (this.tournament) updateControlUsernames(usernames);
 			this.resetScore();
 
 			if (this.tournamentFinished) {
@@ -206,7 +207,7 @@ class Game {
 			}
 		}
 
-		this.gameAnimationId = requestAnimationFrame(this.draw.bind(this));
+		gameAnimationId = requestAnimationFrame(this.draw.bind(this));
 	}
 
 	drawScore() {
@@ -231,13 +232,13 @@ class Game {
 
 	handlePause(e) {
 		if (e.key === 'p') {
-			if (this.gameAnimationId) {
+			if (gameAnimationId) {
 				this.paddles.forEach(paddle => this.pausePaddleEffects(paddle));
-				cancelAnimationFrame(this.gameAnimationId);
-				this.gameAnimationId = null;
+				cancelAnimationFrame(gameAnimationId);
+				gameAnimationId = null;
 			} else {
 				this.paddles.forEach(paddle => this.resumePaddleEffects(paddle));
-				this.gameAnimationId = requestAnimationFrame(this.draw.bind(this));
+				gameAnimationId = requestAnimationFrame(this.draw.bind(this));
 			}
 		}
 	}
@@ -273,7 +274,15 @@ const startGame = (gameMode, settings, tournament=false) => {
 	game.start();
 }
 
-function addControls(gameOptions)
+const updateControlUsernames = (usernames) => {
+	const oddContainer = document.getElementsByClassName('odd-container')[0];
+	const evenContainer = document.getElementsByClassName('even-container')[0];
+
+	oddContainer.getElementsByTagName('h3')[0].innerText = usernames[0];
+	evenContainer.getElementsByTagName('h3')[0].innerText = usernames[1];
+}
+
+function addControls(gameOptions, usernames)
 {
 	const oddContainer = document.getElementsByClassName('odd-container')[0];
 	const evenContainer = document.getElementsByClassName('even-container')[0];

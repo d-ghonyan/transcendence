@@ -19,11 +19,11 @@ def add_tournament(request):
 
 	return JsonResponse({ 'code': 'success' })
 
-@require_GET
+@require_POST
 def get_tournaments_user(request):
 	data = json.loads(request.body.decode('utf-8'))
 
-	if ('user_id' not in data):
+	if ('username' not in data):
 		return JsonResponse({ 'error': 'Invalid data' })
 
-	return JsonResponse({ 'contract': get_contract(data['user_id']) })
+	return JsonResponse( { "data": get_contract(data['username']) } )

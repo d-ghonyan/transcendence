@@ -21,7 +21,7 @@
 	.header {
 		width: 100%;
 		display: flex;
-		justify-content: space-between;
+		justify-content: end;
 		height: 15%;
 	}
 
@@ -104,6 +104,31 @@
 		z-index: 99; /* Specify a stack order in case you're using a different order for other elements */
 		cursor: pointer; /* Add a pointer on hover */
 	}
+
+	.tournament-container, .scores {
+		gap: 20px;
+	}
+
+	.scores {
+		flex-grow: 1;
+		border-right: 1px solid black;
+		padding: 0 40px;
+	}
+
+	.scores:last-of-type {
+		border-right: 0;
+	}
+
+	.scores:first-of-type {
+		padding: 0;
+		padding-right: 40px;
+	}
+
+	.scores:last-of-type, .winner {
+		padding: 0;
+		padding-left: 40px;
+	}
+
 </style>
 
 <div class="homepage d-flex flex-column justify-content-between w-100 h-100">
@@ -209,6 +234,88 @@
 				<div class="powerup-checks-container">
 					<input type="checkbox" name="speedUp">
 					<label for="speedUp" class="speed_up_text">Speed Up</label>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<div class="tournament-container d-flex flex-column w-100" id="tournament_container">
+		<div class="tournament-header">
+			<h2 class="tournaments_text">User Tournaments</h2>
+		</div>
+		<div class="tournament-entry">
+			<div class="matches w-100 d-flex justify-content-center flex-wrap">
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="winner">
+					<div class="username">AAA</div>
+					<div class="winner_text">Winner</div>
+				</div>
+			</div>
+		</div>
+		<div class="tournament-entry">
+			<div class="matches w-100 d-flex justify-content-center flex-wrap">
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="scores d-flex justify-content-between align-items-center">
+					<div class="score1">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+					<div class="score2">
+						<div class="username">AAA</div>
+						<div class="score_text">0</div>
+					</div>
+				</div>
+				<div class="winner">
+					<div class="username">AAA</div>
+					<div class="winner_text">Winner</div>
 				</div>
 			</div>
 		</div>

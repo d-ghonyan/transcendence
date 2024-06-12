@@ -8,6 +8,8 @@ const showErrorMessage = (message) => {
 	new Timer(() => {
 		hideErrorMessage();
 	}, 5000);
+
+	console.error(message);
 }
 
 const hideErrorMessage = () => {
@@ -58,7 +60,6 @@ const createLanguageOptions = (optionContainer, selectBtn, customSelect) => {
 				
 					storeLang(this.id);
 				} catch (error) {
-					console.error("Updating preffered language: ", error);
 					showErrorMessage("Updating preffered language: " + error);
 				}
 			}
