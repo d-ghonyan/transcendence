@@ -18,12 +18,12 @@ from django.urls import path
 from django.http import JsonResponse
 
 from .views import register, login, set_language
-# from user_auth import logger
+from user_auth import logger
 from django.views.decorators.csrf import csrf_exempt
 
 @csrf_exempt
 def test(request):
-	# logger.info("anasun es?")
+	logger.info("anasun es?")
 	return JsonResponse({ "status": 200, "message": "User created successfully" })
 
 urlpatterns = [
