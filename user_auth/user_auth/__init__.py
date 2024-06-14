@@ -1,4 +1,3 @@
-import logging
 import requests
 from .settings import KIBANA_API_CREATE_INDEX, KIBANA_URL
 from time import sleep

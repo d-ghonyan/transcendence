@@ -126,3 +126,49 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+ELASTICSEARCH_HTTP_PORT = os.getenv("ELASTICSEARCH_HTTP_PORT")
+
+ELASTICSEARCH_DSL={
+    'default': {
+        'hosts': f'localhost:{ELASTICSEARCH_HTTP_PORT}'
+    },
+}
+
+LOGGING = {
+  'version': 1,
+  'disable_existing_loggers': True,
+  'formatters': {
+      'simple': {
+            'format': '%(levelname)s %(message)s'
+        },
+  },
+  'handlers': {
+        # 'console': {
+        #     'level': 'INFO',
+        #     'class': 'logging.StreamHandler',
+        #     'formatter': 'simple'
+        # },
+        'logstash': {
+            'level': 'INFO',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': 'logstash',
+            'port': 5959, # Default value: 5959
+            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
+            'message_type': 'django-server',  # 'type' field in logstash message. Default value: 'logstash'.
+            'fqdn': False, # Fully qualified domain name. Default value: false.
+            'tags': ['django.server'], # list of tags. Default: None.
+        },
+  },
+  'loggers': {
+        'django.server': {
+            'handlers': ['logstash'],
+            'level': 'INFO',
+            'propagate': True,
+        },
+        # 'django': {
+        #     'handlers': ['console'],
+        #     'propagate': True,
+        # },
+    }
+}

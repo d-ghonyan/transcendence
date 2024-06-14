@@ -144,64 +144,44 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': f'localhost:{123}'
+        'hosts': f'localhost:{ELASTICSEARCH_HTTP_PORT}'
     },
 }
-
-
-LOGGING = {
-'version': 1,
-'disable_existing_loggers': True,
-'handlers': {
-    'logfile': {
-        'level': 'WARNING',
-        'class': 'logging.FileHandler',
-        'filename': os.path.join(BASE_DIR, 'debug.log'),
-    },
-},
-'loggers': {
-    'django.request': {
-        'handlers': ['logfile'],
-        'level': 'WARNING',
-        'propagate': True,
-    },
-}}
 
 LOGGING = {
   'version': 1,
   'disable_existing_loggers': True,
   'formatters': {
       'simple': {
-            'format': 'velname)s %(message)s'
+            'format': '%(levelname)s %(message)s'
         },
   },
   'handlers': {
-        'console': {
-            'level': 'INFO',
-            'class': 'logging.StreamHandler',
-            'formatter': 'simple'
-        },
+        # 'console': {
+        #     'level': 'INFO',
+        #     'class': 'logging.StreamHandler',
+        #     'formatter': 'simple'
+        # },
         'logstash': {
-            'level': 'INFO',
+            'level': 'DEBUG',
             'class': 'logstash.TCPLogstashHandler',
-            'host': 'localhost',
+            'host': 'logstash',
             'port': 5959, # Default value: 5959
             'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
-            'message_type': 'logstash',  # 'type' field in logstash message. Default value: 'logstash'.
-            'tags': ['hmm'], # list of tags. Default: None.
-			'fqdn': False, # Fully qualified domain name. Default value: false.
+            'message_type': 'django-server',  # 'type' field in logstash message. Default value: 'logstash'.
+            'fqdn': False, # Fully qualified domain name. Default value: false.
+            'tags': ['django.server'], # list of tags. Default: None.
         },
   },
   'loggers': {
-        # 'django.request': {
-        #     'handlers': ['logstash'],
-        #     'level': 'INFO',
-        #     'propagate': True,
-        # },
-        'hello': {
+        'django.server': {
             'handlers': ['logstash'],
-			'level': 'INFO',
+            'level': 'DEBUG',
             'propagate': True,
         },
+        # 'django': {
+        #     'handlers': ['console'],
+        #     'propagate': True,
+        # },
     }
 }

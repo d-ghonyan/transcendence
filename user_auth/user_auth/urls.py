@@ -21,12 +21,11 @@ from .views import register, login, set_language
 from django.views.decorators.csrf import csrf_exempt
 import logging
 
-logger = logging.getLogger('hello')
-
 @csrf_exempt
 def test(request):
-	logger.info("anasun es?")
-	return JsonResponse({ "status": 200, "message": "User created successfully" })
+	logger = logging.getLogger('django.server')
+	logger.debug("anasun es?")
+	return JsonResponse({ "status": 200, "message": f"User created successfully{logger.__dict__}" })
 
 urlpatterns = [
 	path('register/', register),

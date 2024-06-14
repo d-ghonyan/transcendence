@@ -8,8 +8,14 @@ import json
 
 app_dir = 'frontend'
 
+import logging
+logger = logging.getLogger('django.server')
+
 @require_GET
 def login(request):
+
+	logger.info("Login page accessed")
+
 	texts_file = open(BASE_DIR / app_dir / 'lang.json', 'r')
 	texts_json = json.dumps(json.load(texts_file))
 

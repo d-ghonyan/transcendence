@@ -66,45 +66,45 @@ services:
       elasticsearch:
         condition: service_healthy
 
-  # ganache:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/Dockerfile.ganache
-  #   stop_grace_period: 5s
-  #   env_file: .env
-  #   volumes:
-  #     - ganache:/data
-  #   ports:
-  #     - ${GANACHE_PORT}:${GANACHE_PORT}
-  #   networks:
-  #     - barev
-  #   restart: always
+  ganache:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.ganache
+    stop_grace_period: 5s
+    env_file: .env
+    volumes:
+      - ganache:/data
+    ports:
+      - ${GANACHE_PORT}:${GANACHE_PORT}
+    networks:
+      - barev
+    restart: always
 
-  # blockchain:
-  #   build:
-  #     context: .
-  #     dockerfile: ./docker/Dockerfile.blockchain
-  #   stop_grace_period: 5s
-  #   env_file: .env
-  #   volumes:
-  #     - ./blockchain:/app
-  #   ports:
-  #     - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
-  #   networks:
-  #     - barev
-  #     - elk
-  #   depends_on:
-  #     elasticsearch:
-  #       condition: service_healthy
-  #     db:
-  #       condition: service_healthy
-  #     kibana:
-  #       condition: service_healthy
-  #     ganache:
-  #       condition: service_started
-  #     logstash:
-  #       condition: service_started
-  #   restart: always
+  blockchain:
+    build:
+      context: .
+      dockerfile: ./docker/Dockerfile.blockchain
+    stop_grace_period: 5s
+    env_file: .env
+    volumes:
+      - ./blockchain:/app
+    ports:
+      - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
+    networks:
+      - barev
+      - elk
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+      ganache:
+        condition: service_started
+      logstash:
+        condition: service_started
+    restart: always
 
   user_auth:
     build:
@@ -130,31 +130,31 @@ services:
         condition: service_started
     restart: always
 
-  # frontend:
-  #   build:
-  #     context: .
-  #     dockerfile: docker/Dockerfile.frontend
-  #   env_file: .env
-  #   stop_grace_period: 5s
-  #   volumes:
-  #     - ./frontend:/app
-  #   ports:
-  #     - "${FRONTEND_PORT}:${FRONTEND_PORT}"
-  #   networks:
-  #     - elk
-  #     - barev
-  #   depends_on:
-  #     elasticsearch:
-  #       condition: service_healthy
-  #     db:
-  #       condition: service_healthy
-  #     kibana:
-  #       condition: service_healthy
-  #     user_auth:
-  #       condition: service_started
-  #     logstash:
-  #       condition: service_started
-  #   restart: always
+  frontend:
+    build:
+      context: .
+      dockerfile: docker/Dockerfile.frontend
+    env_file: .env
+    stop_grace_period: 5s
+    volumes:
+      - ./frontend:/app
+    ports:
+      - "${FRONTEND_PORT}:${FRONTEND_PORT}"
+    networks:
+      - elk
+      - barev
+    depends_on:
+      elasticsearch:
+        condition: service_healthy
+      db:
+        condition: service_healthy
+      kibana:
+        condition: service_healthy
+      user_auth:
+        condition: service_started
+      logstash:
+        condition: service_started
+    restart: always
 
 volumes:
   postgres:
