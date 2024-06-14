@@ -18,8 +18,10 @@ from django.urls import path
 from django.http import JsonResponse
 
 from .views import register, login, set_language
-from user_auth import logger
 from django.views.decorators.csrf import csrf_exempt
+import logging
+
+logger = logging.getLogger('hello')
 
 @csrf_exempt
 def test(request):

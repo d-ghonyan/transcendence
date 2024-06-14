@@ -37,7 +37,10 @@ POSTGRES_USER = os.getenv("POSTGRES_USER")
 POSTGRES_PASSWORD = os.getenv("POSTGRES_PASSWORD")
 POSTGRES_HOST = os.getenv("POSTGRES_HOST")
 KIBANA_URL = os.getenv("KIBANA_URL")
-KIBANA_API_CREATE_INDEX = "api/index_patterns/index_pattern"
+LOGSTASH_PORT = os.getenv("LOGSTASH_PORT")
+ELASTICSEARCH_HTTP_PORT = os.getenv("ELASTICSEARCH_HTTP_PORT")
+ELASTICSEARCH_TRANSPORT_PORT = os.getenv("ELASTICSEARCH_TRANSPORT_PORT")
+KIBANA_API_CREATE_INDEX = "api/saved_objects/index-pattern"
 
 # Application definition
 
@@ -141,46 +144,62 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 ELASTICSEARCH_DSL={
     'default': {
-        'hosts': 'localhost:9200'
+        'hosts': f'localhost:{123}'
     },
 }
 
+
+LOGGING = {
+'version': 1,
+'disable_existing_loggers': True,
+'handlers': {
+    'logfile': {
+        'level': 'WARNING',
+        'class': 'logging.FileHandler',
+        'filename': os.path.join(BASE_DIR, 'debug.log'),
+    },
+},
+'loggers': {
+    'django.request': {
+        'handlers': ['logfile'],
+        'level': 'WARNING',
+        'propagate': True,
+    },
+}}
+
 LOGGING = {
   'version': 1,
-  'disable_existing_loggers': False,
+  'disable_existing_loggers': True,
   'formatters': {
       'simple': {
-            'format': 'LOGSTASH: %(message)s'
+            'format': 'velname)s %(message)s'
         },
   },
   'handlers': {
         'console': {
             'level': 'INFO',
-            'class': 'logstash.TCPLogstashHandler',
-            'host': 'localhost',
-            'port': 9600, # Default value: 5959
-            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
-            'message_type': 'logstash',  # 'type' field in logstash message. Default value: 'logstash'.
-            'tags': ['django'], # list of tags. Default: None.
+            'class': 'logging.StreamHandler',
+            'formatter': 'simple'
         },
         'logstash': {
-            'level': 'WARNING',
+            'level': 'INFO',
             'class': 'logstash.TCPLogstashHandler',
             'host': 'localhost',
-            'port': 9600, # Default value: 5959
+            'port': 5959, # Default value: 5959
             'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
             'message_type': 'logstash',  # 'type' field in logstash message. Default value: 'logstash'.
-            'tags': ['django.request'], # list of tags. Default: None.
+            'tags': ['hmm'], # list of tags. Default: None.
+			'fqdn': False, # Fully qualified domain name. Default value: false.
         },
   },
   'loggers': {
-        'django.request': {
+        # 'django.request': {
+        #     'handlers': ['logstash'],
+        #     'level': 'INFO',
+        #     'propagate': True,
+        # },
+        'hello': {
             'handlers': ['logstash'],
-            'level': 'WARNING',
-            'propagate': True,
-        },
-        'django': {
-            'handlers': ['console'],
 			'level': 'INFO',
             'propagate': True,
         },
