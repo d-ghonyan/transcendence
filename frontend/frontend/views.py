@@ -15,20 +15,26 @@ logger = logging.getLogger('django.server')
 def login(request):
 
 	logger.info("Login page accessed")
-
-	texts_file = open(BASE_DIR / app_dir / 'lang.json', 'r')
-	texts_json = json.dumps(json.load(texts_file))
-
+	try:
+		texts_file = open(BASE_DIR / app_dir / 'lang.json', 'r')
+		texts_json = json.dumps(json.load(texts_file))
+		logger.info("Loaded language texts successfully")
+	except Exception as e:
+		logger.error(f"Error loading language texts: {e}")
+        
 	pages = {}
+	try:
+		for i in os.listdir(BASE_DIR / app_dir / 'pages'):
+			filename = i.replace(".html", "")
 
-	for i in os.listdir(BASE_DIR / app_dir / 'pages'):
-		filename = i.replace(".html", "")
+			if os.path.isfile(BASE_DIR / app_dir / 'pages' / i):
 
-		if os.path.isfile(BASE_DIR / app_dir / 'pages' / i):
-
-			pages[filename] = {}
-			with open(BASE_DIR / app_dir / 'pages' / i, 'r') as f:
-				pages[filename]['html'] = f.read()
+				pages[filename] = {}
+				with open(BASE_DIR / app_dir / 'pages' / i, 'r') as f:
+					pages[filename]['html'] = f.read()
+		logger.info("Loaded pages successfully")
+	except Exception as e:
+		logger.error(f"Error loading pages: {e}")
 
 	pages = json.dumps(pages)
 	context = {
@@ -37,5 +43,6 @@ def login(request):
 		"auth_port": USER_AUTH_PORT,
 		"blockchain_port": BLOCKCHAIN_PORT,
 	}
-
+ 
+	logger.info("Rendering login page with context")
 	return render(request, 'index.html', context=context)
