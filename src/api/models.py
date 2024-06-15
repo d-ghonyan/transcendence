@@ -31,3 +31,4 @@ class Tournament(models.Model):
 	name = models.TextField(default="", )
 	players = models.TextField(default=[], )
 	winner = models.TextField(default="", )
+

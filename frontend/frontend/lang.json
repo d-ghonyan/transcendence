@@ -1,0 +1,150 @@
+{
+	"login_tab_text": {
+		"us": "Login",
+		"am": "Մուտք",
+		"ru": "Вход"
+	},
+	"register_tab_text": {
+		"us": "Register",
+		"am": "Գրանցվել",
+		"ru": "Регистрация"
+	},
+	"sign_with_text": {
+		"us": "Sign in with:",
+		"am": "Մուտք գործել: ",
+		"ru": "Вход с:"
+	},
+	"username_text": {
+		"us": "Username",
+		"am": "Օգտանուն",
+		"ru": "Имя пользователя"
+	},
+	"password_text": {
+		"us": "Password",
+		"am": "Գաղտնաբառ",
+		"ru": "Пароль"
+	},
+	"sign_in_text": {
+		"us": "Sign in",
+		"am": "Մուտք գործել",
+		"ru": "Вход"
+	},
+	"repeat_password_text": {
+		"us": "Repeat password",
+		"am": "Կրկնել գաղտնաբառը",
+		"ru": "Повторите пароль"
+	},
+	"error_text": {
+		"us": "Please fill out all fields",
+		"am": "Լրացրեք բոլոր դաշտերը",
+		"ru": "Заполните все поля"
+	},
+	"settings_text": {
+		"us": "Settings",
+		"am": "Կարգավորումներ",
+		"ru": "Настройки"
+
+	},
+	"friends_text": {
+		"us": "Friends",
+		"am": "Ընկերներ",
+		"ru": "Друзья"
+
+	},
+	"history_text": {
+		"us": "History",
+		"am": "Պատմություն",
+		"ru": "История"
+
+	},
+	"logout_text": {
+		"us": "Logout",
+		"am": "Դուրս գալ",
+		"ru": "Выход"
+	},
+	"tournament_text": {
+		"us": "Tournament",
+		"am": "Մրցաշար",
+		"ru": "Турнир"
+	},
+	"ball_size_text": {
+		"us": "Ball size",
+		"am": "Գնդի չափ",
+		"ru": "Размер мяча"
+	},
+	"ball_speed_text": {
+		"us": "Ball speed",
+		"am": "Գնդի արագություն",
+		"ru": "Скорость мяча"
+	},
+	"paddle_width_text": {
+		"us": "Paddle width",
+		"am": "Խաղացողի հաստություն",
+		"ru": "Ширина ракетки"
+	},
+	"paddle_height_text": {
+		"us": "Paddle height",
+		"am": "Խաղացողի բարձրություն",
+		"ru": "Высота ракетки"
+	},
+	"paddle_speed_text": {
+		"us": "Paddle speed",
+		"am": "Խաղացողի արագություն",
+		"ru": "Скорость ракетки"
+	},
+	"shrink_text": {
+		"us": "Shrink powerup",
+		"am": "Փոքրացնել",
+		"ru": "Уменьшить"
+	},
+	"grow_text": {
+		"us": "Grow powerup",
+		"am": "Մեծացնել",
+		"ru": "Увеличить"
+	},
+	"slow_down_text": {
+		"us": "Slow down powerup",
+		"am": "Դանդաղեցնել",
+		"ru": "Замедлить"
+	},
+	"speed_up_text": {
+		"us": "Speed up powerup",
+		"am": "Արագացնել",
+		"ru": "Ускорить"
+	},
+	"shrink_desc_text": {
+		"us": "Shrinks the paddle.",
+		"am": "Փոքրացնում է խաղացողին:",
+		"ru": "Уменьшает ракетку."
+	},
+	"grow_desc_text": {
+		"us": "Grows the paddle.",
+		"am": "Մեծացնում է խաղացողին:",
+		"ru": "Увеличивает ракетку."
+	},
+	"slowDown_desc_text": {
+		"us": "Slows down the paddle.",
+		"am": "Դանդաղում է խաղացողին:",
+		"ru": "Замедляет ракетку."
+	},
+	"speedUp_desc_text": {
+		"us": "Speeds up the paddle.",
+		"am": "Արագացնում է խաղացողին:",
+		"ru": "Ускоряет ракетку."
+	},
+	"reset_text": {
+		"us": "Reset",
+		"am": "Վերականգնել",
+		"ru": "Сброс"
+	},
+	"start_text": {
+		"us": "Start",
+		"am": "Սկսել",
+		"ru": "Старт"
+	},
+	"usernames_text": {
+		"us": "Usernames",
+		"am": "Օգտանուններ",
+		"ru": "Пользователи"
+	}
+}
