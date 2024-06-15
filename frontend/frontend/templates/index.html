@@ -74,23 +74,10 @@
 		const page_data = JSON.parse("{{ pages | escapejs }}");
 		const lang_data = JSON.parse("{{ language_texts | escapejs }}");
 
-<<<<<<< HEAD:src/src/templates/index.html
-		window.addEventListener("DOMContentLoaded", async (e) => {
-			let url = window.location.pathname;
-			if (url[0] === "/") url = url.slice(1, url.length);
-			if (url[url.length - 1] === "/") url = url.slice(0, url.length - 1);
-		
-			if (url === "game") url = "home";
-		
-			const page_data = JSON.parse("{{ pages|escapejs }}");
-			const lang_data = JSON.parse("{{ language_texts|escapejs }}");
-		
-=======
 		auth_url = auth_url.replace("{port}", "{{ auth_port }}");
 		blockchain_url = blockchain_url.replace("{port}", "{{ blockchain_port }}");
 
 		window.addEventListener("DOMContentLoaded", (e) => {
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:frontend/frontend/templates/index.html
 			const customSelect = document.querySelector(".custom-select");
 			const selectBtn = document.querySelector(".select-button");
 			const optionContainer = document.querySelector(".option-container");
@@ -99,29 +86,6 @@
 			customSelect.addEventListener("click", () => {
 				optionContainer.style.display = optionContainer.style.display === "none" ? "flex" : "none";
 			});
-<<<<<<< HEAD:src/src/templates/index.html
-		
-			createLanguageOptions(optionContainer, selectBtn, customSelect);
-		
-			try {
-				if (url === "login" && getUser().token) {
-					const data = await getUserInfo();
-					console.log("User info retrieved:", data);
-					updateState({ page: page_data["home"], url: "/home" });
-					renderUserInfo(data);
-				} else if (page_data[url] && getUser().token) {
-					const data = await getUserInfo();
-					console.log("Page data retrieved:", data);
-					updateState({ page: page_data[url], url: "/" + url });
-					renderUserInfo(data);
-				} else {
-					updateState({ page: page_data["login"], url: "/login" });
-				}
-			} catch (error) {
-				console.error('Error:', error);
-			}
-		
-=======
 
 			createLanguageOptions(optionContainer, selectBtn, customSelect);
 
@@ -138,7 +102,6 @@
 				updateState({ page: page_data["login"], url: "/login" });
 			}
 
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:frontend/frontend/templates/index.html
 			updateLanguage();
 		});
 		
@@ -162,14 +125,9 @@
 
 <body style="height: 90vh;">
 
-<<<<<<< HEAD:src/src/templates/index.html
-	<div id="overlay"></div>
-    <!-- Elements to display user information -->
-=======
 	<div class="error hide" id="error">
 		<span>Please help us graduate</span>
 	</div>
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:frontend/frontend/templates/index.html
 
 	<header>
 		<nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -189,12 +147,8 @@
 		</nav>
 	</header>
 
-<<<<<<< HEAD:src/src/templates/index.html
-	<div class="container d-flex align-items-center flex-column h-100" id="container">
-=======
 	<div class="container d-flex align-items-center justify-content-center flex-column h-100" id="container">
 
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:frontend/frontend/templates/index.html
 	</div>
 
 	<footer class="footer">

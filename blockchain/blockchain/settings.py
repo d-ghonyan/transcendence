@@ -38,12 +38,7 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
 	'blockchain',
 	'corsheaders',
-<<<<<<< HEAD:src/src/settings.py
-	# 'django_extensions',
-	# 'oauth2_provider',
-=======
 	# 'django_extensions', # for ssl server
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:blockchain/blockchain/settings.py
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
@@ -91,25 +86,10 @@ WSGI_APPLICATION = 'blockchain.wsgi.application'
 # https://docs.djangoproject.com/en/4.2/ref/settings/#databases
 
 DATABASES = {
-<<<<<<< HEAD:src/src/settings.py
-	'default': {
-		'ENGINE': 'django.db.backends.postgresql',
-		'NAME': "db_transcendence",
-		'PORT': 5432,
-		'USER': "user_transcendence",
-		'PASSWORD': "pass_transcendence",
-		'HOST': 'db',
-	}
-	# "default": {
-    #     "ENGINE": "django.db.backends.sqlite3",
-    #     "NAME": "mydatabase",
-    # }
-=======
 	"default": {
         "ENGINE": "django.db.backends.sqlite3",
         "NAME": "mydatabase",
     }
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:blockchain/blockchain/settings.py
 }
 
 LOGIN_URL = '/admin/login'

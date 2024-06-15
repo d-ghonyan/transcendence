@@ -1,11 +1,3 @@
-<<<<<<< HEAD:src/api/settings.py
-import os
-from pathlib import Path
-
-BASE_DIR = Path(__file__).resolve().parent.parent
-MEDIA_URL = '/media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
-=======
 """
 Django settings for user_auth project.
 
@@ -193,4 +185,3 @@ LOGGING = {
         # },
     }
 }
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:user_auth/user_auth/settings.py

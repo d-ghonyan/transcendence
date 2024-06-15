@@ -5,18 +5,15 @@ const events = {
 	register_button,
 	logout_button,
 	startGame,
-<<<<<<< HEAD:src/src/static/scripts/page_listeners.js
 	intra_button,
 	submit_button,
 	language_select_popup_change,
-	ImageFileAccess_change
-=======
+	ImageFileAccess_change,
 	reset_button,
 	tournament_button,
 	start_button,
 	overlay,
 	start_button,
->>>>>>> 41d29b56fe2488f0720327adac2b23a034ebca9e:frontend/frontend/static/scripts/page_listeners.js
 }
 
 document.addEventListener('click', async (e) => {
