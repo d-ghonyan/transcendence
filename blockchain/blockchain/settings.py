@@ -38,13 +38,14 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
 	'blockchain',
 	'corsheaders',
-	# 'django_extensions', # for ssl server
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'django_elasticsearch_dsl',
+	'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -133,9 +134,6 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
 ELASTICSEARCH_HTTP_PORT = os.getenv("ELASTICSEARCH_HTTP_PORT")
 
 ELASTICSEARCH_DSL={
@@ -181,3 +179,7 @@ LOGGING = {
         # },
     }
 }
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
