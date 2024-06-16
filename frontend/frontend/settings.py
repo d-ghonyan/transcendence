@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+	'django_elasticsearch_dsl',
+	'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -172,3 +174,7 @@ LOGGING = {
         # },
     }
 }
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
