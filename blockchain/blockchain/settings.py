@@ -162,7 +162,7 @@ LOGGING = {
             'host': 'logstash',
             'port': 5959, # Default value: 5959
             'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
-            'message_type': 'django-server',  # 'type' field in logstash message. Default value: 'logstash'.
+            'message_type': 'django-blockchain',  # 'type' field in logstash message. Default value: 'logstash'.
             'fqdn': False, # Fully qualified domain name. Default value: false.
             'tags': ['django.server'], # list of tags. Default: None.
         },

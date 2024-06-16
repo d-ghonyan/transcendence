@@ -99,6 +99,9 @@ DATABASES = {
 		'USER': POSTGRES_USER,
 		'PASSWORD': POSTGRES_PASSWORD,
 		'HOST': POSTGRES_HOST,
+		'OPTIONS': {
+			'sslmode': 'require',
+		}
 	}
 }
 

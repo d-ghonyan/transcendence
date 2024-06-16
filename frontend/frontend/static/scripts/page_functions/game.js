@@ -4,7 +4,6 @@ class Game {
 		this.ctx = this.canvas.getContext('2d');
 		this.matches = [];
 		this.matchIndex = 0;
-		console.log(tournament);
 		this.tournament = tournament;
 		this.tournamentFinished = false;
 		
@@ -59,7 +58,7 @@ class Game {
 		usernames.splice(random_index2, 1);
 		
 		this.matches.push({ user1, user2 }, { user1: usernames[0], user2: usernames[1] }, {});
-		console.log(user1, user2);
+		console.log(this.matches);
 		updateControlUsernames([ user1, user2 ]);
 	}
 
@@ -170,12 +169,11 @@ class Game {
 		}
 
 		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
-
 			let usernames = [this.mode.teamNames.player1, this.mode.teamNames.player2];
 			let winner = this.player1Score === this.winningScore ? usernames[0] : usernames[1];
 
 			if (this.tournament) {
-				usernames = [this.matches[this.matchIndex].user1, this.matches[this.matchIndex].user2];
+				usernames = [this.matches[this.matchIndex + 1]?.user1, this.matches[this.matchIndex + 1]?.user2];
 
 				this.matches[this.matchIndex].winner = this.player1Score === this.winningScore ? this.matches[this.matchIndex].user1 : this.matches[this.matchIndex].user2;
 				winner = this.matches[this.matchIndex].winner;
@@ -184,10 +182,10 @@ class Game {
 				this.matchIndex++;
 
 				if (this.matchIndex === 2) {
-					console.log("last game!");
-
 					this.matches[2].user1 = this.matches[0].winner;
 					this.matches[2].user2 = this.matches[1].winner;
+
+					usernames = [this.matches[2].user1, this.matches[2].user2];
 				}
 
 				if (this.matchIndex === 3) {
@@ -199,11 +197,11 @@ class Game {
 			}
 
 			alert(`${winner} wins!`);
-			if (this.tournament) updateControlUsernames(usernames);
+			if (this.tournament && !this.tournamentFinished) updateControlUsernames(usernames);
 			this.resetScore();
 
 			if (this.tournamentFinished) {
-				// back to home
+				updateState({ page: page_data["home"], url: "/home", onload: "homeOnload" });
 			}
 		}
 
@@ -213,8 +211,8 @@ class Game {
 	drawScore() {
 		this.ctx.fillStyle = 'white';
 		this.ctx.font = '20px Arial';
-		this.ctx.fillText(`${this.mode.teamNames.player1}: ${this.player1Score}`, 20, 30);
-		this.ctx.fillText(`${this.mode.teamNames.player2}: ${this.player2Score}`, this.canvas.width - 140, 30);
+		this.ctx.fillText(`Score 1: ${this.player1Score}`, 40, 30);
+		this.ctx.fillText(`Score 2: ${this.player2Score}`, this.canvas.width - 140, 30);
 	}
 
 	resetScore() {
@@ -277,6 +275,8 @@ const startGame = (gameMode, settings, tournament=false) => {
 const updateControlUsernames = (usernames) => {
 	const oddContainer = document.getElementsByClassName('odd-container')[0];
 	const evenContainer = document.getElementsByClassName('even-container')[0];
+
+	console.log(usernames);
 
 	oddContainer.getElementsByTagName('h3')[0].innerText = usernames[0];
 	evenContainer.getElementsByTagName('h3')[0].innerText = usernames[1];

@@ -4,7 +4,6 @@ WORKDIR /app
 
 ADD ./user_auth/requirements.txt .
 ADD ./user_auth/entrypoint.sh .
-ADD ./certs /app/certs
 
 RUN	pip install --upgrade pip && \
 	pip install -r requirements.txt 

@@ -1,7 +1,7 @@
 class Powerup extends MovingObject {
 	constructor(x, y, effectTypes) {
 
-		const speedX = Math.random() < 0.5 ? 2 : -2;
+		const speedX = Math.random() < 0.5 ? 5 : -5;
 		super(x, y, DEFAULTS.ballSize, speedX, getRandomSpeed());
 
 		this.effectTypes = effectTypes || ['shrink', 'grow', 'slowDown', 'speedUp'];

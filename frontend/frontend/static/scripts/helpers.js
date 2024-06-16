@@ -7,7 +7,7 @@ const showErrorMessage = (message) => {
 
 	new Timer(() => {
 		hideErrorMessage();
-	}, 5000);
+	}, 4000);
 
 	console.error(message);
 }

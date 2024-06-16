@@ -1,6 +1,10 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
-from blockchain import call_contract, get_contract, get_all_tournaments
+from blockchain import call_contract, get_all_tournaments, deployed_contract
+
+import logging
+
+logger = logging.getLogger('django.server')
 
 import json
 import logging
@@ -38,4 +42,16 @@ def get_tournaments_user(request):
 		return JsonResponse({ 'error': 'Invalid data' })
 	logger.info(f"Fetching tournaments for user: {data['username']}")
 
-	return JsonResponse( { "data": get_contract(data['username']) } )
+	tournaments = deployed_contract.functions.getTournaments().call()
+
+	user_tournaments = []
+
+	logger.info(tournaments)
+
+	for tournament in tournaments:
+		for match in tournament[0]:
+			if (isinstance(match, list) or isinstance(match, tuple)) and data['username'] in match:
+				user_tournaments.append(tournament)
+				break
+
+	return JsonResponse( { "data": user_tournaments } )

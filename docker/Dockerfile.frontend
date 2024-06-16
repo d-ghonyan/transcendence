@@ -4,7 +4,6 @@ WORKDIR /app
 
 ADD ./frontend/requirements.txt .
 ADD ./frontend/entrypoint.sh .
-ADD ./certs .
 
 RUN	pip install --upgrade pip && \
 	pip install -r requirements.txt 
