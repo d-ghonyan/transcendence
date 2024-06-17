@@ -161,32 +161,32 @@ LOGGING = {
         },
   },
   'handlers': {
-        # 'console': {
-        #     'level': 'INFO',
-        #     'class': 'logging.StreamHandler',
-        #     'formatter': 'simple'
-        # },
-        'logstash': {
-            'level': 'DEBUG',
+        'info': {
+            'level': 'INFO',
             'class': 'logstash.TCPLogstashHandler',
             'host': 'logstash',
-            'port': 5959, # Default value: 5959
-            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
-            'message_type': 'django-server',  # 'type' field in logstash message. Default value: 'logstash'.
-            'fqdn': False, # Fully qualified domain name. Default value: false.
-            'tags': ['django.server'], # list of tags. Default: None.
+            'port': 5959,
+            'version': 1,
+            'message_type': 'django-user_auth',
+            'fqdn': False,
+            'tags': ['django.user_auth-info'],
+        },
+        'warning': {
+            'level': 'WARNING',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': 'logstash',
+            'port': 5959,
+            'version': 1,
+            'message_type': 'django-user_auth',
+            'fqdn': False,
+            'tags': ['django-user_auth-warning'],
         },
   },
   'loggers': {
         'django.server': {
-            'handlers': ['logstash'],
-            'level': 'DEBUG',
-            'propagate': True,
+            'handlers': ['info', 'warning'],
+            'level': 1,
         },
-        # 'django': {
-        #     'handlers': ['console'],
-        #     'propagate': True,
-        # },
     }
 }
 

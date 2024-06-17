@@ -1,5 +1,18 @@
+const resetGameAnimation = () => {
+	if (gameAnimationId)
+	{
+		cancelAnimationFrame(gameAnimationId);
+	
+		document.removeEventListener('keydown', globalListeners['keydown']);
+		document.removeEventListener('keyup', globalListeners['keyup']);
+	
+		gameAnimationId = null;
+	}
+}
+
 function updateState(state)
 {
+	resetGameAnimation();
 	pushState(state, state.url);
 
 	const page = state.page;
@@ -46,12 +59,7 @@ window.addEventListener('popstate', async (e) => {
 	}
 	else if (gameAnimationId)
 	{
-		cancelAnimationFrame(gameAnimationId);
-
-		document.removeEventListener('keydown', globalListeners['keydown']);
-		document.removeEventListener('keyup', globalListeners['keyup']);
-
-		gameAnimationId = null;
+		resetGameAnimation();
 	}
 
 	if (!getUser())

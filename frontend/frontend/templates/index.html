@@ -74,6 +74,7 @@
 		html {
 			height: 100%;
 		}
+
 		body {
 			width: 90vw;
 			height: 100vh;
@@ -119,12 +120,27 @@
 			transition: opacity 1s;
 		}
 
+		.show-winner {
+			z-index: 102;
+			opacity: 1;
+			position: absolute;
+			top: 0;
+			left: 30%;
+			min-width: 20%;
+			padding: 20px;
+			border-radius: 14px;
+			background-color: #4465ab;
+			color: #ffffff;
+			transition: opacity 1s;
+		}
+
 		.hide {
 			opacity: 0;
 			pointer-events: none;
 		}
 
 		.custom-select {
+			position: relative;
 			font-size: 1.15rem;
 			color: #000;
 		}
@@ -186,10 +202,6 @@
 		<nav class="navbar navbar-expand-lg navbar-light">
 			<div class="container">
 				<a class="navbar-brand logolol" href="#">Khoustup</a>
-				<button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
-					aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-					<span class="navbar-toggler-icon"></span>
-				</button>
 				<div class="language-switcher">
 					<div class="custom-select">
 						<div class="select-button" role="combobox" aria-labelledby="select button"
@@ -201,7 +213,7 @@
 		</nav>
 	</header>
 
-	<div class="container d-flex align-items-center justify-content-center flex-column h-100" id="container">
+	<div class="container d-flex flex-column h-75 justify-content-center align-items-center" id="container">
 
 	</div>
 

@@ -51,8 +51,6 @@ function homeOnload() {
 				else {
 					gameSettings.powerups = gameSettings.powerups.filter(powerup => powerup !== input.name);
 				}
-
-				console.log(gameSettings.powerups);
 			});
 		});
 	});
@@ -73,16 +71,12 @@ const showTournaments = async () => {
 	headerDiv.appendChild(headerH2);
 	tournamentContainer.appendChild(headerDiv);
 
-	console.log(tournaments);
-
 	tournaments?.forEach(tournament => {
 		const tournamentEntry = document.createElement('div');
 		tournamentEntry.classList.add('tournment-entry');
 
 		const matchesDiv = document.createElement('div');
 		matchesDiv.classList.add('matches', 'w-100', 'd-flex', 'justify-content-center', 'flex-wrap');
-
-		console.log(tournament);
 
 		for (const match of tournament[0]) {
 			const scoresDiv = document.createElement('div');

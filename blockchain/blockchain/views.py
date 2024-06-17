@@ -1,13 +1,9 @@
 from django.http import JsonResponse
 from django.views.decorators.http import require_GET, require_POST
 from blockchain import call_contract, get_all_tournaments, deployed_contract
-
-import logging
-
-logger = logging.getLogger('django.server')
-
 import json
 import logging
+
 logger = logging.getLogger('django.server')
 
 @require_GET
@@ -17,10 +13,9 @@ def get_tournaments(request):
 
 @require_POST
 def add_tournament(request):
-	logger.info("Request received to add a tournament")
-
 	data = json.loads(request.body.decode('utf-8'))
-	logger.info(f"Request data: {data}")
+	logger.info(f"Request received to add a tournament with data: {data}")
+
 	if ('matches' not in data) or ('winner' not in data):
 		logger.warning("Invalid data: 'matches' or 'winner' missing")
 		return JsonResponse({ 'error': 'Invalid data' })
@@ -31,22 +26,16 @@ def add_tournament(request):
 
 @require_POST
 def get_tournaments_user(request):
-	logger.info("Request received to get tournaments for a user")
-
 	data = json.loads(request.body.decode('utf-8'))
-	logger.info(f"Request data: {data}")
+	logger.info(f"Request received to get tournaments for a user with data: {data}")
 
 	if ('username' not in data):
 		logger.warning("Invalid data: 'username' missing")
-
 		return JsonResponse({ 'error': 'Invalid data' })
-	logger.info(f"Fetching tournaments for user: {data['username']}")
 
 	tournaments = deployed_contract.functions.getTournaments().call()
 
 	user_tournaments = []
-
-	logger.info(tournaments)
 
 	for tournament in tournaments:
 		for match in tournament[0]:
@@ -54,4 +43,5 @@ def get_tournaments_user(request):
 				user_tournaments.append(tournament)
 				break
 
+	logger.info(f"Found {len(user_tournaments)} tournaments for user {data['username']}")
 	return JsonResponse( { "data": user_tournaments } )

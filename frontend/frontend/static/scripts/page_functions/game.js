@@ -23,7 +23,7 @@ class Game {
 		
 		this.timeoutId = null;
 		gameAnimationId = null;
-		
+
 		this.balls = [];
 		this.paddles = [];
 		this.controller = {};
@@ -47,6 +47,7 @@ class Game {
 	}
 	
 	eliminationGameUsers() {
+		this.matchIndex = 0;
 		const usernames = this.settings.usernames;
 
 		const random_index1 = Math.floor(Math.random() * usernames.length);
@@ -58,7 +59,6 @@ class Game {
 		usernames.splice(random_index2, 1);
 		
 		this.matches.push({ user1, user2 }, { user1: usernames[0], user2: usernames[1] }, {});
-		console.log(this.matches);
 		updateControlUsernames([ user1, user2 ]);
 	}
 
@@ -104,7 +104,7 @@ class Game {
 		}
 	}
 
-	draw() {
+	async draw() {
 		const randomSpawnTimeout = Math.floor(Math.random() * 4000) + 2000;
 
 		if (!this.timeoutId && this.settings.powerups.length > 0) {
@@ -172,7 +172,7 @@ class Game {
 			let usernames = [this.mode.teamNames.player1, this.mode.teamNames.player2];
 			let winner = this.player1Score === this.winningScore ? usernames[0] : usernames[1];
 
-			if (this.tournament) {
+			if (this.tournament && this.matchIndex !== 3) {
 				usernames = [this.matches[this.matchIndex + 1]?.user1, this.matches[this.matchIndex + 1]?.user2];
 
 				this.matches[this.matchIndex].winner = this.player1Score === this.winningScore ? this.matches[this.matchIndex].user1 : this.matches[this.matchIndex].user2;
@@ -184,24 +184,25 @@ class Game {
 				if (this.matchIndex === 2) {
 					this.matches[2].user1 = this.matches[0].winner;
 					this.matches[2].user2 = this.matches[1].winner;
-
 					usernames = [this.matches[2].user1, this.matches[2].user2];
 				}
 
 				if (this.matchIndex === 3) {
-					console.log("tournament finished!");
 					this.matches[2].winner = this.player1Score === this.winningScore ? this.matches[2].user1 : this.matches[2].user2;
 					storeGameScore(this.matches);
 					this.tournamentFinished = true;
 				}
 			}
 
-			alert(`${winner} wins!`);
+			showWinner(`${winner} wins!`);
+			await new Promise(resolve => setTimeout(resolve, 2500));
+
 			if (this.tournament && !this.tournamentFinished) updateControlUsernames(usernames);
 			this.resetScore();
 
 			if (this.tournamentFinished) {
 				updateState({ page: page_data["home"], url: "/home", onload: "homeOnload" });
+				return ;
 			}
 		}
 
@@ -275,8 +276,6 @@ const startGame = (gameMode, settings, tournament=false) => {
 const updateControlUsernames = (usernames) => {
 	const oddContainer = document.getElementsByClassName('odd-container')[0];
 	const evenContainer = document.getElementsByClassName('even-container')[0];
-
-	console.log(usernames);
 
 	oddContainer.getElementsByTagName('h3')[0].innerText = usernames[0];
 	evenContainer.getElementsByTagName('h3')[0].innerText = usernames[1];

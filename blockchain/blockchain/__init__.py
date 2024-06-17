@@ -42,6 +42,7 @@ def deploy_contract():
 	with open(address_file_path, 'w') as f:
 		f.write(deployed_address)
 
+	logger.info(f"Deployed the contract with address {deployed_address}.")
 	return deployed_address
 
 if os.path.exists(address_file_path):
