@@ -71,7 +71,7 @@ window.addEventListener('popstate', async (e) => {
 	{
 		if (e.state.url === "/login")
 		{
-			updateState({ page: page_data['home'], url: "/home" });
+			updateState({ page: page_data['home'], url: "/home", onload: "homeOnload" });
 			return ;
 		}
 	}

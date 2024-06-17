@@ -33,7 +33,10 @@ function homeOnload() {
 	powerupChecks.forEach(div => {
 		const powerupCheckboxes = div.querySelectorAll('input');
 		powerupCheckboxes.forEach(input => {
-			input.setAttribute("checked", "checked");
+			if (gameSettings.powerups.includes(input.name))
+				input.setAttribute("checked", "checked");
+			else
+				input.removeAttribute("checked");
 		});
 
 		div.addEventListener('click', e => {
