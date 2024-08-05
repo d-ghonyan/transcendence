@@ -80,6 +80,17 @@ services:
       - barev
     restart: always
 
+  https:
+    build:
+      context: https
+    ports:
+      - "8003:8003"
+    networks:
+      - barev
+    restart: always
+    depends_on:
+      - frontend
+
   blockchain:
     build:
       context: .
