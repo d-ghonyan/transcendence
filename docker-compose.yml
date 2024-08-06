@@ -1,9 +1,6 @@
 services:
   db:
-    build:
-      context: .
-      dockerfile: ./docker/Dockerfile.postgres
-    stop_grace_period: 5s
+    image: postgres:latest
     env_file: .env
     volumes:
       - postgres:/var/lib/postgresql/data
@@ -57,7 +54,6 @@ services:
       - "${KIBANA_PORT}:${KIBANA_PORT}"
     volumes:
       - ./elk-config/kibana/kibana.yml:/usr/share/kibana/config/kibana.yml
-      - ./certs:/certs
       - kb_data:/usr/share/kibana/data
     networks:
       - elk
@@ -103,7 +99,6 @@ services:
     env_file: .env
     volumes:
       - ./blockchain:/app
-      - ./certs:/certs
     ports:
       - ${BLOCKCHAIN_PORT}:${BLOCKCHAIN_PORT}
     networks:
@@ -130,7 +125,6 @@ services:
     stop_grace_period: 5s
     volumes:
       - ./user_auth:/app
-      - ./certs:/certs
     ports:
       - "${USER_AUTH_PORT}:${USER_AUTH_PORT}"
     networks:
@@ -155,7 +149,6 @@ services:
     stop_grace_period: 5s
     volumes:
       - ./frontend:/app
-      - ./certs:/certs
     ports:
       - "${FRONTEND_PORT}:${FRONTEND_PORT}"
     networks:
@@ -164,9 +157,9 @@ services:
     depends_on:
       elasticsearch:
         condition: service_healthy
-      kibana:
-        condition: service_healthy
       db:
+        condition: service_healthy
+      kibana:
         condition: service_healthy
       user_auth:
         condition: service_started
