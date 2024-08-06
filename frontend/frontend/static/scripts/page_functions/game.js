@@ -4,7 +4,6 @@ class Game {
 		this.ctx = this.canvas.getContext('2d');
 		this.matches = [];
 		this.matchIndex = 0;
-		console.log(tournament);
 		this.tournament = tournament;
 		this.tournamentFinished = false;
 		
@@ -24,7 +23,7 @@ class Game {
 		
 		this.timeoutId = null;
 		gameAnimationId = null;
-		
+
 		this.balls = [];
 		this.paddles = [];
 		this.controller = {};
@@ -48,6 +47,7 @@ class Game {
 	}
 	
 	eliminationGameUsers() {
+		this.matchIndex = 0;
 		const usernames = this.settings.usernames;
 
 		const random_index1 = Math.floor(Math.random() * usernames.length);
@@ -59,7 +59,6 @@ class Game {
 		usernames.splice(random_index2, 1);
 		
 		this.matches.push({ user1, user2 }, { user1: usernames[0], user2: usernames[1] }, {});
-		console.log(user1, user2);
 		updateControlUsernames([ user1, user2 ]);
 	}
 
@@ -105,7 +104,7 @@ class Game {
 		}
 	}
 
-	draw() {
+	async draw() {
 		const randomSpawnTimeout = Math.floor(Math.random() * 4000) + 2000;
 
 		if (!this.timeoutId && this.settings.powerups.length > 0) {
@@ -170,12 +169,11 @@ class Game {
 		}
 
 		if (this.player1Score === this.winningScore || this.player2Score === this.winningScore) {
-
 			let usernames = [this.mode.teamNames.player1, this.mode.teamNames.player2];
 			let winner = this.player1Score === this.winningScore ? usernames[0] : usernames[1];
 
-			if (this.tournament) {
-				usernames = [this.matches[this.matchIndex].user1, this.matches[this.matchIndex].user2];
+			if (this.tournament && this.matchIndex !== 3) {
+				usernames = [this.matches[this.matchIndex + 1]?.user1, this.matches[this.matchIndex + 1]?.user2];
 
 				this.matches[this.matchIndex].winner = this.player1Score === this.winningScore ? this.matches[this.matchIndex].user1 : this.matches[this.matchIndex].user2;
 				winner = this.matches[this.matchIndex].winner;
@@ -184,26 +182,27 @@ class Game {
 				this.matchIndex++;
 
 				if (this.matchIndex === 2) {
-					console.log("last game!");
-
 					this.matches[2].user1 = this.matches[0].winner;
 					this.matches[2].user2 = this.matches[1].winner;
+					usernames = [this.matches[2].user1, this.matches[2].user2];
 				}
 
 				if (this.matchIndex === 3) {
-					console.log("tournament finished!");
 					this.matches[2].winner = this.player1Score === this.winningScore ? this.matches[2].user1 : this.matches[2].user2;
 					storeGameScore(this.matches);
 					this.tournamentFinished = true;
 				}
 			}
 
-			alert(`${winner} wins!`);
-			if (this.tournament) updateControlUsernames(usernames);
+			showWinner(`${winner} wins!`);
+			await new Promise(resolve => setTimeout(resolve, 2500));
+
+			if (this.tournament && !this.tournamentFinished) updateControlUsernames(usernames);
 			this.resetScore();
 
 			if (this.tournamentFinished) {
-				// back to home
+				updateState({ page: page_data["home"], url: "/home", onload: "homeOnload" });
+				return ;
 			}
 		}
 
@@ -213,8 +212,8 @@ class Game {
 	drawScore() {
 		this.ctx.fillStyle = 'white';
 		this.ctx.font = '20px Arial';
-		this.ctx.fillText(`${this.mode.teamNames.player1}: ${this.player1Score}`, 20, 30);
-		this.ctx.fillText(`${this.mode.teamNames.player2}: ${this.player2Score}`, this.canvas.width - 140, 30);
+		this.ctx.fillText(`Score 1: ${this.player1Score}`, 40, 30);
+		this.ctx.fillText(`Score 2: ${this.player2Score}`, this.canvas.width - 140, 30);
 	}
 
 	resetScore() {

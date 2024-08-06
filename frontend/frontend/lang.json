@@ -146,5 +146,20 @@
 		"us": "Usernames",
 		"am": "Օգտանուններ",
 		"ru": "Пользователи"
+	},
+	"tournaments_text":	{
+		"us": "Tournaments",
+		"am": "Մրցաշարեր",
+		"ru": "Турниры"
+	},
+	"no_tournaments_text":	{
+		"us": "No Tournaments Found",
+		"am": "Մրցաշարեր չեն գտնվել",
+		"ru": "Турниры не найдены"
+	},
+	"winner_text": {
+		"us": "Winner",
+		"am": "Հաղթող",
+		"ru": "Победитель"
 	}
 }

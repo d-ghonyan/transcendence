@@ -1,8 +1,10 @@
 from blockchain.settings import GANACHE_URL, BASE_DIR, MNEMONIC
-
+import logging
 import os
 import json
 from web3 import Web3
+
+logger = logging.getLogger('django.server')
 
 chain_id = 1337
 tournament_json = BASE_DIR / "contracts/Tournament.json"
@@ -40,6 +42,7 @@ def deploy_contract():
 	with open(address_file_path, 'w') as f:
 		f.write(deployed_address)
 
+	logger.info(f"Deployed the contract with address {deployed_address}.")
 	return deployed_address
 
 if os.path.exists(address_file_path):
@@ -71,18 +74,6 @@ def call_contract(mathces, winner):
 		return False
 
 	return tx_hash
-
-def get_contract(user_id):
-	tournaments = deployed_contract.functions.getTournaments().call()
-
-	user_tournaments = []
-
-	for tournament in tournaments:
-		for match in tournament:
-			if (isinstance(match, list) or isinstance(match, tuple)) and user_id in match:
-				user_tournaments.append(tournament) 
-
-	return user_tournaments
 
 def get_all_tournaments():
 	return deployed_contract.functions.getTournaments().call()

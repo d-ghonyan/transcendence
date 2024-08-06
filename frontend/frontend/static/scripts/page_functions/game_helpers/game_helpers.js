@@ -10,8 +10,6 @@ const storeGameScore = async (data) => {
 		winner: data[2].winner,
 	}
 
-	console.log(finalData);
-
 	try {
 		const res = await fetch(`${blockchain_url}/add_tournament/`, {
 			method: "POST",
@@ -21,7 +19,6 @@ const storeGameScore = async (data) => {
 			body: JSON.stringify(finalData),
 		});
 
-		console.log(res);
 	} catch (error) {
 		showErrorMessage("Couldn't store data in blockchain: " + error);
 	}

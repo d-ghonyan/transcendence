@@ -1,8 +1,8 @@
 const	lang_codes = [ "am", "us", "ru" ];
 let		lang = localStorage.getItem("lang") || lang_codes[0];
 
-let		auth_url = "http://localhost:{port}";
-let		blockchain_url = "http://localhost:{port}";
+let		auth_url = "https://localhost:{port}";
+let		blockchain_url = "https://localhost:{port}";
 const	flag_url = "https://flagicons.lipis.dev/flags/4x3/{lang}.svg";
 
 const	get_flag_url = (lang) => flag_url.replace("{lang}", lang);
@@ -31,7 +31,7 @@ const DEFAULTS = {
 	paddleWidth_min: 5,
 	paddleWidth_max: 30,
 
-	winningScore: 1, // TODOOOOOO
+	winningScore: 10,
 	winningScore_min: 5,
 	winningScore_max: 15,
 
@@ -62,17 +62,20 @@ const TOURNAMENT_SETTINGS = {
 	powerups: [],
 }
 
-const gameSettings = localStorage.getItem('gameSettings') ? 
-JSON.parse(localStorage.getItem('gameSettings')) :
-{
-	paddleWidth: DEFAULTS.paddleWidth,
-	paddleHeight: DEFAULTS.paddleHeight,
-	paddleSpeed: DEFAULTS.paddleSpeed,
-	ballSize: DEFAULTS.ballSize,
-	ballSpeed: DEFAULTS.ballSpeed,
-	winningScore: DEFAULTS.winningScore,
-	powerups: DEFAULTS.powerups,
-};
+const resetSettings = () => {
+	return {
+		paddleWidth: DEFAULTS.paddleWidth,
+		paddleHeight: DEFAULTS.paddleHeight,
+		paddleSpeed: DEFAULTS.paddleSpeed,
+		ballSize: DEFAULTS.ballSize,
+		ballSpeed: DEFAULTS.ballSpeed,
+		winningScore: DEFAULTS.winningScore,
+		powerups: DEFAULTS.powerups,
+	};
+}
+
+let gameSettings = localStorage.getItem('gameSettings') ? 
+		JSON.parse(localStorage.getItem('gameSettings')) : resetSettings();
 
 let gameAnimationId = null;
 

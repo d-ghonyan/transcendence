@@ -38,13 +38,14 @@ ALLOWED_HOSTS = ['*']
 INSTALLED_APPS = [
 	'blockchain',
 	'corsheaders',
-	# 'django_extensions', # for ssl server
 	'django.contrib.admin',
 	'django.contrib.auth',
 	'django.contrib.contenttypes',
 	'django.contrib.sessions',
 	'django.contrib.messages',
 	'django.contrib.staticfiles',
+	'django_elasticsearch_dsl',
+	'django_extensions',
 ]
 
 MIDDLEWARE = [
@@ -133,9 +134,6 @@ STATIC_URL = 'static/'
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field
 
-# SECURE_SSL_REDIRECT = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
 ELASTICSEARCH_HTTP_PORT = os.getenv("ELASTICSEARCH_HTTP_PORT")
 
 ELASTICSEARCH_DSL={
@@ -153,31 +151,35 @@ LOGGING = {
         },
   },
   'handlers': {
-        # 'console': {
-        #     'level': 'INFO',
-        #     'class': 'logging.StreamHandler',
-        #     'formatter': 'simple'
-        # },
-        'logstash': {
+        'info': {
             'level': 'INFO',
             'class': 'logstash.TCPLogstashHandler',
             'host': 'logstash',
-            'port': 5959, # Default value: 5959
-            'version': 1, # Version of logstash event schema. Default value: 0 (for backward compatibility of the library)
-            'message_type': 'django-server',  # 'type' field in logstash message. Default value: 'logstash'.
-            'fqdn': False, # Fully qualified domain name. Default value: false.
-            'tags': ['django.server'], # list of tags. Default: None.
+            'port': 5959,
+            'version': 1,
+            'message_type': 'django-blockchain',
+            'fqdn': False,
+            'tags': ['django.blockchain-info'],
+        },
+        'warning': {
+            'level': 'WARNING',
+            'class': 'logstash.TCPLogstashHandler',
+            'host': 'logstash',
+            'port': 5959,
+            'version': 1,
+            'message_type': 'django-blockchain',
+            'fqdn': False,
+            'tags': ['django-blockchain-warning'],
         },
   },
   'loggers': {
         'django.server': {
-            'handlers': ['logstash'],
-            'level': 'INFO',
-            'propagate': True,
+            'handlers': ['info', 'warning'],
+            'level': 1,
         },
-        # 'django': {
-        #     'handlers': ['console'],
-        #     'propagate': True,
-        # },
     }
 }
+
+SECURE_SSL_REDIRECT = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True

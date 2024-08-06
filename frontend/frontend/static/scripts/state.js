@@ -1,5 +1,18 @@
+const resetGameAnimation = () => {
+	if (gameAnimationId)
+	{
+		cancelAnimationFrame(gameAnimationId);
+	
+		document.removeEventListener('keydown', globalListeners['keydown']);
+		document.removeEventListener('keyup', globalListeners['keyup']);
+	
+		gameAnimationId = null;
+	}
+}
+
 function updateState(state)
 {
+	resetGameAnimation();
 	pushState(state, state.url);
 
 	const page = state.page;
@@ -46,12 +59,7 @@ window.addEventListener('popstate', async (e) => {
 	}
 	else if (gameAnimationId)
 	{
-		cancelAnimationFrame(gameAnimationId);
-
-		document.removeEventListener('keydown', globalListeners['keydown']);
-		document.removeEventListener('keyup', globalListeners['keyup']);
-
-		gameAnimationId = null;
+		resetGameAnimation();
 	}
 
 	if (!getUser())
@@ -63,7 +71,7 @@ window.addEventListener('popstate', async (e) => {
 	{
 		if (e.state.url === "/login")
 		{
-			updateState({ page: page_data['home'], url: "/home" });
+			updateState({ page: page_data['home'], url: "/home", onload: "homeOnload" });
 			return ;
 		}
 	}

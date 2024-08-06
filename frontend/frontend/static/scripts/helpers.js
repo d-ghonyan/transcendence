@@ -7,14 +7,29 @@ const showErrorMessage = (message) => {
 
 	new Timer(() => {
 		hideErrorMessage();
-	}, 5000);
+	}, 4000);
 
 	console.error(message);
+}
+
+const showWinner = (message) => {
+	const winner = document.getElementById("winner");
+	winner.innerText = message;
+	winner.classList.remove("hide");
+
+	new Timer(() => {
+		hideWinner();
+	}, 1500);
 }
 
 const hideErrorMessage = () => {
 	const error = document.getElementById("error");
 	error.classList.add("hide");
+}
+
+const hideWinner = () => {
+	const winner = document.getElementById("winner");
+	winner.classList.add("hide");
 }
 
 const updateLanguage = () => {

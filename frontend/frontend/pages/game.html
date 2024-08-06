@@ -1,7 +1,6 @@
 <style>
 	.gamecontainer {
 		display: flex;
-		gap: 20px;
 	}
 
 	.hints {
@@ -39,9 +38,21 @@
 		gap: 20px;
 	}
 
+	.canvas-container {
+		border: 2px solid #fafafa;
+	}
+
+	.even-container h3, .odd-container h3 {
+		max-width: 150px;
+		overflow-wrap: break-word;
+	}
 </style>
 
 <div class="game-container d-flex">
+
+	<div class="show-winner hide" id="winner">
+		<span class="winner-text"></span>
+	</div>
 
 	<div class="canvas-container">
 		<canvas id="gameCanvas" width="800" height="400"></canvas>

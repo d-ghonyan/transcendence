@@ -2,7 +2,7 @@ const clamp = (value, min, max) => {
 	return Math.min(Math.max(value, min), max);
 }
 
-function homeOnload () {
+function homeOnload() {
 	const gameSettingInputs = document.querySelectorAll('.range-input');
 
 	gameSettingInputs.forEach(input => {
@@ -33,9 +33,12 @@ function homeOnload () {
 	powerupChecks.forEach(div => {
 		const powerupCheckboxes = div.querySelectorAll('input');
 		powerupCheckboxes.forEach(input => {
-			input.setAttribute("checked", "checked");
+			if (gameSettings.powerups.includes(input.name))
+				input.setAttribute("checked", "checked");
+			else
+				input.removeAttribute("checked");
 		});
-		
+
 		div.addEventListener('click', e => {
 			powerupCheckboxes.forEach(input => {
 				if (input.hasAttribute("checked")) {
@@ -51,8 +54,6 @@ function homeOnload () {
 				else {
 					gameSettings.powerups = gameSettings.powerups.filter(powerup => powerup !== input.name);
 				}
-
-				console.log(gameSettings.powerups);
 			});
 		});
 	});
@@ -61,37 +62,81 @@ function homeOnload () {
 }
 
 const showTournaments = async () => {
-	// const tournaments = await getTournaments();
+	const tournamentContainer = document.getElementById('tournament_container');
+	const tournaments = await getTournaments();
 
-	// const tournamentContainer = document.getElementById('tournament_container');
+	const headerDiv = document.createElement('div');
+	headerDiv.classList.add('tournament-header');
 
-	// if (tournaments.length === 0) {
-	// 	tournamentContainer.innerHTML = "<h3>No tournaments found</h3>";
-	// }
+	const headerH2 = document.createElement('h2');
+	headerH2.classList.add( tournaments?.length ? 'tournaments_text' : 'no_tournaments_text');
 
-	// tournaments.forEach(tournament => {
+	headerDiv.appendChild(headerH2);
+	tournamentContainer.appendChild(headerDiv);
 
-	// 	const users = [ tournament[0], tournament[1] ];
-	// 	const scores = [ tournament[2], tournament[3] ];
-	// 	const winner = tournament[4];
+	tournaments?.forEach(tournament => {
+		const tournamentEntry = document.createElement('div');
+		tournamentEntry.classList.add('tournment-entry');
 
-	// 	// show tournaments in columns
-	// 	const column = document.createElement('div');
-	// 	column.classList.add('column');
+		const matchesDiv = document.createElement('div');
+		matchesDiv.classList.add('matches', 'w-100', 'd-flex', 'justify-content-center', 'flex-wrap');
 
-	// 	const tournamentDiv = document.createElement('div');
-	// 	tournamentDiv.classList.add('tournament');
+		for (const match of tournament[0]) {
+			const scoresDiv = document.createElement('div');
+			scoresDiv.classList.add('scores', 'd-flex', 'justify-content-between', 'align-items-center');
 
-	// 	const scoreDiv = document.createElement('div');
-	// 	scoreDiv.classList.add('score');
+			const score1Div = document.createElement('div');
+			score1Div.classList.add('score1');
 
-	// 	const username = document.createElement('span');
-	// 	username.classList.add('tournament-username');
-	// 	username.innerText = users[0];
+			const username1Div = document.createElement('div');
+			username1Div.classList.add('username');
 
+			username1Div.textContent = match[0];
+			const score1TextDiv = document.createElement('div');
 
+			score1TextDiv.classList.add('score_text');
+			score1TextDiv.textContent = match[2];
+			score1Div.appendChild(username1Div);
+			score1Div.appendChild(score1TextDiv);
 
-	// });
+			const score2Div = document.createElement('div');
+			score2Div.classList.add('score2');
+
+			const username2Div = document.createElement('div');
+			username2Div.classList.add('username');
+			username2Div.textContent = match[1];
+
+			const score2TextDiv = document.createElement('div');
+			score2TextDiv.classList.add('score_text');
+			score2TextDiv.textContent = match[3];
+
+			score2Div.appendChild(username2Div);
+			score2Div.appendChild(score2TextDiv);
+
+			scoresDiv.appendChild(score1Div);
+			scoresDiv.appendChild(score2Div);
+			matchesDiv.appendChild(scoresDiv);
+		}
+
+		const winnerDiv = document.createElement('div');
+		winnerDiv.classList.add('winner');
+
+		const winnerUsernameDiv = document.createElement('div');
+		winnerUsernameDiv.classList.add('username');
+		winnerUsernameDiv.textContent = tournament[1];
+
+		const winnerTextDiv = document.createElement('div');
+		winnerTextDiv.classList.add('winner_text');
+
+		winnerDiv.appendChild(winnerUsernameDiv);
+		winnerDiv.appendChild(winnerTextDiv);
+
+		matchesDiv.appendChild(winnerDiv);
+		tournamentEntry.appendChild(matchesDiv);
+		tournamentContainer.appendChild(tournamentEntry);
+	});
+
+	updateLanguage();
 }
 
 const getTournaments = async () => {
@@ -119,6 +164,7 @@ const logout_button = async () => {
 	clearUser();
 	clearLang();
 	localStorage.removeItem("gameSettings");
+	gameSettings = resetSettings();
 
 	updateState({ page: page_data['login'], url: "/login" });
 }
@@ -170,12 +216,12 @@ const tournament_button = () => {
 const start_button = async () => {
 	let curr_user_found = false;
 	const usernames = document.querySelectorAll('.tournament-username');
-	
+
 	let username_values = Array.from(usernames).map(username => username.value.trim());
 	for (const username of username_values) {
 		if (!username) {
 			showErrorMessage("Please enter a username for each player.");
-			return ;
+			return;
 		}
 
 		if (username === getUser()) {
@@ -185,17 +231,17 @@ const start_button = async () => {
 
 	if (!curr_user_found) {
 		showErrorMessage("The logged in user should be present in the tournament.");
-		return ;
+		return;
 	}
 
 	const username_set = new Set(username_values);
 	if (username_set.size !== username_values.length) {
 		showErrorMessage("Please enter unique usernames.");
-		return ;
+		return;
 	}
 
 	overlay();
-	
+
 	const settings = {
 		...TOURNAMENT_SETTINGS,
 		usernames: username_values
