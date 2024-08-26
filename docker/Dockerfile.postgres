@@ -4,7 +4,7 @@ ADD ./postgres-certs/server.key /var/lib/postgresql/server.key
 ADD ./postgres-certs/server.crt /var/lib/postgresql/server.crt
 
 RUN chown postgres /var/lib/postgresql/server.key /var/lib/postgresql/server.crt
-RUN chmod g-r /var/lib/postgresql/server.key
+RUN chmod 700 /var/lib/postgresql/server.key
 
 # ENTRYPOINT ["sleep", "infinity"]
 

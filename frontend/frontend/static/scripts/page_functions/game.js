@@ -16,7 +16,7 @@ class Game {
 		this.player1Score = 0;
 		this.player2Score = 0;
 		this.winningScore = settings.winningScore;
-		
+
 		this.gameMode = gameMode;
 		this.settings = settings;
 		this.setupCanvas();

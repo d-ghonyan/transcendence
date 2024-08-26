@@ -43,19 +43,16 @@
 		"us": "Settings",
 		"am": "Կարգավորումներ",
 		"ru": "Настройки"
-
 	},
 	"friends_text": {
 		"us": "Friends",
 		"am": "Ընկերներ",
 		"ru": "Друзья"
-
 	},
 	"history_text": {
 		"us": "History",
 		"am": "Պատմություն",
 		"ru": "История"
-
 	},
 	"logout_text": {
 		"us": "Logout",

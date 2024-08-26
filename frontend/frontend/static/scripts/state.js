@@ -53,7 +53,14 @@ window.addEventListener('popstate', async (e) => {
 	{
 		changePageContent(page_data['game'].html);
 
-		startGame(e.state.mode, e.state.settings, e.state.tournament);
+		startGame(e.state.mode,
+			e.state.tournament ?
+			{
+				...TOURNAMENT_SETTINGS,
+				usernames: e.state.usernames,
+			}
+			: gameSettings,
+		e.state.tournament);
 
 		return ;
 	}

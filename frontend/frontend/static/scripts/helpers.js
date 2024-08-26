@@ -98,7 +98,6 @@ const storeLang = (lang) => localStorage.setItem("lang", lang);
 const clearLang = () => localStorage.removeItem("lang");
 const getLang = () => localStorage.getItem("lang");
 
-
 function addListener(element, event, func)
 {
 	globalListeners[event] = func;

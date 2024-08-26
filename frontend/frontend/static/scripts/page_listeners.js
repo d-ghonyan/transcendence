@@ -12,6 +12,11 @@ const events = {
 	start_button,
 }
 
+const gameConf = {
+	tournament: true,
+	vs: false,
+}
+
 document.addEventListener('click', async (e) => {
 	e.preventDefault();
 	if (e.target.id.includes('popup'))
@@ -25,7 +30,7 @@ document.addEventListener('click', async (e) => {
 	else if (e.target.id.includes("vs"))
 	{
 		updateState({ page: page_data['game'], url: "/game", mode: e.target.id, tournament: false });
-		startGame(e.target.id, gameSettings, false);
+		startGame(gamemode, gameSettings, gameConf[prop]);
 	}
 	else if (e.target.id.includes("submit_button"))
 	{

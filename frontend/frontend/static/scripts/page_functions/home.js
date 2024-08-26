@@ -251,8 +251,9 @@ const start_button = async () => {
 		page: page_data['game'],
 		url: "/game",
 		mode: "vs1",
+		usernames: username_values,
 		tournament: true,
-		settings
+		settings,
 	});
 
 	startGame("vs1", settings, true);
